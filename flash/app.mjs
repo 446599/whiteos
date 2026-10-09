@@ -1,4 +1,4 @@
-import { firmwareSource } from "./config.mjs";
+import { firmwareSource } from "./config.mjs?v=1.0.0";
 import { FlashError } from "./core.mjs";
 import { loadRelease, downloadParts } from "./github.mjs";
 import { flashDevice } from "./device.mjs";
@@ -66,10 +66,6 @@ async function run(mode) {
 buttons.forEach((button) => button.addEventListener("click", () => run(button.id)));
 
 async function initialize() {
-  if (!supported) {
-    state("当前浏览器无法烧录", "请在电脑 Chrome 或 Edge 中，通过 HTTPS 或 localhost 打开此页。", 0, "error");
-    return;
-  }
   if (!firmwareSource) {
     state("等待固件发布", "尚未配置公开 GitHub 固件源。当前不会连接或写入设备。", 0, "ready");
     return;
@@ -81,7 +77,8 @@ async function initialize() {
     $("source").href = `https://github.com/${release.source.owner}/${release.source.repo}/tree/${release.commit}`;
     $("source").hidden = false;
     $("source-empty").hidden = true;
-    state("可以开始", "尚未连接设备。", 0, "ready");
+    state(supported ? "可以开始" : "固件已识别",
+      supported ? "尚未连接设备。" : "请用电脑 Chrome 或 Edge 打开此页进行烧录。", 0, "ready");
   } catch (error) {
     state("固件源不可用", error instanceof FlashError ? error.message : "请检查发布配置。", 0, "error");
   }

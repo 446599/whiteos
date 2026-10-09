@@ -2,18 +2,18 @@
 
 入口：<https://446599.github.io/whiteos/flash/>。
 
-当前只有网页，尚未公开发布固件，两个按钮保持禁用。
+whiteos **1.0.0** 首版固件已发布。支持 Web Serial 的电脑浏览器可使用两个按钮，页面加载时识别版本，不自动连接设备。
 
 ## 固件源
 
-后续经过审核的公开发布包可以放在本仓库的 `firmware/` 目录，包含：
+当前发布包位于本仓库的 `firmware/` 目录，包含：
 
 - `manifest.json`
 - `bootloader.bin`
 - `partition-table.bin`
 - `whiteos.bin`
 
-确认真实发布包可访问后，维护者再将 `config.mjs` 中的 `firmwareSource` 配置为：
+`config.mjs` 中的 `firmwareSource` 已配置为：
 
 ```js
 export const firmwareSource = {
@@ -76,6 +76,6 @@ export const firmwareSource = {
 - 全新烧录有写入前确认。烧录时不要断开 USB 或关闭页面；中断可能需要重新烧录。
 - 下载、取消、写入或校验失败不会被当作安装成功。通过写入校验也不等于设备启动与屏幕功能已经验收。
 
-镜像仅在对应板卡真机验收后发布。此网页不提供硬件身份认证，也不保证其他 ESP32-S3 设备兼容。
+1.0.0 的编译、内部版本、镜像与分区校验已通过；该构建尚未完成真机启动与屏幕验收。此网页不提供硬件身份认证，也不保证其他 ESP32-S3 设备兼容。
 
 驱动固定为 `esptool-js 0.7.0`，相关许可证保留在 `vendor/`。参考上游：<https://github.com/espressif/esptool-js>。

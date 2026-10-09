@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "board": "read-pico-4.7",
+  "chip": "ESP32-S3",
+  "flashSize": 16777216,
+  "partitionTableOffset": 32768,
+  "version": "1.0.0",
+  "parts": [
+    {
+      "role": "bootloader",
+      "offset": 0,
+      "file": "bootloader.bin",
+      "size": 21168,
+      "sha256": "dc81efcd48276ae71dd20b889e656e21299fbc50ba4fe23e99a418c0bccc9ad1"
+    },
+    {
+      "role": "partitions",
+      "offset": 32768,
+      "file": "partition-table.bin",
+      "size": 3072,
+      "sha256": "a54a05e03e1de446e95b40cdb7f6dd710ea0368d4c255805666548b75e0ad82c"
+    },
+    {
+      "role": "application",
+      "offset": 65536,
+      "file": "whiteos.bin",
+      "size": 7334144,
+      "sha256": "3e17188b41ae000d304003c961a6161b0ed62954990c51b7f49f7a650324b441"
+    }
+  ]
+}
