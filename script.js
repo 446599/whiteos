@@ -272,12 +272,14 @@
 
   let pageIndex = 0;
   let turnFrame = null;
+  let turnState = null;
   const turnImages = $$(".turn-source");
   const turnCanvas = $("#turn-canvas");
   const turnContext = turnCanvas.getContext("2d");
   function finishTurn() {
     if (turnFrame !== null) cancelAnimationFrame(turnFrame);
     turnFrame = null;
+    turnState = null;
     turnCanvas.hidden = true;
   }
   function updateTurnControls() {
@@ -294,7 +296,12 @@
     previous.height = turnCanvas.height;
     const previousContext = previous.getContext("2d");
     if (ready && previousContext) {
-      previousContext.drawImage(turnCanvas.hidden ? turnImages[pageIndex] : turnCanvas, 0, 0);
+      // Keep the current content, but do not bake the old ripple into a new turn.
+      previousContext.drawImage(turnState ? turnState.previous : turnImages[pageIndex], 0, 0);
+      if (turnState?.covered) {
+        const { target, x, covered } = turnState;
+        previousContext.drawImage(target, x, 0, covered, previous.height, x, 0, covered, previous.height);
+      }
     }
     finishTurn();
     pageIndex = next;
@@ -307,32 +314,28 @@
     if (!ready || !previousContext || !motionEnabled()) return;
     const { width, height } = turnCanvas;
     const target = turnImages[pageIndex];
-    const bands = 8;
-    const stagger = 56;
-    const duration = 360;
+    const duration = 750;
     const started = performance.now();
+    const state = { previous, target, x: 0, covered: 0 };
+    turnState = state;
     turnContext.drawImage(previous, 0, 0);
     turnCanvas.hidden = false;
     function draw(now) {
-      const elapsed = now - started;
+      const progress = Math.max(0, Math.min(1, (now - started) / duration));
+      const covered = Math.round(width * progress);
+      const x = direction > 0 ? 0 : width - covered;
+      state.x = x;
+      state.covered = covered;
       turnContext.drawImage(previous, 0, 0);
-      for (let band = 0; band < bands; band++) {
-        const order = direction > 0 ? band : bands - 1 - band;
-        const progress = Math.max(0, Math.min(1, (elapsed - order * stagger) / duration));
-        const y0 = Math.floor(height * band / bands);
-        const y1 = Math.floor(height * (band + 1) / bands);
-        const covered = Math.round((y1 - y0) * progress);
-        const y = direction > 0 ? y0 : y1 - covered;
-        // Source and destination coordinates match: only the coverage front moves.
-        if (covered) turnContext.drawImage(target, 0, y, width, covered, 0, y, width, covered);
-        if (progress > 0 && progress < 1) {
-          const edge = direction > 0 ? y0 + covered : y1 - covered;
-          const ripple = Math.min(16, y1 - edge, edge - y0);
-          turnContext.fillStyle = `rgba(70,70,70,${0.14 * Math.sin(progress * Math.PI)})`;
-          turnContext.fillRect(0, edge - ripple, width, ripple * 2);
-        }
+      // Pixels stay in place; a single full-height boundary sweeps horizontally.
+      if (covered) turnContext.drawImage(target, x, 0, covered, height, x, 0, covered, height);
+      if (progress > 0 && progress < 1) {
+        const edge = direction > 0 ? covered : width - covered;
+        const ripple = Math.min(16, edge, width - edge);
+        turnContext.fillStyle = `rgba(70,70,70,${0.14 * Math.sin(progress * Math.PI)})`;
+        turnContext.fillRect(edge - ripple, 0, ripple * 2, height);
       }
-      if (elapsed < duration + (bands - 1) * stagger) {
+      if (progress < 1) {
         turnFrame = requestAnimationFrame(draw);
       } else {
         finishTurn();
