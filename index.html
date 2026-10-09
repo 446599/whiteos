@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f5ee">
+  <meta name="description" content="whiteos，适用于小纸 Pico 的阅读固件。微信读书、本地 EPUB 与 PDF、TTF 即时字体、条带翻页动画，以及离线 Anki 学习。把阅读，还给自己。">
+  <title>whiteos · 把阅读，还给自己</title>
+  <link rel="icon" href="./assets/icons/book-open.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="whiteos 首页">
+      <img src="./assets/icons/book-open.svg" width="26" height="26" alt="">
+      <span>whiteos</span>
+    </a>
+    <nav id="navigation" aria-label="主导航">
+      <a href="#weread">微信读书</a>
+      <a href="#reading">本地阅读</a>
+      <a href="#typography">字与翻页</a>
+      <a href="#anki">Anki 学习</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-button motion-toggle" type="button" aria-label="暂停装饰动画" aria-pressed="false" title="暂停装饰动画">
+        <span class="pause-symbol" aria-hidden="true"></span>
+      </button>
+      <button class="icon-button menu-toggle" type="button" aria-label="打开导航" aria-controls="navigation" aria-expanded="false" title="打开导航">
+        <img src="./assets/icons/layout-grid.svg" width="22" height="22" alt="">
+      </button>
+      <a class="header-link" href="#weread">探索阅读 <img src="./assets/icons/arrow-right.svg" width="18" height="18" alt=""></a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-heading">
+        <p class="eyebrow">小纸 Pico 阅读固件 <span>阅读，简单一点。</span></p>
+        <h1 id="hero-title"><span>whiteos</span></h1>
+        <p class="hero-tagline">把阅读，还给自己。</p>
+      </div>
+      <div class="hero-scene">
+        <div class="scene-rule rule-left" aria-hidden="true"></div>
+        <div class="scene-rule rule-right" aria-hidden="true"></div>
+        <div class="floating-book book-red" aria-hidden="true">
+          <span class="cover-index">READING NOTES / 01</span>
+          <strong>山野<br>来信</strong>
+          <span class="cover-rule"></span>
+          <small>留一点时间<br>给那些慢下来的日子。</small>
+        </div>
+        <div class="floating-book book-yellow" aria-hidden="true">
+          <span class="cover-index">A LITTLE EVERY DAY</span>
+          <strong>日常<br>练习</strong>
+          <span class="cover-letter">Aa</span>
+          <small>READ. REMEMBER. REPEAT.</small>
+        </div>
+        <div class="hero-note note-left"><span class="note-index">01 / 阅读</span><p>一整个书架。<br>一小片安静。</p></div>
+        <div class="hero-note note-right"><span class="note-index">02 / 学习</span><p>读进去，<br>也记得住。</p></div>
+        <div class="device hero-device">
+          <span class="device-camera" aria-hidden="true"></span>
+          <div class="device-screen">
+            <img src="./assets/screens/shelf.png" width="684" height="1216" alt="小纸 Pico 固件的六格书架界面，使用合成图书数据" fetchpriority="high">
+          </div>
+          <div class="device-chin" aria-hidden="true"><i></i><span>READ PICO</span><i></i></div>
+        </div>
+        <span class="hero-device-label">4.7″ 墨水屏 · 界面示意</span>
+      </div>
+      <div class="hero-bottom"><span>为读书，也为每一天的学习。</span><a href="#weread" aria-label="继续浏览微信读书功能"><span>往下读</span><img src="./assets/icons/arrow-right.svg" width="20" height="20" alt=""></a></div>
+    </section>
+
+    <div class="feature-index" aria-label="功能索引">
+      <a href="#weread"><span>01</span> 微信读书</a>
+      <a href="#reading"><span>02</span> EPUB 阅读</a>
+      <a href="#reading"><span>03</span> PDF 阅读</a>
+      <a href="#typography"><span>04</span> TTF 即时字体</a>
+      <a href="#page-turn"><span>05</span> 翻页动画</a>
+      <a href="#anki"><span>06</span> Anki 牌库</a>
+    </div>
+
+    <section class="intro section-width">
+      <p class="eyebrow reveal">LESS NOISE. MORE PAGES.</p>
+      <h2 class="reveal">世界很热闹。<br>这里，只留下一页书。</h2>
+      <p class="intro-copy reveal">让手机里的书架来到墨水屏，让随身的文档找到自己的位置。<br class="desktop-break">换一种喜欢的字体，接着读；打开一副牌组，每天记住一点。</p>
+    </section>
+
+    <section id="weread" class="weread-story" aria-labelledby="weread-heading">
+      <div class="story-sticky">
+        <div class="story-layout section-width">
+          <div class="story-copy">
+            <p class="eyebrow"><span class="section-number">01</span> 微信读书 / WEREAD</p>
+            <h2 id="weread-heading">手机读到哪，<br><span>小纸接着读。</span></h2>
+            <p class="section-lead">从熟悉的书架出发，把阅读留在纸面上。</p>
+            <div class="story-tabs" role="tablist" aria-label="微信读书功能">
+              <button type="button" id="story-tab-0" role="tab" aria-selected="true" aria-controls="story-panel-0" data-step="0"><span>01</span> 书架</button>
+              <button type="button" id="story-tab-1" role="tab" aria-selected="false" aria-controls="story-panel-1" tabindex="-1" data-step="1"><span>02</span> 下载</button>
+              <button type="button" id="story-tab-2" role="tab" aria-selected="false" aria-controls="story-panel-2" tabindex="-1" data-step="2"><span>03</span> 同步</button>
+            </div>
+            <div class="story-panels">
+              <div class="story-panel" id="story-panel-0" role="tabpanel" aria-labelledby="story-tab-0">
+                <h3>你的书架，不必换个地方。</h3>
+                <p>扫码登录后，在同一个书架里切换本地图书与微信读书。封面、目录和继续阅读，都在熟悉的位置。</p>
+                <div class="inline-feature"><img src="./assets/icons/library.svg" width="18" height="18" alt=""> 书架内切换 <span>·</span> 扫码登录</div>
+              </div>
+              <div class="story-panel" id="story-panel-1" role="tabpanel" aria-labelledby="story-tab-1" hidden>
+                <h3>下载一本，带走一段安静。</h3>
+                <p>按书下载已授权章节，也可以挑选想读的部分。下载完成后离线阅读，读到章末继续下一章，不用来回退出正文。</p>
+                <div class="inline-feature"><img src="./assets/icons/book-open.svg" width="18" height="18" alt=""> 按书／按章下载 <span>·</span> 连续翻章</div>
+              </div>
+              <div class="story-panel" id="story-panel-2" role="tabpanel" aria-labelledby="story-tab-2" hidden>
+                <h3>阅读进度，由你决定。</h3>
+                <p>手动同步阅读位置与设备记录的阅读时长。手机和小纸都读过时，先选择保留哪一端的位置；也可以只下载云端进度。</p>
+                <div class="inline-feature"><img src="./assets/icons/refresh-cw.svg" width="18" height="18" alt=""> 双向位置 <span>·</span> 新增时长 <span>·</span> 手动确认</div>
+              </div>
+            </div>
+            <p class="feature-note">非官方接入；仅限账号已授权内容。线上同步持续验收中，批注暂不云同步。</p>
+          </div>
+          <div class="story-visual">
+            <span class="visual-side-label" aria-hidden="true">YOUR BOOKS. YOUR PACE.</span>
+            <div class="device story-device">
+              <span class="device-camera" aria-hidden="true"></span>
+              <div class="device-screen">
+                <img class="story-screen active" data-screen="0" src="./assets/screens/weread-shelf.png" width="684" height="1216" alt="微信读书书架原生渲染图，合成数据" loading="lazy">
+                <img class="story-screen" data-screen="1" src="./assets/screens/weread-download.png" width="684" height="1216" alt="微信读书章节下载原生渲染图，合成数据" loading="lazy" aria-hidden="true">
+                <img class="story-screen" data-screen="2" src="./assets/screens/weread-sync.png" width="684" height="1216" alt="阅读同步的位置选择原生渲染图，合成数据" loading="lazy" aria-hidden="true">
+              </div>
+              <div class="device-chin" aria-hidden="true"><i></i><span>READ PICO</span><i></i></div>
+            </div>
+            <div class="story-counter" aria-hidden="true"><span id="story-counter">01</span><i></i><span>03</span></div>
+            <p class="visual-caption">固件主机渲染 · 合成数据 · 非实屏录像</p>
+          </div>
+        </div>
+        <div class="story-progress" aria-hidden="true"><span></span></div>
+      </div>
+    </section>
+
+    <section id="reading" class="reading-section section-width" aria-labelledby="reading-heading">
+      <div class="section-heading reveal">
+        <p class="eyebrow"><span class="section-number">02</span> 本地阅读 / YOUR LIBRARY</p>
+        <h2 id="reading-heading">一本书，一份文档。<br><span>各有各的读法。</span></h2>
+      </div>
+      <div class="reading-layout">
+        <div class="reading-demo reveal">
+          <div class="reading-demo-bar">
+            <div class="format-tabs" role="tablist" aria-label="阅读格式">
+              <button type="button" id="format-epub" role="tab" aria-selected="true" aria-controls="epub-demo" data-format="epub">EPUB</button>
+              <button type="button" id="format-pdf" role="tab" aria-selected="false" aria-controls="pdf-demo" tabindex="-1" data-format="pdf">PDF</button>
+            </div>
+            <span class="demo-label">阅读体验示意</span>
+          </div>
+          <div class="format-viewport">
+            <div id="epub-demo" class="epub-demo" role="tabpanel" aria-labelledby="format-epub">
+              <div class="reader-chrome"><span>山野来信</span><img src="./assets/icons/bookmark.svg" width="17" height="17" alt=""></div>
+              <div class="epub-body" id="epub-body">
+                <span class="chapter-label">第一章 / 慢一点</span>
+                <h3>把一天，留给山野。</h3>
+                <p>清晨的风经过窗边，带来一点草木的气息。我们把那些着急的事情放下，沿着一条不知名字的小路往前走。</p>
+                <p>有时，一天不需要太多安排。一本读到一半的书，一杯刚好温热的水，就足以让时间变得柔软。</p>
+                <p>书页翻过，远处的山仍在那里。我们也终于学会，不急着走向下一件事。</p>
+              </div>
+              <div class="reader-footer"><span>01 / 03</span><span>EPUB · 文字随字号重排</span></div>
+            </div>
+            <div id="pdf-demo" class="pdf-demo" role="tabpanel" aria-labelledby="format-pdf" hidden>
+              <div class="pdf-paper" id="pdf-paper">
+                <span class="pdf-small">PICO JOURNAL / VOL. 01</span>
+                <h3>日常观察</h3>
+                <p class="pdf-subtitle">Field Notes for a Slower Life</p>
+                <div class="pdf-line"></div>
+                <div class="pdf-columns"><p>把目光从远处收回来，看一看窗外的光，桌上的一本书，以及生活里那些细小而确定的美好。</p><p>观察不需要目的。记录一阵风、一片影子，或者今天读到的一句话。它们都是日常留下的印记。</p></div>
+                <div class="pdf-diagram" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+                <div class="pdf-columns"><p>01 / 留白<br>给一天留一点不被安排的时间。让阅读慢慢发生。</p><p>02 / 记录<br>不必长篇大论，写下一个值得记住的瞬间就好。</p></div>
+                <span class="pdf-page-number">01</span>
+              </div>
+            </div>
+          </div>
+          <div class="demo-toolbar" id="epub-controls">
+            <span>字号</span>
+            <button class="icon-button" id="epub-minus" type="button" aria-label="减小 EPUB 字号" title="减小字号"><img src="./assets/icons/minus.svg" width="18" height="18" alt=""></button>
+            <output id="epub-size" aria-live="polite">20</output>
+            <button class="icon-button" id="epub-plus" type="button" aria-label="增大 EPUB 字号" title="增大字号"><img src="./assets/icons/plus.svg" width="18" height="18" alt=""></button>
+            <span class="toolbar-end">章节 · 书签 · 进度</span>
+          </div>
+          <div class="demo-toolbar" id="pdf-controls" hidden>
+            <button class="icon-button" id="pdf-minus" type="button" aria-label="缩小 PDF" title="缩小"><img src="./assets/icons/minus.svg" width="18" height="18" alt=""></button>
+            <output id="pdf-zoom" aria-live="polite">100%</output>
+            <button class="icon-button" id="pdf-plus" type="button" aria-label="放大 PDF" title="放大"><img src="./assets/icons/plus.svg" width="18" height="18" alt=""></button>
+            <button class="icon-button" id="pdf-rotate" type="button" aria-label="旋转 PDF" title="旋转"><img src="./assets/icons/refresh-cw.svg" width="18" height="18" alt=""></button>
+            <button class="icon-button" id="pdf-reset" type="button" aria-label="PDF 适整页" title="适整页"><img src="./assets/icons/layout-grid.svg" width="18" height="18" alt=""></button>
+          </div>
+        </div>
+        <div class="reading-copy reveal">
+          <article class="format-description active" data-description="epub">
+            <span class="format-big">EPUB<span>01</span></span>
+            <h3>字里行间，恰好舒服。</h3>
+            <p>让内容适应你的阅读习惯。调整字号和页边距，循着目录前进，留下书签，下次从上次的位置继续。</p>
+            <ul class="feature-list"><li>正文文字与常见 JPEG／PNG 插图</li><li>章节目录、书签与逐书进度</li><li>字号、边距与阅读页眉／页脚</li></ul>
+          </article>
+          <article class="format-description" data-description="pdf" hidden>
+            <span class="format-big">PDF<span>02</span></span>
+            <h3>原来的版面，安心留下。</h3>
+            <p>让文档保留自己的排版。整页看全貌，放大看细节，旋转或平移到舒服的位置；翻页和跳页都各就各位。</p>
+            <ul class="feature-list"><li>固定版式、适整页与适宽</li><li>缩放、平移、旋转与数字跳页</li><li>密码文档与独立阅读进度</li></ul>
+            <p class="feature-note">复杂或超出容量的 PDF 可能无法打开；中文字体需由文档内嵌。</p>
+          </article>
+          <div class="transfer-note"><img src="./assets/icons/wifi.svg" width="24" height="24" alt=""><div><h4>喜欢的书，随手带过来。</h4><p>Wi-Fi 浏览器传书，或 USB 磁盘复制。<br>本地阅读不需要始终联网。</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="typography" class="type-section" aria-labelledby="type-heading">
+      <div class="section-width">
+        <div class="type-heading reveal">
+          <div><p class="eyebrow"><span class="section-number">03</span> TTF 即时字体 / MAKE IT YOURS</p><h2 id="type-heading">喜欢的字，<br>就是阅读的语气。</h2></div>
+          <p>把 TTF／OTF 字体放进 TF 卡，选择它，就开始读。<br>无需提前转换整套字库；字号随心，文字按需呈现。</p>
+        </div>
+        <div class="type-specimen reveal">
+          <div class="specimen-main" id="specimen-main"><span>风起时，</span><span>读一页。</span><small>THE QUIET JOY OF READING.</small></div>
+          <div class="type-controls">
+            <div class="font-options" role="group" aria-label="字体风格示意">
+              <button type="button" data-font="serif" aria-pressed="true"><span class="serif">Aa</span> 宋体风格</button>
+              <button type="button" data-font="sans" aria-pressed="false"><span>Aa</span> 黑体风格</button>
+            </div>
+            <div class="type-slider"><label for="font-weight">字重 <output id="weight-value">500</output></label><input type="range" id="font-weight" min="300" max="800" step="100" value="500"></div>
+            <div class="type-slider"><label for="specimen-size">字号 <output id="specimen-value">72</output></label><input type="range" id="specimen-size" min="48" max="88" step="4" value="72"></div>
+            <span class="demo-label">网页字体风格示意</span>
+          </div>
+        </div>
+        <div class="type-footnotes"><span>TTF / OTF</span><p>即时字形 · 抗锯齿 · 可调字号<br>把字排成你喜欢的样子。</p><span>YOUR TYPE.<br>YOUR RHYTHM.</span></div>
+      </div>
+    </section>
+
+    <section id="page-turn" class="turn-section section-width" aria-labelledby="turn-heading">
+      <div class="turn-copy reveal">
+        <p class="eyebrow"><span class="section-number">04</span> 翻页动画 / ONE MORE PAGE</p>
+        <h2 id="turn-heading">翻过这一页。<br><span>思绪，不用停。</span></h2>
+        <p class="section-lead">有方向的条带翻页，让新的一页逐段出现。<br>向前，或回看；阅读的节奏，轻轻接上。</p>
+        <div class="turn-actions"><button class="icon-button" id="turn-previous" type="button" aria-label="上一页" title="上一页"><img src="./assets/icons/arrow-left.svg" width="22" height="22" alt=""></button><output id="turn-counter" aria-live="polite">01 / 03</output><button class="icon-button" id="turn-next" type="button" aria-label="下一页" title="下一页"><img src="./assets/icons/arrow-right.svg" width="22" height="22" alt=""></button></div>
+        <p class="feature-note">标准刷新档可选条带动画；快速档不运行动画。<br>这里是网页动效示意，不代表墨水屏实测速度。</p>
+      </div>
+      <div class="turn-visual reveal">
+        <div class="turn-page" id="turn-page">
+          <div class="turn-page-top"><span>山野来信</span><span id="turn-chapter">第一章</span></div>
+          <h3 id="turn-title">慢一点，也没关系。</h3>
+          <div id="turn-text" class="turn-text"><p>沿着小路往前走，听风经过树叶。没有消息需要回复，没有日程等着完成。我们只是在这一刻，认真地读一页书。</p><p>文字之外，还有大片留白。它们像一扇没有关上的窗，让日常的光慢慢照进来。</p></div>
+          <div class="turn-page-bottom"><span>READ PICO</span><span id="turn-page-number">01</span></div>
+          <div class="turn-strips" aria-hidden="true"></div>
+        </div>
+        <span class="turn-side-label" aria-hidden="true">THE NEXT CHAPTER IS WAITING.</span>
+      </div>
+    </section>
+
+    <section id="anki" class="anki-section" aria-labelledby="anki-heading">
+      <div class="anki-layout section-width">
+        <div class="anki-copy reveal">
+          <p class="eyebrow"><span class="section-number">05</span> ANKI 牌库 / A LITTLE EVERY DAY</p>
+          <h2 id="anki-heading">读进去。<br><span>也记得住。</span></h2>
+          <p class="section-lead">让碎片时间，变成一点点积累。<br>导入自己的牌组，在墨水屏上专注回忆。</p>
+          <ul class="feature-list"><li>兼容旧版 .apkg，本地离线导入</li><li>问答、挖空、静态单选与常见图片</li><li>四档评分、FSRS-6 每日复习</li><li>每日限额、学习统计与进度保存</li></ul>
+          <p class="feature-note">独立离线学习，不连接 AnkiWeb。原牌组复习历史不迁移，复杂脚本与音视频模板不支持。</p>
+        </div>
+        <div class="anki-demo reveal">
+          <div class="anki-demo-top"><span><img src="./assets/icons/library.svg" width="18" height="18" alt=""> 每日词汇</span><button class="icon-button" id="anki-reset" type="button" aria-label="重新开始牌组演示" title="重新开始"><img src="./assets/icons/refresh-cw.svg" width="18" height="18" alt=""></button></div>
+          <div class="anki-progress"><span id="anki-progress"></span></div>
+          <div class="anki-card" id="anki-card">
+            <span class="card-tag" id="anki-tag">01 / 03 · 回忆</span>
+            <h3 id="anki-word">Serendipity</h3>
+            <p class="anki-pronunciation" id="anki-pronunciation">/ˌser.ənˈdɪp.ə.ti/</p>
+            <div class="anki-answer" id="anki-answer" hidden><div class="answer-rule"></div><h4 id="anki-meaning">不期而遇的美好</h4><p id="anki-example">在没有期待的地方，遇见值得珍惜的事。</p></div>
+            <p class="anki-finished" id="anki-finished" hidden>今天的三张卡片，已经完成。<br>一点点，也是在向前。</p>
+          </div>
+          <div class="anki-demo-bottom">
+            <button class="solid-button" id="anki-reveal" type="button">显示答案 <img src="./assets/icons/arrow-right.svg" width="18" height="18" alt=""></button>
+            <div class="anki-ratings" id="anki-ratings" hidden><button type="button" data-rating="again">Again<span>没记住</span></button><button type="button" data-rating="hard">Hard<span>费力</span></button><button type="button" data-rating="good">Good<span>记住了</span></button><button type="button" data-rating="easy">Easy<span>轻松</span></button></div>
+            <p class="demo-label" id="anki-status" role="status">原创示例牌组 · 网页演示</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="details-section section-width" aria-labelledby="details-heading">
+      <div class="details-heading reveal"><p class="eyebrow">GOOD TO KNOW</p><h2 id="details-heading">简单，也说清楚。</h2><p>功能说明依据 2026 年 10 月 8 日产品工作区源码。<br>实现、主机回归与真机验收，是不同的状态。</p></div>
+      <div class="details-list reveal">
+        <details><summary>微信读书能同步什么？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>当前提供手动阅读位置与新增阅读时长同步，以及仅下载云端位置。两端位置都有更新时，需要用户明确选择。个人批注暂存本机，不同步到云端。部分书籍的位置无法准确匹配时会停止同步，而不是猜测位置。云→设备的位置下载已有受控真机验证；设备→云的位置与时长上传仍在验收。</p></details>
+        <details><summary>哪些本地书和牌组可以阅读？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>本地阅读支持 EPUB 与 PDF。EPUB 支持文字和有范围限制的 JPEG／PNG 插图，并不复现所有复杂网页排版。PDF 保留固定版式，复杂、超容量或缺少内嵌中文字体的文件可能无法正确打开。Anki 需导出兼容旧版本的 .apkg；导入后从本机新卡开始，不迁移桌面复习历史，不连接 AnkiWeb。</p></details>
+        <details><summary>这些展示是设备实拍吗？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>不是。书架与微信读书界面图由实际固件绘制函数在主机上生成，使用合成数据。阅读、字体、翻页和牌组交互为网页示意；外框也不是实物外观承诺。它们不代表屏幕光学效果、续航或实测延迟。具体功能仍需逐项真机验收。</p></details>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="section-width">
+        <p class="eyebrow reveal">A SMALL SCREEN. A BIG LITTLE WORLD.</p>
+        <h2 class="reveal">下一页，<br>留给自己。</h2>
+        <a class="closing-link reveal" href="#top">whiteos <img src="./assets/icons/arrow-right.svg" width="28" height="28" alt=""></a>
+        <span class="closing-word" aria-hidden="true">whiteos</span>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer section-width"><a class="brand" href="#top"><img src="./assets/icons/book-open.svg" width="22" height="22" alt=""><span>whiteos</span></a><span>小纸 Pico · 独立阅读固件</span><span>微信读书与 Anki 为各自品牌，本站非官方合作页面。</span><a href="./flash/">固件烧录</a><a href="./README.md">部署说明</a></footer>
+</body>
+</html>

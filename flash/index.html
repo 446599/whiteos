@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf8f4">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' https://api.github.com https://raw.githubusercontent.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>whiteos · 固件烧录</title>
+  <link rel="icon" href="../assets/icons/book-open.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./flash.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html"><img src="../assets/icons/book-open.svg" width="23" height="23" alt=""><span>whiteos</span></a>
+    <span class="tool-name">固件烧录</span>
+  </header>
+  <main>
+    <div class="heading">
+      <span class="eyebrow">whiteos / INSTALLER</span>
+      <h1>固件烧录</h1>
+      <p>小纸 Pico <span aria-hidden="true">·</span> ESP32-S3</p>
+    </div>
+    <dl class="release-info">
+      <div><dt>固件版本</dt><dd id="version">—</dd></div>
+      <div><dt>发布来源</dt><dd><a id="source" hidden target="_blank" rel="noopener noreferrer"></a><span id="source-empty">未配置</span></dd></div>
+    </dl>
+    <div class="actions" aria-label="烧录操作">
+      <button id="install" type="button" disabled>
+        <img src="../assets/icons/arrow-right.svg" width="21" height="21" alt="">
+        <span>全新烧录</span>
+      </button>
+      <button id="update" type="button" disabled>
+        <img src="../assets/icons/refresh-cw.svg" width="20" height="20" alt="">
+        <span>固件更新</span>
+      </button>
+    </div>
+    <p class="safety">全新烧录包含启动程序与分区表；更新仅写应用。<br>均不整片擦除，不操作 TF 卡或 PMU 标定。</p>
+    <section class="status-area" aria-label="烧录状态">
+      <div class="status-heading"><span class="status-dot" id="status-dot" aria-hidden="true"></span><h2 id="status-title" role="status" aria-live="polite">正在检查固件源</h2><output id="percent" aria-label="完成百分比">0%</output></div>
+      <progress id="progress" max="100" value="0" aria-label="烧录进度"></progress>
+      <p id="status-detail">尚未连接设备。</p>
+      <details id="history"><summary>操作记录</summary><ol id="events"></ol></details>
+    </section>
+    <noscript><p class="noscript">烧录需要启用 JavaScript。当前不会连接或写入设备。</p></noscript>
+  </main>
+  <footer><span>whiteos</span><span>USB · Web Serial</span></footer>
+</body>
+</html>
