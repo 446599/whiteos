@@ -183,7 +183,7 @@ h1, h2 { font-weight: 500; text-wrap: balance; }
 .format-tabs button { padding: 7px 21px; background: transparent; border-radius: 2px; font-size: 12px; }
 .format-tabs button[aria-selected="true"] { background: var(--ink); color: var(--white); }
 .demo-label { color: var(--muted); font-size: 10px; line-height: 1.6; }
-.format-viewport { height: 495px; position: relative; overflow: hidden; }
+.format-viewport { position: relative; overflow: hidden; }
 .epub-demo { height: 100%; display: flex; flex-direction: column; }
 .reader-chrome, .reader-footer { padding: 15px 26px; display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #686a60; border-bottom: 1px solid #eae8df; flex: 0 0 auto; }
 .reader-footer { border-top: 1px solid #eae8df; border-bottom: 0; margin-top: auto; }
@@ -410,7 +410,6 @@ h1, h2 { font-weight: 500; text-wrap: balance; }
   .intro h2 { font-size: 42px; }
   .section-heading h2 { font-size: 43px; }
   .reading-layout { gap: 35px; }
-  .format-viewport { height: 450px; }
   .epub-body { padding-inline: 23px; }
   .format-big { font-size: 51px; }
   .toolbar-end { display: none; }
@@ -501,7 +500,6 @@ h1, h2 { font-weight: 500; text-wrap: balance; }
   .reading-demo-bar { padding: 11px 15px; }
   .reading-demo-bar .demo-label { font-size: 9px; }
   .format-tabs button { padding-inline: 20px; }
-  .format-viewport { height: 480px; }
   .epub-body { padding: 25px 26px; }
   .reader-chrome, .reader-footer { padding-inline: 21px; }
   .toolbar-end { display: block; }
