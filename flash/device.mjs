@@ -1,6 +1,6 @@
 import {
-  TABLE_ADDRESS, FlashError, requireSafe, requireDevice,
-  validatePartitions, selectedParts, protectedRanges, md5,
+  FlashError, requireSafe, requireDevice,
+  selectedParts, protectedRanges, md5,
 } from "./core.mjs?v=20261009-digest";
 
 const DIGEST_BLOCK_SIZE = 512 * 1024;
@@ -57,21 +57,6 @@ export async function flashDevice({ port, release, images, mode, onState, confir
     requireDevice(loader.chip?.CHIP_NAME, await loader.detectFlashSize(),
       await loader.getSecurityInfo(), loader.IS_STUB);
 
-    onState("检查分区", "尚未写入。正在快速核对分区表。", 25);
-    const publishedTable = images.get("partitions");
-    validatePartitions(publishedTable);
-    requireSafe(publishedTable.length <= 4096, "PARTITIONS", "发布分区表大小无效。");
-    const table = new Uint8Array(4096).fill(0xff);
-    table.set(publishedTable);
-    const tableHash = await deviceDigest(loader, TABLE_ADDRESS, table.length);
-    if (tableHash === md5(new Uint8Array(4096).fill(0xff))) {
-      requireSafe(mode === "install", "BLANK", "设备尚未安装固件，请使用全新烧录。");
-      requireSafe(await deviceDigest(loader, 0, TABLE_ADDRESS) === md5(new Uint8Array(TABLE_ADDRESS).fill(0xff)),
-        "PARTITIONS", "分区表为空但启动区不是空白，需单独确认恢复方案。");
-    } else {
-      requireSafe(tableHash === md5(table), "PARTITIONS",
-        "设备分区表与发布版本不一致，网页不会改写；需单独确认布局或迁移。");
-    }
     const parts = selectedParts(release.manifest, mode);
     const ranges = protectedRanges(parts);
     onState("检查保护区域", "只计算设备摘要，不读取或上传用户文件。", 30);
@@ -79,7 +64,7 @@ export async function flashDevice({ port, release, images, mode, onState, confir
       onState("检查保护区域", "尚未写入。正在核对数据区域。", 30 + 4 * fraction));
 
     if (mode === "install" && !confirmInstall(
-      `全新烧录 whiteos ${release.manifest.version}？\n\n将写入启动程序、已核对的分区表和应用。\n不整片擦除，不操作 TF 卡或 PMU。\n烧录中断可能需要重新烧录；请保持 USB 连接。`,
+      `全新烧录 whiteos ${release.manifest.version}？\n\n将写入发布包中的启动程序、分区表和应用。\n不整片擦除，不操作 TF 卡或 PMU。\n烧录中断可能需要重新烧录；请保持 USB 连接。`,
     )) { throw new FlashError("CANCELLED", "已取消，没有写入设备。"); }
 
     const sizes = parts.map((part) => part.size);

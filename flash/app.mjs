@@ -1,7 +1,7 @@
 import { firmwareSource } from "./config.mjs?v=1.0.0-pinned";
 import { FlashError } from "./core.mjs?v=20261009-digest";
 import { loadRelease, downloadParts } from "./github.mjs?v=20261009-digest";
-import { flashDevice } from "./device.mjs?v=20261009-digest";
+import { flashDevice } from "./device.mjs?v=20261009-direct";
 
 const $ = (id) => document.getElementById(id);
 const buttons = [$("install"), $("update")];
