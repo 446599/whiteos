@@ -1,4 +1,4 @@
-import { firmwareSource } from "./config.mjs?v=1.0.0";
+import { firmwareSource } from "./config.mjs?v=1.0.0-pinned";
 import { FlashError } from "./core.mjs";
 import { loadRelease, downloadParts } from "./github.mjs";
 import { flashDevice } from "./device.mjs";

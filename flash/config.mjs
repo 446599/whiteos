@@ -2,7 +2,7 @@
 export const firmwareSource = {
   owner: "446599",
   repo: "whiteos",
-  ref: "main",
+  ref: "63f53e88c6d06c75f76c6ad9756257379ed25174",
   manifestPath: "firmware/manifest.json",
 };
 

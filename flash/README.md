@@ -19,12 +19,12 @@ whiteos **1.0.0** 首版固件已发布。支持 Web Serial 的电脑浏览器�
 export const firmwareSource = {
   owner: "446599",
   repo: "whiteos",
-  ref: "main",
+  ref: "63f53e88c6d06c75f76c6ad9756257379ed25174",
   manifestPath: "firmware/manifest.json",
 };
 ```
 
-也可以使用单独的公开固件发布仓库。不要配置私有源码仓库，不要在网页中加入 GitHub token。分支或标签先解析为固定提交，再从同一提交下载清单与镜像；也可将 `ref` 固定为 40 位提交 SHA。
+当前直接固定到 1.0.0 发布提交，下载无需请求匿名 GitHub API，避免接口限流。后续发布更新时更换此 SHA。也可使用单独的公开固件发布仓库，不配置私有源码仓库或 GitHub token；使用分支或标签时会先解析为固定提交，再下载同一提交的清单与镜像。
 
 固件清单格式：
 
