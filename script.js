@@ -181,7 +181,7 @@
     });
     ["epub", "pdf"].forEach((kind) => {
       $(`#${kind}-demo`).hidden = kind !== format;
-      $(`#${kind}-controls`).hidden = kind !== format;
+      if (kind === "pdf") $("#pdf-controls").hidden = kind !== format;
       $(`[data-description="${kind}"]`).hidden = kind !== format;
     });
     animate($(`[data-description="${format}"]`), [
@@ -189,43 +189,18 @@
       { opacity: 1, transform: "translateY(0)" },
     ]);
   });
-  let epubSize = 20;
-  function changeEpubSize(delta) {
-    epubSize = Math.max(16, Math.min(28, epubSize + delta));
-    $("#epub-body").style.setProperty("--epub-size", `${epubSize}px`);
-    $("#epub-size").textContent = epubSize;
-    $("#epub-minus").disabled = epubSize === 16;
-    $("#epub-plus").disabled = epubSize === 28;
-  }
-  $("#epub-minus").addEventListener("click", () => changeEpubSize(-2));
-  $("#epub-plus").addEventListener("click", () => changeEpubSize(2));
-
-  let pdfScale = 1;
-  let pdfRotation = 0;
-  function updatePdf() {
-    $("#pdf-paper").style.setProperty("--pdf-scale", pdfScale);
-    $("#pdf-paper").style.setProperty("--pdf-rotation", `${pdfRotation}deg`);
-    $("#pdf-zoom").textContent = `${Math.round(pdfScale * 100)}%`;
-    $("#pdf-minus").disabled = pdfScale <= 0.75;
-    $("#pdf-plus").disabled = pdfScale >= 1.75;
-  }
-  $("#pdf-minus").addEventListener("click", () => {
-    pdfScale = Math.max(0.75, pdfScale - 0.25);
-    updatePdf();
-  });
-  $("#pdf-plus").addEventListener("click", () => {
-    pdfScale = Math.min(1.75, pdfScale + 0.25);
-    updatePdf();
-  });
-  $("#pdf-rotate").addEventListener("click", () => {
-    pdfRotation = (pdfRotation + 90) % 360;
-    updatePdf();
-  });
-  $("#pdf-reset").addEventListener("click", () => {
-    pdfScale = 1;
-    pdfRotation = 0;
-    updatePdf();
-  });
+  const pdfViews = {
+    reading: "真机 PDF 整页阅读：固定排版与图表",
+    zoom: "真机 PDF 同一页放大细节，保留文档原版面",
+  };
+  $$("[data-pdf-view]").forEach((button) => button.addEventListener("click", () => {
+    $$("[data-pdf-view]").forEach((option) => option.setAttribute("aria-pressed", String(option === button)));
+    const src = `./assets/screens/pdf-${button.dataset.pdfView}.png`;
+    $("#pdf-capture").src = src;
+    $("#pdf-capture").alt = pdfViews[button.dataset.pdfView];
+    $("#pdf-capture-link").href = src;
+    animate($("#pdf-capture"), [{ opacity: 0.6 }, { opacity: 1 }], { duration: 250 });
+  }));
 
   const readerMenuTabs = $$(".menu-tabs button");
   bindTabs(readerMenuTabs, (_, selected) => {
@@ -244,31 +219,16 @@
     ]);
   });
 
-  const specimen = $("#specimen-main");
   $$("[data-font]").forEach((button) => button.addEventListener("click", () => {
     $$("[data-font]").forEach((option) => option.setAttribute("aria-pressed", String(option === button)));
-    specimen.style.fontFamily = button.dataset.font === "serif" ? "var(--serif)" : "var(--sans)";
-    animate(specimen, [{ opacity: 0.4 }, { opacity: 1 }], { duration: 300 });
+    const src = `./assets/screens/font-${button.dataset.font}.png`;
+    $("#font-capture").src = src;
+    $("#font-capture").alt = button.dataset.font === "serif"
+      ? "真机 DejaVu Serif 衬线字体，同一段原创正文"
+      : "真机 DejaVu Sans 无衬线字体，同一段原创正文";
+    $("#font-capture-link").href = src;
+    animate($("#font-capture"), [{ opacity: 0.6 }, { opacity: 1 }], { duration: 250 });
   }));
-  $("#font-weight").addEventListener("input", (event) => {
-    const value = event.target.value;
-    specimen.style.setProperty("--specimen-weight", value);
-    $("#weight-value").textContent = value;
-  });
-  $("#specimen-size").addEventListener("input", (event) => {
-    const value = event.target.value;
-    specimen.style.setProperty("--specimen-size", `${value}px`);
-    $("#specimen-value").textContent = value;
-  });
-  function fitSpecimen() {
-    const slider = $("#specimen-size");
-    slider.max = window.innerWidth <= 360 ? "64" : mobile.matches ? "76" : "88";
-    slider.value = String(Math.min(Number(slider.value), Number(slider.max)));
-    specimen.style.setProperty("--specimen-size", `${slider.value}px`);
-    $("#specimen-value").textContent = slider.value;
-  }
-  window.addEventListener("resize", fitSpecimen, { passive: true });
-  fitSpecimen();
 
   let pageIndex = 0;
   let turnFrame = null;
@@ -346,61 +306,20 @@
   $("#turn-previous").addEventListener("click", () => turn(-1));
   $("#turn-next").addEventListener("click", () => turn(1));
 
-  const cards = [
-    { word: "Serendipity", pronunciation: "/ˌser.ənˈdɪp.ə.ti/", meaning: "不期而遇的美好", example: "在没有期待的地方，遇见值得珍惜的事。" },
-    { word: "Wander", pronunciation: "/ˈwɒn.dər/", meaning: "漫步，随意走走", example: "不必每一次出发，都有一个确定的目的地。" },
-    { word: "Tranquil", pronunciation: "/ˈtræŋ.kwɪl/", meaning: "宁静的，平和的", example: "留一页书的时间，给安静的自己。" },
-  ];
-  const ratings = { again: "Again", hard: "Hard", good: "Good", easy: "Easy" };
-  let cardIndex = 0;
-  let showingAnswer = false;
-  function renderCard() {
-    showingAnswer = false;
-    const finished = cardIndex >= cards.length;
-    $("#anki-answer").hidden = true;
-    $("#anki-ratings").hidden = true;
-    $("#anki-finished").hidden = !finished;
-    $("#anki-reveal").hidden = finished;
-    $("#anki-pronunciation").hidden = finished;
-    $("#anki-progress").style.width = `${cardIndex / cards.length * 100}%`;
-    $("#anki-tag").textContent = finished ? "03 / 03 · 完成" : `${String(cardIndex + 1).padStart(2, "0")} / 03 · 回忆`;
-    $("#anki-word").textContent = finished ? "A little, every day." : cards[cardIndex].word;
-    if (!finished) {
-      $("#anki-pronunciation").textContent = cards[cardIndex].pronunciation;
-      $("#anki-meaning").textContent = cards[cardIndex].meaning;
-      $("#anki-example").textContent = cards[cardIndex].example;
-    }
-    animate($("#anki-card"), [
-      { opacity: 0, transform: "translateX(15px)" },
-      { opacity: 1, transform: "translateX(0)" },
-    ]);
-  }
-  $("#anki-reveal").addEventListener("click", () => {
-    showingAnswer = true;
-    $("#anki-answer").hidden = false;
-    $("#anki-ratings").hidden = false;
-    $("#anki-reveal").hidden = true;
-    $("#anki-tag").textContent = `${String(cardIndex + 1).padStart(2, "0")} / 03 · 答案`;
-    animate($("#anki-answer"), [
-      { opacity: 0, transform: "translateY(10px)" },
-      { opacity: 1, transform: "translateY(0)" },
-    ]);
-    $("#anki-ratings button[data-rating='good']").focus({ preventScroll: true });
-  });
-  $$("[data-rating]").forEach((button) => button.addEventListener("click", () => {
-    if (!showingAnswer || cardIndex >= cards.length) return;
-    const rating = ratings[button.dataset.rating];
-    cardIndex++;
-    renderCard();
-    $("#anki-status").textContent = cardIndex === cards.length
-      ? `演示完成 · 最后一张：${rating} · 未写入设备记录`
-      : `上一张：${rating} · 原创演示，不保存学习记录`;
-    (cardIndex === cards.length ? $("#anki-reset") : $("#anki-reveal")).focus({ preventScroll: true });
+  const ankiViews = {
+    decks: "原创牌库 · 新卡与待复习数量",
+    front: "原创问答 · 回忆后再看答案",
+    answer: "同一张卡片 · 答案与四档评分",
+    stats: "学习统计 · 本次采集未进行评分",
+  };
+  $$("[data-anki-view]").forEach((button) => button.addEventListener("click", () => {
+    $$("[data-anki-view]").forEach((option) => option.setAttribute("aria-pressed", String(option === button)));
+    const src = `./assets/screens/anki-${button.dataset.ankiView}.png`;
+    $("#anki-capture").src = src;
+    $("#anki-capture").alt = `真机 Anki 截图：${ankiViews[button.dataset.ankiView]}`;
+    $("#anki-capture-link").href = src;
+    $("#anki-caption").textContent = `真机截图 · ${ankiViews[button.dataset.ankiView]}`;
+    animate($("#anki-capture"), [{ opacity: 0.6 }, { opacity: 1 }], { duration: 250 });
   }));
-  $("#anki-reset").addEventListener("click", () => {
-    cardIndex = 0;
-    renderCard();
-    $("#anki-status").textContent = "原创示例牌组 · 网页演示";
-  });
   updateMotion();
 })();

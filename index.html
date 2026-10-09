@@ -7,8 +7,8 @@
   <meta name="description" content="whiteos，小纸 Pico 阅读固件。微信读书双向进度与阅读时间同步，EPUB 流式解码、PDF 阅读、双指缩放、TTF 实时字体与离线 Anki。">
   <title>whiteos · 把阅读，还给自己</title>
   <link rel="icon" href="./assets/icons/book-open.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./styles.css?v=20261009-wave">
-  <script src="./script.js?v=20261009-single-wave" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=20261009-real-screens">
+  <script src="./script.js?v=20261009-real-screens" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">跳到正文</a>
@@ -46,28 +46,18 @@
       <div class="hero-scene">
         <div class="scene-rule rule-left" aria-hidden="true"></div>
         <div class="scene-rule rule-right" aria-hidden="true"></div>
-        <div class="floating-book book-red" aria-hidden="true">
-          <span class="cover-index">READING NOTES / 01</span>
-          <strong>山野<br>来信</strong>
-          <span class="cover-rule"></span>
-          <small>留一点时间<br>给那些慢下来的日子。</small>
-        </div>
-        <div class="floating-book book-yellow" aria-hidden="true">
-          <span class="cover-index">A LITTLE EVERY DAY</span>
-          <strong>日常<br>练习</strong>
-          <span class="cover-letter">Aa</span>
-          <small>READ. REMEMBER. REPEAT.</small>
-        </div>
+        <a class="hero-preview preview-reading" href="./assets/screens/epub-reading.png" target="_blank" rel="noopener" aria-label="查看 EPUB 真机截图"><img src="./assets/screens/epub-reading.png" width="684" height="1216" alt="whiteos 真机 EPUB 阅读页面"></a>
+        <a class="hero-preview preview-home" href="./assets/screens/home.png" target="_blank" rel="noopener" aria-label="查看主页真机截图"><img src="./assets/screens/home.png" width="684" height="1216" alt="whiteos 真机主页，时钟和继续阅读入口"></a>
         <div class="hero-note note-left"><span class="note-index">01 / 阅读</span><p>一整个书架。<br>一小片安静。</p></div>
         <div class="hero-note note-right"><span class="note-index">02 / 学习</span><p>读进去，<br>也记得住。</p></div>
         <div class="device hero-device">
           <span class="device-camera" aria-hidden="true"></span>
           <div class="device-screen">
-            <img src="./assets/screens/shelf.png" width="684" height="1216" alt="小纸 Pico 固件的六格书架界面，使用合成图书数据" fetchpriority="high">
+            <img src="./assets/screens/shelf.png" width="684" height="1216" alt="whiteos 真机六格书架，展示六本原创示例书" fetchpriority="high">
           </div>
           <div class="device-chin" aria-hidden="true"><i></i><span>READ PICO</span><i></i></div>
         </div>
-        <span class="hero-device-label">4.7″ 墨水屏 · 界面示意</span>
+        <span class="hero-device-label">4.7″ 墨水屏 · 真机界面</span>
       </div>
       <div class="hero-bottom"><span>为读书，也为每一天的学习。</span><a href="#weread" aria-label="继续浏览微信读书功能"><span>往下读</span><img src="./assets/icons/arrow-right.svg" width="20" height="20" alt=""></a></div>
     </section>
@@ -116,7 +106,7 @@
                 <div class="inline-feature"><img src="./assets/icons/refresh-cw.svg" width="18" height="18" alt=""> 双向进度同步 <span>·</span> 阅读时间同步</div>
               </div>
             </div>
-            <p class="feature-note">同步需手动确认，并非后台自动上传。非官方接入，仅限已授权内容；设备→云进度及阅读时间上传仍在验收，批注暂不云同步。</p>
+            <p class="feature-note">双向阅读进度与设备→云阅读时间同步已验证成功。同步需手动确认，并非后台自动上传；非官方接入，仅限已授权内容，批注暂不云同步。</p>
           </div>
           <div class="story-visual">
             <span class="visual-side-label" aria-hidden="true">YOUR BOOKS. YOUR PACE.</span>
@@ -149,46 +139,22 @@
               <button type="button" id="format-epub" role="tab" aria-selected="true" aria-controls="epub-demo" data-format="epub">EPUB</button>
               <button type="button" id="format-pdf" role="tab" aria-selected="false" aria-controls="pdf-demo" tabindex="-1" data-format="pdf">PDF</button>
             </div>
-            <span class="demo-label">阅读体验示意</span>
+            <span class="demo-label">真机阅读界面</span>
           </div>
-          <div class="format-viewport">
-            <div id="epub-demo" class="epub-demo" role="tabpanel" aria-labelledby="format-epub">
-              <div class="reader-chrome"><span>山野来信</span><img src="./assets/icons/bookmark.svg" width="17" height="17" alt=""></div>
-              <div class="epub-body" id="epub-body">
-                <span class="chapter-label">第一章 / 慢一点</span>
-                <h3>把一天，留给山野。</h3>
-                <p>清晨的风经过窗边，带来一点草木的气息。我们把那些着急的事情放下，沿着一条不知名字的小路往前走。</p>
-                <p>有时，一天不需要太多安排。一本读到一半的书，一杯刚好温热的水，就足以让时间变得柔软。</p>
-                <p>书页翻过，远处的山仍在那里。我们也终于学会，不急着走向下一件事。</p>
-              </div>
-              <div class="reader-footer"><span>01 / 03</span><span>EPUB · 文字随字号重排</span></div>
+          <div class="format-viewport capture-viewport">
+            <div id="epub-demo" role="tabpanel" aria-labelledby="format-epub">
+              <a class="capture-link" href="./assets/screens/epub-reading.png" target="_blank" rel="noopener"><img src="./assets/screens/epub-reading.png" width="684" height="1216" alt="真机 EPUB 正文：清晨的河岸，段落与插图" loading="lazy"></a>
             </div>
-            <div id="pdf-demo" class="pdf-demo" role="tabpanel" aria-labelledby="format-pdf" hidden>
-              <div class="pdf-paper" id="pdf-paper">
-                <span class="pdf-small">PICO JOURNAL / VOL. 01</span>
-                <h3>日常观察</h3>
-                <p class="pdf-subtitle">Field Notes for a Slower Life</p>
-                <div class="pdf-line"></div>
-                <div class="pdf-columns"><p>把目光从远处收回来，看一看窗外的光，桌上的一本书，以及生活里那些细小而确定的美好。</p><p>观察不需要目的。记录一阵风、一片影子，或者今天读到的一句话。它们都是日常留下的印记。</p></div>
-                <div class="pdf-diagram" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
-                <div class="pdf-columns"><p>01 / 留白<br>给一天留一点不被安排的时间。让阅读慢慢发生。</p><p>02 / 记录<br>不必长篇大论，写下一个值得记住的瞬间就好。</p></div>
-                <span class="pdf-page-number">01</span>
-              </div>
+            <div id="pdf-demo" role="tabpanel" aria-labelledby="format-pdf" hidden>
+              <a class="capture-link" id="pdf-capture-link" href="./assets/screens/pdf-reading.png" target="_blank" rel="noopener"><img id="pdf-capture" src="./assets/screens/pdf-reading.png" width="684" height="1216" alt="真机 PDF 整页阅读：固定排版与图表" loading="lazy"></a>
             </div>
           </div>
-          <div class="demo-toolbar" id="epub-controls">
-            <span>字号</span>
-            <button class="icon-button" id="epub-minus" type="button" aria-label="减小 EPUB 字号" title="减小字号"><img src="./assets/icons/minus.svg" width="18" height="18" alt=""></button>
-            <output id="epub-size" aria-live="polite">20</output>
-            <button class="icon-button" id="epub-plus" type="button" aria-label="增大 EPUB 字号" title="增大字号"><img src="./assets/icons/plus.svg" width="18" height="18" alt=""></button>
-            <span class="toolbar-end">章节 · 书签 · 进度</span>
-          </div>
-          <div class="demo-toolbar" id="pdf-controls" hidden>
-            <button class="icon-button" id="pdf-minus" type="button" aria-label="缩小 PDF" title="缩小"><img src="./assets/icons/minus.svg" width="18" height="18" alt=""></button>
-            <output id="pdf-zoom" aria-live="polite">100%</output>
-            <button class="icon-button" id="pdf-plus" type="button" aria-label="放大 PDF" title="放大"><img src="./assets/icons/plus.svg" width="18" height="18" alt=""></button>
-            <button class="icon-button" id="pdf-rotate" type="button" aria-label="旋转 PDF" title="旋转"><img src="./assets/icons/refresh-cw.svg" width="18" height="18" alt=""></button>
-            <button class="icon-button" id="pdf-reset" type="button" aria-label="PDF 适整页" title="适整页"><img src="./assets/icons/layout-grid.svg" width="18" height="18" alt=""></button>
+          <div class="capture-footer">
+            <p class="visual-caption">真机截图 · 原创示例内容</p>
+            <div class="capture-options" id="pdf-controls" role="group" aria-label="PDF 截图对比" hidden>
+              <button type="button" data-pdf-view="reading" aria-pressed="true">整页</button>
+              <button type="button" data-pdf-view="zoom" aria-pressed="false">放大细节</button>
+            </div>
           </div>
         </div>
         <div class="reading-copy reveal">
@@ -227,12 +193,12 @@
               <button id="menu-tab-3" type="button" role="tab" aria-selected="false" aria-controls="menu-panel-3" tabindex="-1">设置</button>
             </div>
             <div class="menu-screen-stack">
-              <img class="menu-screen active" src="./assets/screens/menu-layout.png" width="684" height="1216" alt="固件排版菜单主机渲染图：字体、字号、字重、行距、段距与页边距" loading="lazy">
-              <img class="menu-screen" src="./assets/screens/menu-contents.png" width="684" height="1216" alt="固件章节目录菜单主机渲染图，合成数据" loading="lazy" aria-hidden="true">
-              <img class="menu-screen" src="./assets/screens/menu-bookmarks.png" width="684" height="1216" alt="固件书签菜单主机渲染图，合成数据" loading="lazy" aria-hidden="true">
-              <img class="menu-screen" src="./assets/screens/menu-settings.png" width="684" height="1216" alt="固件阅读设置菜单主机渲染图，合成数据" loading="lazy" aria-hidden="true">
+              <img class="menu-screen active" src="./assets/screens/menu-layout.png" width="684" height="1216" alt="真机排版菜单截图：字体、字号、字重、行距、段距与页边距" loading="lazy">
+              <img class="menu-screen" src="./assets/screens/menu-contents.png" width="684" height="1216" alt="真机章节目录截图，原创示例书" loading="lazy" aria-hidden="true">
+              <img class="menu-screen" src="./assets/screens/menu-bookmarks.png" width="684" height="1216" alt="真机书签列表截图，原创示例书" loading="lazy" aria-hidden="true">
+              <img class="menu-screen" src="./assets/screens/menu-settings.png" width="684" height="1216" alt="真机阅读设置截图，原创示例书" loading="lazy" aria-hidden="true">
             </div>
-            <p class="visual-caption">固件主机渲染 · 合成数据 · 非真机截图</p>
+            <p class="visual-caption">真机截图 · 阅读中的四个菜单</p>
           </div>
           <div class="menu-descriptions">
             <article id="menu-panel-0" role="tabpanel" aria-labelledby="menu-tab-0">
@@ -259,7 +225,7 @@
               <p>自动翻页、摇一摇翻页、翻页动画与文字抗锯齿，都在这里。页眉页脚的显示和文字，也能按自己的习惯调整。</p>
               <ul class="feature-list"><li>自动翻页与时间间隔</li><li>摇一摇翻页、条带动画</li><li>文字抗锯齿与页眉页脚</li></ul>
             </article>
-            <p class="feature-note">菜单选项随阅读格式和当前状态而变化。上图是固件测试界面，不代表真机光学效果。</p>
+            <p class="feature-note">菜单选项随阅读格式和当前状态而变化。</p>
           </div>
         </div>
         <div class="gesture-layout reveal" id="gestures">
@@ -289,16 +255,19 @@
           <div><p class="eyebrow"><span class="section-number">03</span> TTF 实时解码 / MAKE IT YOURS</p><h2 id="type-heading">字体随心换。<br>每一页，都合眼缘。</h2></div>
           <p>把喜欢的 TTF／OTF 字体放进 TF 卡，在排版菜单里切换。<br>实时解码需要的字，无需提前转换整套字库。<br>宋体的温柔、黑体的利落，阅读有自己的语气。</p>
         </div>
-        <div class="type-specimen reveal">
-          <div class="specimen-main" id="specimen-main"><span>风起时，</span><span>读一页。</span><small>THE QUIET JOY OF READING.</small></div>
-          <div class="type-controls">
-            <div class="font-options" role="group" aria-label="字体风格示意">
-              <button type="button" data-font="serif" aria-pressed="true"><span class="serif">Aa</span> 宋体风格</button>
-              <button type="button" data-font="sans" aria-pressed="false"><span>Aa</span> 黑体风格</button>
+        <div class="font-gallery reveal">
+          <div class="font-capture">
+            <a class="capture-link" id="font-capture-link" href="./assets/screens/font-serif.png" target="_blank" rel="noopener"><img id="font-capture" src="./assets/screens/font-serif.png" width="684" height="1216" alt="真机 DejaVu Serif 字体，同一段原创英文正文" loading="lazy"></a>
+          </div>
+          <div class="font-comparison-copy">
+            <p class="eyebrow">同一段文字，两种阅读气质。</p>
+            <h3>喜欢哪一种，<br>就用哪一种。</h3>
+            <div class="font-options" role="group" aria-label="真机字体对比">
+              <button type="button" data-font="serif" aria-pressed="true"><span class="serif">Aa</span> 衬线字体</button>
+              <button type="button" data-font="sans" aria-pressed="false"><span>Aa</span> 无衬线字体</button>
             </div>
-            <div class="type-slider"><label for="font-weight">字重 <output id="weight-value">500</output></label><input type="range" id="font-weight" min="300" max="800" step="100" value="500"></div>
-            <div class="type-slider"><label for="specimen-size">字号 <output id="specimen-value">72</output></label><input type="range" id="specimen-size" min="48" max="88" step="4" value="72"></div>
-            <span class="demo-label">网页字体风格示意</span>
+            <p>同一阅读位置、字号和边距，换一种字体，让书页换一种表情。喜欢的 TTF／OTF 字体，放进卡里就能选。</p>
+            <p class="visual-caption">真机截图 · DejaVu Serif / Sans<br>仅更换字体，保留自然换行。</p>
           </div>
         </div>
         <div class="type-footnotes"><span>TTF / OTF</span><p>实时解码 · 按需字形 · 随心换字体<br>字号、字重与抗锯齿，一起调到舒服。</p><span>YOUR TYPE.<br>YOUR RHYTHM.</span></div>
@@ -315,11 +284,11 @@
       </div>
       <div class="turn-visual reveal">
         <div class="turn-page" id="turn-page">
-          <img class="turn-source active" src="./assets/screens/turn-page-1.png" width="684" height="1216" alt="固件原生阅读页一，主机渲染的合成测试正文" loading="lazy">
-          <img class="turn-source" src="./assets/screens/turn-page-2.png" width="684" height="1216" alt="固件原生阅读页二，主机渲染的合成测试正文" loading="lazy" aria-hidden="true">
+          <img class="turn-source active" src="./assets/screens/page-turn-before.png" width="684" height="1216" alt="真机 EPUB 相邻页，翻页前" loading="lazy">
+          <img class="turn-source" src="./assets/screens/page-turn-after.png" width="684" height="1216" alt="真机 EPUB 相邻页，翻页后" loading="lazy" aria-hidden="true">
           <canvas id="turn-canvas" width="684" height="1216" aria-hidden="true" hidden></canvas>
         </div>
-        <p class="visual-caption">固件主机渲染 · 合成数据 · 水波纹覆盖示意</p>
+        <p class="visual-caption">真机相邻页截图 · 网页水波纹覆盖演示</p>
       </div>
     </section>
 
@@ -332,32 +301,26 @@
           <ul class="feature-list"><li>兼容旧版 .apkg，本地离线导入</li><li>问答、挖空、静态单选与常见图片</li><li>四档评分、FSRS-6 每日复习</li><li>每日限额、学习统计与进度保存</li></ul>
           <p class="feature-note">独立离线学习，不连接 AnkiWeb。原牌组复习历史不迁移，复杂脚本与音视频模板不支持。</p>
         </div>
-        <div class="anki-demo reveal">
-          <div class="anki-demo-top"><span><img src="./assets/icons/library.svg" width="18" height="18" alt=""> 每日词汇</span><button class="icon-button" id="anki-reset" type="button" aria-label="重新开始牌组演示" title="重新开始"><img src="./assets/icons/refresh-cw.svg" width="18" height="18" alt=""></button></div>
-          <div class="anki-progress"><span id="anki-progress"></span></div>
-          <div class="anki-card" id="anki-card">
-            <span class="card-tag" id="anki-tag">01 / 03 · 回忆</span>
-            <h3 id="anki-word">Serendipity</h3>
-            <p class="anki-pronunciation" id="anki-pronunciation">/ˌser.ənˈdɪp.ə.ti/</p>
-            <div class="anki-answer" id="anki-answer" hidden><div class="answer-rule"></div><h4 id="anki-meaning">不期而遇的美好</h4><p id="anki-example">在没有期待的地方，遇见值得珍惜的事。</p></div>
-            <p class="anki-finished" id="anki-finished" hidden>今天的三张卡片，已经完成。<br>一点点，也是在向前。</p>
+        <div class="anki-capture reveal">
+          <div class="capture-options" role="group" aria-label="Anki 真机截图">
+            <button type="button" data-anki-view="decks" aria-pressed="false">牌库</button>
+            <button type="button" data-anki-view="front" aria-pressed="true">题面</button>
+            <button type="button" data-anki-view="answer" aria-pressed="false">答案</button>
+            <button type="button" data-anki-view="stats" aria-pressed="false">统计</button>
           </div>
-          <div class="anki-demo-bottom">
-            <button class="solid-button" id="anki-reveal" type="button">显示答案 <img src="./assets/icons/arrow-right.svg" width="18" height="18" alt=""></button>
-            <div class="anki-ratings" id="anki-ratings" hidden><button type="button" data-rating="again">Again<span>没记住</span></button><button type="button" data-rating="hard">Hard<span>费力</span></button><button type="button" data-rating="good">Good<span>记住了</span></button><button type="button" data-rating="easy">Easy<span>轻松</span></button></div>
-            <p class="demo-label" id="anki-status" role="status">原创示例牌组 · 网页演示</p>
-          </div>
+          <a class="capture-link" id="anki-capture-link" href="./assets/screens/anki-front.png" target="_blank" rel="noopener"><img id="anki-capture" src="./assets/screens/anki-front.png" width="684" height="1216" alt="真机 Anki 原创问答卡片题面" loading="lazy"></a>
+          <p class="visual-caption" id="anki-caption">真机截图 · 原创问答 · 回忆后再看答案</p>
         </div>
       </div>
     </section>
 
     <section class="details-section section-width" aria-labelledby="details-heading">
-      <div class="details-heading reveal"><p class="eyebrow">GOOD TO KNOW</p><h2 id="details-heading">简单，也说清楚。</h2><p>功能说明依据 2026 年 10 月 9 日产品工作区源码。<br>实现、主机回归与真机验收，是不同的状态。</p></div>
+      <div class="details-heading reveal"><p class="eyebrow">GOOD TO KNOW</p><h2 id="details-heading">简单，也说清楚。</h2><p>阅读界面来自真实设备。<br>功能与使用范围，在这里说清楚。</p></div>
       <div class="details-list reveal">
-        <details><summary>微信读书能同步什么？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>当前提供手动阅读位置与新增阅读时长同步，以及仅下载云端位置。两端位置都有更新时，需要用户明确选择。个人批注暂存本机，不同步到云端。部分书籍的位置无法准确匹配时会停止同步，而不是猜测位置。云→设备的位置下载已有受控真机验证；设备→云的位置与时长上传仍在验收。</p></details>
+        <details><summary>微信读书能同步什么？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>双向阅读进度同步，以及设备→云的新增阅读时间上传，均已验证成功。同步由你手动确认，也可以只取回云端位置。两端位置都有更新时，由你选择从哪里接着读。个人批注暂存本机，不同步到云端；无法准确匹配阅读位置时会停止同步，不猜测位置。</p></details>
         <details><summary>哪些本地书和牌组可以阅读？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>本地阅读支持 EPUB 与 PDF。EPUB 支持文字和有范围限制的 JPEG／PNG 插图，并不复现所有复杂网页排版。PDF 保留固定版式，复杂、超容量或缺少内嵌中文字体的文件可能无法正确打开。Anki 需导出兼容旧版本的 .apkg；导入后从本机新卡开始，不迁移桌面复习历史，不连接 AnkiWeb。</p></details>
         <details><summary>双指缩放怎样改变这一页？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>双指缩放已发布。EPUB／TXT 捏合调整字号，松手后从当前阅读位置重新排版；PDF 调整页面比例，以手势中心附近的内容为缩放参考。移动时预览变化，松手后呈现清晰页面；资源不足时可能仅显示松手后的结果。实际响应与显示效果以设备为准。</p></details>
-        <details><summary>这些展示是设备实拍吗？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>不是。书架、微信读书与阅读菜单界面图由实际固件绘制函数在主机上生成，使用合成数据。阅读、缩放、字体、翻页和牌组交互为网页示意；外框也不是实物外观承诺。它们不代表屏幕光学效果、续航或实测延迟。具体功能仍需逐项真机验收。</p></details>
+        <details><summary>这些图片来自真实设备吗？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>书架、主页、EPUB、PDF、阅读菜单、字体和 Anki 均为 2026 年 10 月 9 日采集的真机帧缓冲截图，保留完整 684 × 1216 画面，使用原创示例内容。微信读书的三张图仍为固件主机渲染示意。手势与翻页动画由网页演示；截图不代表墨水屏的光学效果或刷新速度，网页设备外框也为示意。</p></details>
       </div>
     </section>
 

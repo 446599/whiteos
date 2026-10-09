@@ -12,6 +12,52 @@
   --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
   --ease: cubic-bezier(.22, 1, .36, 1);
 }
+
+.hero-preview { position: absolute; width: 167px; aspect-ratio: 684 / 1216; overflow: hidden; border: 1px solid #b7b9ae; border-radius: 4px; box-shadow: 8px 18px 28px #292b2520; }
+.hero-preview img { display: block; width: 100%; height: auto; }
+.preview-reading { left: calc(50% - 350px); top: 70px; transform: rotate(-12deg); }
+.preview-home { right: calc(50% - 350px); top: 60px; transform: rotate(12deg); }
+.capture-link { display: block; width: 100%; cursor: zoom-in; }
+.capture-link img { display: block; width: 100%; height: auto; aspect-ratio: 684 / 1216; object-fit: contain; background: #fff; }
+.reading-demo { max-width: 390px; width: 100%; margin-inline: auto; }
+.capture-viewport { height: auto; aspect-ratio: 684 / 1216; background: #fff; }
+.capture-footer { min-height: 76px; padding: 14px 18px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.capture-footer .visual-caption { margin: 0; font-size: 11px; }
+.capture-options { display: flex; gap: 4px; flex-wrap: wrap; }
+.capture-options button { min-height: 44px; padding: 8px 13px; font-size: 12px; background: transparent; border-bottom: 2px solid transparent; color: var(--muted); }
+.capture-options button[aria-pressed="true"] { border-bottom-color: var(--ink); color: var(--ink); font-weight: 600; }
+.capture-options button:hover { background: #ffffff50; }
+.font-gallery { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 70px; margin-top: 38px; padding-block: 40px; border-block: 1px solid #bbac65; }
+.font-capture { width: min(342px, 100%); margin-inline: auto; border: 1px solid #b8ad76; }
+.font-comparison-copy h3 { font: 500 32px/1.4 var(--serif); margin-top: 20px; }
+.font-comparison-copy > p:not(.eyebrow) { font-size: 14px; line-height: 1.9; color: #625b38; margin-top: 24px; max-width: 370px; }
+.font-comparison-copy .font-options { margin-block: 28px; max-width: 330px; }
+.anki-capture { width: min(342px, 100%); margin-inline: auto; }
+.anki-capture > .capture-options { justify-content: space-between; margin-bottom: 16px; border-bottom: 1px solid #91a27e; }
+.anki-capture > .capture-link { border: 1px solid #a2b096; }
+.anki-capture .visual-caption { font-size: 11px; }
+@media (max-width: 700px) {
+  .hero-preview { width: 94px; }
+  .preview-reading { left: calc(50% - 152px); top: 63px; }
+  .preview-home { right: calc(50% - 152px); top: 68px; }
+  .font-gallery { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: 28px; }
+  .font-comparison-copy h3 { font-size: 27px; }
+  .font-comparison-copy > p:not(.eyebrow) { font-size: 13px; max-width: none; }
+  .font-capture { max-width: 290px; }
+  .reading-demo { max-width: 342px; }
+}
+@media (max-width: 360px) {
+  .hero-preview { width: 84px; }
+  .preview-reading { left: calc(50% - 134px); }
+  .preview-home { right: calc(50% - 134px); }
+}
+@media (max-height: 650px) and (min-width: 701px) {
+  .hero-preview { width: 104px; top: 18px; }
+}
+@media (max-height: 610px) and (max-width: 700px) {
+  .hero-preview { width: 75px; top: 26px; }
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 92px; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.7; letter-spacing: 0; }
