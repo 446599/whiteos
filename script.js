@@ -48,7 +48,7 @@
     if (!motionEnabled()) {
       activeAnimations.forEach((animation) => animation.cancel());
       activeAnimations = [];
-      $(".turn-strips").replaceChildren();
+      finishTurn();
     }
     scheduleScroll();
   }
@@ -270,67 +270,76 @@
   window.addEventListener("resize", fitSpecimen, { passive: true });
   fitSpecimen();
 
-  const pages = [
-    { title: "慢一点，也没关系。", chapter: "第一章", paragraphs: ["沿着小路往前走，听风经过树叶。没有消息需要回复，没有日程等着完成。我们只是在这一刻，认真地读一页书。", "文字之外，还有大片留白。它们像一扇没有关上的窗，让日常的光慢慢照进来。"] },
-    { title: "在一页书里，遇见远方。", chapter: "第二章", paragraphs: ["远方未必是一段漫长的旅途。也许只是书页间的一句话，让你看见一种从未想过的生活。", "翻过这一页，故事还在继续。我们带着新的目光，重新看一看身边熟悉的世界。"] },
-    { title: "给自己，一点安静。", chapter: "第三章", paragraphs: ["午后的光落在桌角，时间变得缓慢。此刻不必赶路，也不必证明什么，只要和手里的书待在一起。", "读完最后一段，把书轻轻合上。那些留下来的文字，会在未来的某个日子，重新与你相遇。"] },
-  ];
   let pageIndex = 0;
-  const turnPage = $("#turn-page");
-  const strips = $(".turn-strips");
-  function turn(direction) {
-    const next = Math.max(0, Math.min(pages.length - 1, pageIndex + direction));
-    if (next === pageIndex) return;
-    activeAnimations.forEach((animation) => {
-      if (animation.effect?.target?.classList.contains("turn-strip")) animation.cancel();
-    });
-    strips.replaceChildren();
-    const oldPage = turnPage.cloneNode(true);
-    oldPage.querySelector(".turn-strips").remove();
-    oldPage.querySelectorAll("[id]").forEach((element) => element.removeAttribute("id"));
-    oldPage.classList.remove("turn-page");
-    oldPage.classList.add("strip-content");
-    pageIndex = next;
-    const page = pages[pageIndex];
-    $("#turn-title").textContent = page.title;
-    $("#turn-chapter").textContent = page.chapter;
-    $("#turn-text").replaceChildren(...page.paragraphs.map((text) => {
-      const paragraph = document.createElement("p");
-      paragraph.textContent = text;
-      return paragraph;
-    }));
-    const number = String(pageIndex + 1).padStart(2, "0");
-    $("#turn-page-number").textContent = number;
-    $("#turn-counter").textContent = `${number} / 03`;
-    $("#turn-previous").disabled = pageIndex === 0;
-    $("#turn-next").disabled = pageIndex === pages.length - 1;
-    if (!motionEnabled()) return;
-    const height = turnPage.clientHeight;
-    const width = turnPage.clientWidth;
-    const sidePadding = getComputedStyle(turnPage).paddingLeft;
-    const sequence = [];
-    for (let index = 0; index < 8; index++) {
-      const strip = document.createElement("div");
-      strip.className = "turn-strip";
-      const content = oldPage.cloneNode(true);
-      content.style.top = `${-height * index / 8}px`;
-      content.style.height = `${height}px`;
-      content.style.paddingLeft = sidePadding;
-      content.style.paddingRight = sidePadding;
-      strip.append(content);
-      strips.append(strip);
-      const animation = animate(strip, [
-        { transform: "translateX(0)" },
-        { transform: `translateX(${-direction * width}px)` },
-      ], { duration: 480, delay: (direction > 0 ? index : 7 - index) * 34, fill: "forwards" });
-      if (animation) sequence.push(animation.finished.catch(() => {}));
-    }
-    const currentStrips = [...strips.children];
-    Promise.all(sequence).then(() => {
-      currentStrips.forEach((strip) => strip.remove());
-    });
+  let turnFrame = null;
+  const turnImages = $$(".turn-source");
+  const turnCanvas = $("#turn-canvas");
+  const turnContext = turnCanvas.getContext("2d");
+  function finishTurn() {
+    if (turnFrame !== null) cancelAnimationFrame(turnFrame);
+    turnFrame = null;
+    turnCanvas.hidden = true;
   }
-  $("#turn-previous").disabled = true;
+  function updateTurnControls() {
+    $("#turn-previous").disabled = pageIndex === 0;
+    $("#turn-next").disabled = pageIndex === turnImages.length - 1;
+  }
+  Promise.all(turnImages.map((image) => image.decode().catch(() => {}))).then(updateTurnControls);
+  function turn(direction) {
+    const next = Math.max(0, Math.min(turnImages.length - 1, pageIndex + direction));
+    if (next === pageIndex) return;
+    const ready = turnContext && turnImages.every((image) => image.complete && image.naturalWidth);
+    const previous = document.createElement("canvas");
+    previous.width = turnCanvas.width;
+    previous.height = turnCanvas.height;
+    const previousContext = previous.getContext("2d");
+    if (ready && previousContext) {
+      previousContext.drawImage(turnCanvas.hidden ? turnImages[pageIndex] : turnCanvas, 0, 0);
+    }
+    finishTurn();
+    pageIndex = next;
+    turnImages.forEach((image, index) => {
+      image.classList.toggle("active", index === pageIndex);
+      image.setAttribute("aria-hidden", String(index !== pageIndex));
+    });
+    $("#turn-counter").textContent = `${String(pageIndex + 1).padStart(2, "0")} / 02`;
+    updateTurnControls();
+    if (!ready || !previousContext || !motionEnabled()) return;
+    const { width, height } = turnCanvas;
+    const target = turnImages[pageIndex];
+    const bands = 8;
+    const stagger = 56;
+    const duration = 360;
+    const started = performance.now();
+    turnContext.drawImage(previous, 0, 0);
+    turnCanvas.hidden = false;
+    function draw(now) {
+      const elapsed = now - started;
+      turnContext.drawImage(previous, 0, 0);
+      for (let band = 0; band < bands; band++) {
+        const order = direction > 0 ? band : bands - 1 - band;
+        const progress = Math.max(0, Math.min(1, (elapsed - order * stagger) / duration));
+        const y0 = Math.floor(height * band / bands);
+        const y1 = Math.floor(height * (band + 1) / bands);
+        const covered = Math.round((y1 - y0) * progress);
+        const y = direction > 0 ? y0 : y1 - covered;
+        // Source and destination coordinates match: only the coverage front moves.
+        if (covered) turnContext.drawImage(target, 0, y, width, covered, 0, y, width, covered);
+        if (progress > 0 && progress < 1) {
+          const edge = direction > 0 ? y0 + covered : y1 - covered;
+          const ripple = Math.min(16, y1 - edge, edge - y0);
+          turnContext.fillStyle = `rgba(70,70,70,${0.14 * Math.sin(progress * Math.PI)})`;
+          turnContext.fillRect(0, edge - ripple, width, ripple * 2);
+        }
+      }
+      if (elapsed < duration + (bands - 1) * stagger) {
+        turnFrame = requestAnimationFrame(draw);
+      } else {
+        finishTurn();
+      }
+    }
+    turnFrame = requestAnimationFrame(draw);
+  }
   $("#turn-previous").addEventListener("click", () => turn(-1));
   $("#turn-next").addEventListener("click", () => turn(1));
 

@@ -7,8 +7,8 @@
   <meta name="description" content="whiteos，小纸 Pico 阅读固件。微信读书双向进度与阅读时间同步，EPUB 流式解码、PDF 阅读、双指缩放、TTF 实时字体与离线 Anki。">
   <title>whiteos · 把阅读，还给自己</title>
   <link rel="icon" href="./assets/icons/book-open.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./styles.css">
-  <script src="./script.js" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=20261009-wave">
+  <script src="./script.js?v=20261009-wave" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">跳到正文</a>
@@ -309,19 +309,17 @@
       <div class="turn-copy reveal">
         <p class="eyebrow"><span class="section-number">04</span> 翻页动画 / ONE MORE PAGE</p>
         <h2 id="turn-heading">翻过这一页。<br><span>思绪，不用停。</span></h2>
-        <p class="section-lead">有方向的条带翻页，让新的一页逐段出现。<br>向前，或回看；阅读的节奏，轻轻接上。</p>
-        <div class="turn-actions"><button class="icon-button" id="turn-previous" type="button" aria-label="上一页" title="上一页"><img src="./assets/icons/arrow-left.svg" width="22" height="22" alt=""></button><output id="turn-counter" aria-live="polite">01 / 03</output><button class="icon-button" id="turn-next" type="button" aria-label="下一页" title="下一页"><img src="./assets/icons/arrow-right.svg" width="22" height="22" alt=""></button></div>
-        <p class="feature-note">标准刷新档可选条带动画；快速档不运行动画。<br>这里是网页动效示意，不代表墨水屏实测速度。</p>
+        <p class="section-lead">水波纹条带沿竖向推进，新内容原位覆盖。<br>文字不滑动，下一页随着波纹逐段清晰。</p>
+        <div class="turn-actions"><button class="icon-button" id="turn-previous" type="button" aria-label="上一页" title="上一页" disabled><img src="./assets/icons/arrow-left.svg" width="22" height="22" alt=""></button><output id="turn-counter" aria-live="polite">01 / 02</output><button class="icon-button" id="turn-next" type="button" aria-label="下一页" title="下一页" disabled><img src="./assets/icons/arrow-right.svg" width="22" height="22" alt=""></button></div>
+        <p class="feature-note">684 × 1216 完整画面，按屏幕比例等比显示。<br>标准档可选动画，快速档不运行动画；网页示意不代表实屏速度或残影。</p>
       </div>
       <div class="turn-visual reveal">
         <div class="turn-page" id="turn-page">
-          <div class="turn-page-top"><span>山野来信</span><span id="turn-chapter">第一章</span></div>
-          <h3 id="turn-title">慢一点，也没关系。</h3>
-          <div id="turn-text" class="turn-text"><p>沿着小路往前走，听风经过树叶。没有消息需要回复，没有日程等着完成。我们只是在这一刻，认真地读一页书。</p><p>文字之外，还有大片留白。它们像一扇没有关上的窗，让日常的光慢慢照进来。</p></div>
-          <div class="turn-page-bottom"><span>READ PICO</span><span id="turn-page-number">01</span></div>
-          <div class="turn-strips" aria-hidden="true"></div>
+          <img class="turn-source active" src="./assets/screens/turn-page-1.png" width="684" height="1216" alt="固件原生阅读页一，主机渲染的合成测试正文" loading="lazy">
+          <img class="turn-source" src="./assets/screens/turn-page-2.png" width="684" height="1216" alt="固件原生阅读页二，主机渲染的合成测试正文" loading="lazy" aria-hidden="true">
+          <canvas id="turn-canvas" width="684" height="1216" aria-hidden="true" hidden></canvas>
         </div>
-        <span class="turn-side-label" aria-hidden="true">THE NEXT CHAPTER IS WAITING.</span>
+        <p class="visual-caption">固件主机渲染 · 合成数据 · 水波纹覆盖示意</p>
       </div>
     </section>
 
