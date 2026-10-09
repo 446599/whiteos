@@ -227,6 +227,23 @@
     updatePdf();
   });
 
+  const readerMenuTabs = $$(".menu-tabs button");
+  bindTabs(readerMenuTabs, (_, selected) => {
+    readerMenuTabs.forEach((tab, index) => {
+      tab.setAttribute("aria-selected", String(index === selected));
+      tab.tabIndex = index === selected ? 0 : -1;
+      $(`#menu-panel-${index}`).hidden = index !== selected;
+    });
+    $$(".menu-screen").forEach((image, index) => {
+      image.classList.toggle("active", index === selected);
+      image.setAttribute("aria-hidden", String(index !== selected));
+    });
+    animate($(`#menu-panel-${selected}`), [
+      { opacity: 0, transform: "translateY(12px)" },
+      { opacity: 1, transform: "translateY(0)" },
+    ]);
+  });
+
   const specimen = $("#specimen-main");
   $$("[data-font]").forEach((button) => button.addEventListener("click", () => {
     $$("[data-font]").forEach((option) => option.setAttribute("aria-pressed", String(option === button)));

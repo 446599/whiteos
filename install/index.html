@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f5ee">
+  <meta name="description" content="安装 whiteos：准备小纸 Pico 与 USB 数据线，前往网页烧录，选择全新烧录或固件更新。">
+  <title>安装 whiteos · 网页烧录入口</title>
+  <link rel="icon" href="../assets/icons/book-open.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="./install.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="site-header">
+    <a class="brand" href="../"><img src="../assets/icons/book-open.svg" width="26" height="26" alt=""><span>whiteos</span></a>
+    <a class="install-back" href="../"><img src="../assets/icons/arrow-left.svg" width="18" height="18" alt=""> 返回介绍</a>
+  </header>
+  <main id="main" class="install-main section-width">
+    <p class="eyebrow">小纸 Pico / INSTALL WHITEOS</p>
+    <h1>安装 whiteos</h1>
+    <p class="install-lead">第一次见面，或让阅读再向前一步。<br>用电脑连接小纸，进入网页烧录。</p>
+    <a class="install-primary" href="../flash/">前往烧录页 <img src="../assets/icons/arrow-right.svg" width="22" height="22" alt=""></a>
+    <p class="install-status"><span aria-hidden="true"></span> 网页已就绪，固件镜像尚未发布。烧录按钮暂不可用。</p>
+    <section class="install-options" aria-labelledby="options-heading">
+      <h2 id="options-heading">选一个适合现在的方式。</h2>
+      <div class="install-option-grid">
+        <article>
+          <span class="menu-kicker">01 / 第一次安装</span>
+          <h3>全新烧录</h3>
+          <p>首次安装 whiteos，写入完整安装所需的启动程序、分区表和应用。不是整片擦除；仍需先备份并确认布局兼容。</p>
+        </article>
+        <article>
+          <span class="menu-kicker">02 / 已经在用</span>
+          <h3>固件更新</h3>
+          <p>已有兼容的 whiteos 安装，只更新应用，不改写启动程序与分区表。布局不匹配时停止更新。</p>
+        </article>
+      </div>
+    </section>
+    <section class="install-preparation" aria-labelledby="prepare-heading">
+      <h2 id="prepare-heading">开始前，准备好这三样。</h2>
+      <ol>
+        <li><span>01</span><div><h3>小纸 Pico 与 USB 数据线</h3><p>使用能传输数据的线材，连接稳定，烧录期间不要拔线。</p></div></li>
+        <li><span>02</span><div><h3>支持 Web Serial 的电脑浏览器</h3><p>使用桌面版 Chrome 或 Edge，打开 HTTPS 烧录页。</p></div></li>
+        <li><span>03</span><div><h3>备份与版本确认</h3><p>先备份重要文件与阅读记录，确认发布固件适用于你的设备。页面不会自动连接设备。</p></div></li>
+      </ol>
+    </section>
+    <div class="install-final"><p>准备好了，就在下一页开始。</p><a href="../flash/">打开烧录界面 <img src="../assets/icons/arrow-right.svg" width="20" height="20" alt=""></a></div>
+  </main>
+  <footer class="site-footer section-width"><a class="brand" href="../"><img src="../assets/icons/book-open.svg" width="22" height="22" alt=""><span>whiteos</span></a><span>小纸 Pico · 独立阅读固件</span><a href="../flash/README.md">烧录说明</a></footer>
+</body>
+</html>

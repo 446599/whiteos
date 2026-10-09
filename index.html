@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f8f5ee">
-  <meta name="description" content="whiteos，适用于小纸 Pico 的阅读固件。微信读书、本地 EPUB 与 PDF、TTF 即时字体、条带翻页动画，以及离线 Anki 学习。把阅读，还给自己。">
+  <meta name="description" content="whiteos，小纸 Pico 阅读固件。微信读书双向进度与阅读时间同步，EPUB 流式解码、PDF 阅读、双指缩放、TTF 实时字体与离线 Anki。">
   <title>whiteos · 把阅读，还给自己</title>
   <link rel="icon" href="./assets/icons/book-open.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
@@ -20,8 +20,10 @@
     <nav id="navigation" aria-label="主导航">
       <a href="#weread">微信读书</a>
       <a href="#reading">本地阅读</a>
+      <a href="#reader-menu">阅读菜单</a>
       <a href="#typography">字与翻页</a>
       <a href="#anki">Anki 学习</a>
+      <a class="mobile-install" href="./install/">安装 whiteos</a>
     </nav>
     <div class="header-actions">
       <button class="icon-button motion-toggle" type="button" aria-label="暂停装饰动画" aria-pressed="false" title="暂停装饰动画">
@@ -30,7 +32,7 @@
       <button class="icon-button menu-toggle" type="button" aria-label="打开导航" aria-controls="navigation" aria-expanded="false" title="打开导航">
         <img src="./assets/icons/layout-grid.svg" width="22" height="22" alt="">
       </button>
-      <a class="header-link" href="#weread">探索阅读 <img src="./assets/icons/arrow-right.svg" width="18" height="18" alt=""></a>
+      <a class="header-link" href="./install/">安装 whiteos <img src="./assets/icons/arrow-right.svg" width="18" height="18" alt=""></a>
     </div>
   </header>
 
@@ -91,7 +93,7 @@
           <div class="story-copy">
             <p class="eyebrow"><span class="section-number">01</span> 微信读书 / WEREAD</p>
             <h2 id="weread-heading">手机读到哪，<br><span>小纸接着读。</span></h2>
-            <p class="section-lead">从熟悉的书架出发，把阅读留在纸面上。</p>
+            <p class="section-lead">双向进度同步，接上每一次阅读。<br>阅读时间同步，也留下墨水屏上的专注。</p>
             <div class="story-tabs" role="tablist" aria-label="微信读书功能">
               <button type="button" id="story-tab-0" role="tab" aria-selected="true" aria-controls="story-panel-0" data-step="0"><span>01</span> 书架</button>
               <button type="button" id="story-tab-1" role="tab" aria-selected="false" aria-controls="story-panel-1" tabindex="-1" data-step="1"><span>02</span> 下载</button>
@@ -109,12 +111,12 @@
                 <div class="inline-feature"><img src="./assets/icons/book-open.svg" width="18" height="18" alt=""> 按书／按章下载 <span>·</span> 连续翻章</div>
               </div>
               <div class="story-panel" id="story-panel-2" role="tabpanel" aria-labelledby="story-tab-2" hidden>
-                <h3>阅读进度，由你决定。</h3>
-                <p>手动同步阅读位置与设备记录的阅读时长。手机和小纸都读过时，先选择保留哪一端的位置；也可以只下载云端进度。</p>
-                <div class="inline-feature"><img src="./assets/icons/refresh-cw.svg" width="18" height="18" alt=""> 双向位置 <span>·</span> 新增时长 <span>·</span> 手动确认</div>
+                <h3>进度接得上，时间也记得住。</h3>
+                <p>双向同步手机与小纸的阅读进度，并同步设备新增的阅读时间。两端都往前读了，就由你选择接着哪一处读；也可只取回云端进度。</p>
+                <div class="inline-feature"><img src="./assets/icons/refresh-cw.svg" width="18" height="18" alt=""> 双向进度同步 <span>·</span> 阅读时间同步</div>
               </div>
             </div>
-            <p class="feature-note">非官方接入；仅限账号已授权内容。线上同步持续验收中，批注暂不云同步。</p>
+            <p class="feature-note">同步需手动确认，并非后台自动上传。非官方接入，仅限已授权内容；设备→云进度及阅读时间上传仍在验收，批注暂不云同步。</p>
           </div>
           <div class="story-visual">
             <span class="visual-side-label" aria-hidden="true">YOUR BOOKS. YOUR PACE.</span>
@@ -192,9 +194,10 @@
         <div class="reading-copy reveal">
           <article class="format-description active" data-description="epub">
             <span class="format-big">EPUB<span>01</span></span>
-            <h3>字里行间，恰好舒服。</h3>
-            <p>让内容适应你的阅读习惯。调整字号和页边距，循着目录前进，留下书签，下次从上次的位置继续。</p>
-            <ul class="feature-list"><li>正文文字与常见 JPEG／PNG 插图</li><li>章节目录、书签与逐书进度</li><li>字号、边距与阅读页眉／页脚</li></ul>
+            <h3>少一点等待，多读几页。</h3>
+            <p>不必等整本书处理完，先从想读的章节开始。流式解码按章处理，配合下一页预绘，把等待留得更短，让阅读接得更顺。</p>
+            <ul class="feature-list"><li>按章流式解码，不一次处理整本书</li><li>页面缓存与下一页预绘，减少重复等待</li><li>文字与常见插图，目录、书签和进度</li></ul>
+            <p class="feature-note">章节准备完成后排版；实际等待因书籍与设备而异。</p>
           </article>
           <article class="format-description" data-description="pdf" hidden>
             <span class="format-big">PDF<span>02</span></span>
@@ -208,11 +211,83 @@
       </div>
     </section>
 
+    <section id="reader-menu" class="reader-menu-section" aria-labelledby="menu-heading">
+      <div class="section-width">
+        <div class="section-heading reveal">
+          <p class="eyebrow">阅读菜单 / STAY IN THE STORY</p>
+          <h2 id="menu-heading">需要的，都在书页里。<br><span>不必离开阅读。</span></h2>
+          <p class="section-lead">轻触正文中间，或按中间键，打开阅读菜单。<br>调排版、找章节、留书签，把这一页变成喜欢的样子。</p>
+        </div>
+        <div class="menu-layout reveal">
+          <div class="menu-preview">
+            <div class="menu-tabs" role="tablist" aria-label="阅读菜单分类">
+              <button id="menu-tab-0" type="button" role="tab" aria-selected="true" aria-controls="menu-panel-0">排版</button>
+              <button id="menu-tab-1" type="button" role="tab" aria-selected="false" aria-controls="menu-panel-1" tabindex="-1">目录</button>
+              <button id="menu-tab-2" type="button" role="tab" aria-selected="false" aria-controls="menu-panel-2" tabindex="-1">书签</button>
+              <button id="menu-tab-3" type="button" role="tab" aria-selected="false" aria-controls="menu-panel-3" tabindex="-1">设置</button>
+            </div>
+            <div class="menu-screen-stack">
+              <img class="menu-screen active" src="./assets/screens/menu-layout.png" width="684" height="1216" alt="固件排版菜单主机渲染图：字体、字号、字重、行距、段距与页边距" loading="lazy">
+              <img class="menu-screen" src="./assets/screens/menu-contents.png" width="684" height="1216" alt="固件章节目录菜单主机渲染图，合成数据" loading="lazy" aria-hidden="true">
+              <img class="menu-screen" src="./assets/screens/menu-bookmarks.png" width="684" height="1216" alt="固件书签菜单主机渲染图，合成数据" loading="lazy" aria-hidden="true">
+              <img class="menu-screen" src="./assets/screens/menu-settings.png" width="684" height="1216" alt="固件阅读设置菜单主机渲染图，合成数据" loading="lazy" aria-hidden="true">
+            </div>
+            <p class="visual-caption">固件主机渲染 · 合成数据 · 非真机截图</p>
+          </div>
+          <div class="menu-descriptions">
+            <article id="menu-panel-0" role="tabpanel" aria-labelledby="menu-tab-0">
+              <span class="menu-kicker">01 / 排版</span>
+              <h3>舒服，是可以调出来的。</h3>
+              <p>换一款字体，选一个字号。字重、行距、段距与页边距，也都能细调。让文字的疏密，刚好合你的眼。</p>
+              <ul class="feature-list"><li>字体、字号与字重</li><li>行距、段距与页边距</li><li>阅读进度随手定位</li></ul>
+            </article>
+            <article id="menu-panel-1" role="tabpanel" aria-labelledby="menu-tab-1" hidden>
+              <span class="menu-kicker">02 / 目录</span>
+              <h3>想读哪一章，就去那一章。</h3>
+              <p>章节列表就在正文旁边，回看上一段故事，或跳到下一章。微信读书也可以从目录选择已经下载的章节。</p>
+              <ul class="feature-list"><li>章节列表与跳转</li><li>微信读书离线章节入口</li><li>找好位置，回到正文接着读</li></ul>
+            </article>
+            <article id="menu-panel-2" role="tabpanel" aria-labelledby="menu-tab-2" hidden>
+              <span class="menu-kicker">03 / 书签</span>
+              <h3>喜欢的地方，留一个记号。</h3>
+              <p>保存值得回来的位置，在书签列表里重新找到它。文字批注也有自己的入口，把这一刻的想法留在本机。</p>
+              <ul class="feature-list"><li>保存与返回阅读位置</li><li>书签列表，一处收好</li><li>文字批注本地保留</li></ul>
+            </article>
+            <article id="menu-panel-3" role="tabpanel" aria-labelledby="menu-tab-3" hidden>
+              <span class="menu-kicker">04 / 设置</span>
+              <h3>翻页，也有自己的节奏。</h3>
+              <p>自动翻页、摇一摇翻页、翻页动画与文字抗锯齿，都在这里。页眉页脚的显示和文字，也能按自己的习惯调整。</p>
+              <ul class="feature-list"><li>自动翻页与时间间隔</li><li>摇一摇翻页、条带动画</li><li>文字抗锯齿与页眉页脚</li></ul>
+            </article>
+            <p class="feature-note">菜单选项随阅读格式和当前状态而变化。上图是固件测试界面，不代表真机光学效果。</p>
+          </div>
+        </div>
+        <div class="gesture-layout reveal" id="gestures">
+          <div class="gesture-copy">
+            <p class="eyebrow">双指缩放 / A NATURAL FIT</p>
+            <h3>两指一开，<br>看得更清楚。</h3>
+            <p>双指展开，放大；向内捏合，缩小。<br>EPUB／TXT 调整字号，PDF 调整页面比例。</p>
+            <p>移动时预览变化，松手后呈现清晰页面。<br>字号与版面，各用合适的缩放方式。</p>
+            <p class="feature-note">手势为开发版功能，尚未发布；预览效果与触摸观感需真机验收。右侧为网页动效示意。</p>
+          </div>
+          <div class="gesture-diagram" role="img" aria-label="双指展开缩放示意：EPUB 调整文字大小，PDF 放大固定版面">
+            <div class="gesture-demo-heading"><span>EPUB / TXT</span><span>PDF</span></div>
+            <div class="gesture-examples" aria-hidden="true">
+              <div class="gesture-text"><strong>山野来信</strong><p>风经过窗边，<br>读一页，再一页。</p></div>
+              <div class="gesture-document"><strong>日常观察</strong><div></div><p>把目光收回来，<br>看一看日常的光。</p><div></div></div>
+            </div>
+            <div class="gesture-touch-pair" aria-hidden="true"><span></span><span></span></div>
+            <div class="gesture-demo-caption"><span>文字变大，重新排版</span><span>版面放大，保留原貌</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="typography" class="type-section" aria-labelledby="type-heading">
       <div class="section-width">
         <div class="type-heading reveal">
-          <div><p class="eyebrow"><span class="section-number">03</span> TTF 即时字体 / MAKE IT YOURS</p><h2 id="type-heading">喜欢的字，<br>就是阅读的语气。</h2></div>
-          <p>把 TTF／OTF 字体放进 TF 卡，选择它，就开始读。<br>无需提前转换整套字库；字号随心，文字按需呈现。</p>
+          <div><p class="eyebrow"><span class="section-number">03</span> TTF 实时解码 / MAKE IT YOURS</p><h2 id="type-heading">字体随心换。<br>每一页，都合眼缘。</h2></div>
+          <p>把喜欢的 TTF／OTF 字体放进 TF 卡，在排版菜单里切换。<br>实时解码需要的字，无需提前转换整套字库。<br>宋体的温柔、黑体的利落，阅读有自己的语气。</p>
         </div>
         <div class="type-specimen reveal">
           <div class="specimen-main" id="specimen-main"><span>风起时，</span><span>读一页。</span><small>THE QUIET JOY OF READING.</small></div>
@@ -226,7 +301,7 @@
             <span class="demo-label">网页字体风格示意</span>
           </div>
         </div>
-        <div class="type-footnotes"><span>TTF / OTF</span><p>即时字形 · 抗锯齿 · 可调字号<br>把字排成你喜欢的样子。</p><span>YOUR TYPE.<br>YOUR RHYTHM.</span></div>
+        <div class="type-footnotes"><span>TTF / OTF</span><p>实时解码 · 按需字形 · 随心换字体<br>字号、字重与抗锯齿，一起调到舒服。</p><span>YOUR TYPE.<br>YOUR RHYTHM.</span></div>
       </div>
     </section>
 
@@ -279,23 +354,25 @@
     </section>
 
     <section class="details-section section-width" aria-labelledby="details-heading">
-      <div class="details-heading reveal"><p class="eyebrow">GOOD TO KNOW</p><h2 id="details-heading">简单，也说清楚。</h2><p>功能说明依据 2026 年 10 月 8 日产品工作区源码。<br>实现、主机回归与真机验收，是不同的状态。</p></div>
+      <div class="details-heading reveal"><p class="eyebrow">GOOD TO KNOW</p><h2 id="details-heading">简单，也说清楚。</h2><p>功能说明依据 2026 年 10 月 9 日产品工作区源码。<br>实现、主机回归与真机验收，是不同的状态。</p></div>
       <div class="details-list reveal">
         <details><summary>微信读书能同步什么？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>当前提供手动阅读位置与新增阅读时长同步，以及仅下载云端位置。两端位置都有更新时，需要用户明确选择。个人批注暂存本机，不同步到云端。部分书籍的位置无法准确匹配时会停止同步，而不是猜测位置。云→设备的位置下载已有受控真机验证；设备→云的位置与时长上传仍在验收。</p></details>
         <details><summary>哪些本地书和牌组可以阅读？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>本地阅读支持 EPUB 与 PDF。EPUB 支持文字和有范围限制的 JPEG／PNG 插图，并不复现所有复杂网页排版。PDF 保留固定版式，复杂、超容量或缺少内嵌中文字体的文件可能无法正确打开。Anki 需导出兼容旧版本的 .apkg；导入后从本机新卡开始，不迁移桌面复习历史，不连接 AnkiWeb。</p></details>
-        <details><summary>这些展示是设备实拍吗？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>不是。书架与微信读书界面图由实际固件绘制函数在主机上生成，使用合成数据。阅读、字体、翻页和牌组交互为网页示意；外框也不是实物外观承诺。它们不代表屏幕光学效果、续航或实测延迟。具体功能仍需逐项真机验收。</p></details>
+        <details><summary>双指缩放怎样改变这一页？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>开发版中，EPUB／TXT 双指捏合调整字号，松手后从当前阅读位置重新排版；PDF 调整页面比例，以手势中心附近的内容为缩放参考。移动时可预览当前页面，松手后提交最终绘制；资源不足时可能只有松手后的结果。该功能尚未发布，实际延迟与残影需实体屏验收。</p></details>
+        <details><summary>这些展示是设备实拍吗？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>不是。书架、微信读书与阅读菜单界面图由实际固件绘制函数在主机上生成，使用合成数据。阅读、缩放、字体、翻页和牌组交互为网页示意；外框也不是实物外观承诺。它们不代表屏幕光学效果、续航或实测延迟。具体功能仍需逐项真机验收。</p></details>
       </div>
     </section>
 
-    <section class="closing">
+    <section class="closing" id="installation" aria-labelledby="installation-heading">
       <div class="section-width">
-        <p class="eyebrow reveal">A SMALL SCREEN. A BIG LITTLE WORLD.</p>
-        <h2 class="reveal">下一页，<br>留给自己。</h2>
-        <a class="closing-link reveal" href="#top">whiteos <img src="./assets/icons/arrow-right.svg" width="28" height="28" alt=""></a>
+        <p class="eyebrow reveal">INSTALL WHITEOS / 下一页，从这里开始</p>
+        <h2 class="reveal" id="installation-heading">安装 whiteos。<br>把阅读带到小纸。</h2>
+        <p class="closing-copy reveal">第一次安装，或更新已有固件。<br>一个专门的安装入口，连接到极简网页烧录。</p>
+        <a class="closing-link reveal" href="./install/">进入安装页 <img src="./assets/icons/arrow-right.svg" width="28" height="28" alt=""></a>
         <span class="closing-word" aria-hidden="true">whiteos</span>
       </div>
     </section>
   </main>
-  <footer class="site-footer section-width"><a class="brand" href="#top"><img src="./assets/icons/book-open.svg" width="22" height="22" alt=""><span>whiteos</span></a><span>小纸 Pico · 独立阅读固件</span><span>微信读书与 Anki 为各自品牌，本站非官方合作页面。</span><a href="./flash/">固件烧录</a><a href="./README.md">部署说明</a></footer>
+  <footer class="site-footer section-width"><a class="brand" href="#top"><img src="./assets/icons/book-open.svg" width="22" height="22" alt=""><span>whiteos</span></a><span>小纸 Pico · 独立阅读固件</span><span>微信读书与 Anki 为各自品牌，本站非官方合作页面。</span><a href="./install/">安装 whiteos</a><a href="./flash/">固件烧录</a></footer>
 </body>
 </html>
