@@ -1,4 +1,4 @@
-import { FlashError, requireSafe, validateSource, validateManifest, sha256, validateImage } from "./core.mjs";
+import { FlashError, requireSafe, validateSource, validateManifest, sha256, validateImage } from "./core.mjs?v=20261009-digest";
 
 async function download(url, limit) {
   const controller = new AbortController();

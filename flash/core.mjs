@@ -1,3 +1,5 @@
+import SparkMD5 from "./vendor/spark-md5.mjs";
+
 export const FLASH_SIZE = 0x1000000;
 export const APP_ADDRESS = 0x10000;
 export const APP_SIZE = 0x800000;
@@ -58,6 +60,11 @@ export function validateManifest(manifest) {
 export async function sha256(bytes) {
   const digest = await crypto.subtle.digest("SHA-256", bytes);
   return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+export function md5(bytes) {
+  const buffer = bytes.byteOffset === 0 && bytes.byteLength === bytes.buffer.byteLength
+    ? bytes.buffer : bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
+  return SparkMD5.ArrayBuffer.hash(buffer);
 }
 export function isBlank(bytes) { return bytes.every((value) => value === 0xff); }
 export function validatePartitions(bytes) {

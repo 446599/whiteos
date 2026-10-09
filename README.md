@@ -37,6 +37,10 @@
 
 烧录需要在支持 Web Serial 的电脑浏览器中通过 HTTPS 使用。普通浏览器也可以浏览介绍网页。
 
+分区与写入校验直接由设备计算摘要，避免串口整块读回造成停滞；校验逐段显示进度，单次无响应最多等待 15 秒。下载仍核对 SHA-256，分区不一致不会跳过检查。
+
+2026-10-09 已在电脑 Edge 通过网页完成同一台小纸 Pico 的 1.0.0 应用更新，写入内容与全部保护区域摘要检查通过，页面显示 100% 并发送重启指令。本次只验证 USB 网页更新流程；设备重启后的屏幕与功能验收仍待确认。
+
 ## 公开边界
 
 本仓库包含网页、公开固件镜像、发布清单及第三方许可，不包含设备数据、登录凭据、TF 文件或本地构建日志、ELF、map 文件。
@@ -48,5 +52,6 @@
 - Lucide 图标：`assets/icons/LICENSE` 和 `assets/icons/FEATHER-LICENSE`。
 - 固件合成界面来源许可：`assets/screens/LICENSE`。
 - 固定版本 esptool-js 及其依赖：`flash/vendor/` 内的许可证和 `versions.json`。
+- 本地 MD5 计算使用固定版本 spark-md5 3.0.2，许可保存在 `flash/vendor/spark-md5.LICENSE`。
 
 固件中的第三方组件与资源保留各自许可，见 `firmware/THIRD_PARTY_NOTICES.md` 和 `firmware/licenses/`；不将整个固件统一宣称为 Apache-2.0。
