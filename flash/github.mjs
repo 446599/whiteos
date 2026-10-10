@@ -1,4 +1,4 @@
-import { FlashError, requireSafe, validateSource, validateManifest, sha256, validateImage } from "./core.mjs?v=20261009-digest";
+import { FlashError, requireSafe, validateSource, validateManifest, sha256, validateImage } from "./core.mjs?v=20261010-release";
 
 async function download(url, limit) {
   const controller = new AbortController();
@@ -43,6 +43,20 @@ async function json(url, limit) {
 }
 export async function loadRelease(config) {
   const source = validateSource(config);
+  if (source.type === "release") {
+    const indexUrl = new URL(source.indexPath, import.meta.url);
+    const index = await json(indexUrl.href, 1024 * 1024);
+    const current = index?.latest;
+    requireSafe(index?.schema === 1 && current && /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(current.tag) &&
+      current.version === current.tag.slice(1) && current.manifestPath === `releases/${current.tag}/manifest.json` &&
+      current.releaseUrl === `https://github.com/${source.owner}/${source.repo}/releases/tag/${current.tag}`,
+    "SOURCE", "Release 发布索引无效。");
+    const manifestUrl = new URL(current.manifestPath, indexUrl);
+    const manifest = validateManifest(await json(manifestUrl.href, 32768));
+    requireSafe(manifest.version === current.version, "MANIFEST", "Release 与固件清单版本不一致。");
+    return { manifest, assetBase: new URL("./", manifestUrl).href, tag: current.tag,
+      releaseUrl: current.releaseUrl, source };
+  }
   let commit = source.ref;
   if (!/^[a-f0-9]{40}$/i.test(commit)) {
     const record = await json(`https://api.github.com/repos/${source.owner}/${source.repo}/commits/${encodeURIComponent(source.ref)}`, 65536);

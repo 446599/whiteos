@@ -8,7 +8,7 @@
   <title>whiteos · 把阅读，还给自己</title>
   <link rel="icon" href="./assets/icons/book-open.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css?v=20261009-screen-fit">
-  <script src="./script.js?v=20261009-real-screens" defer></script>
+  <script src="./script.js?v=20261010-anki" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">跳到正文</a>
@@ -68,13 +68,13 @@
       <a href="#reading"><span>03</span> PDF 阅读</a>
       <a href="#typography"><span>04</span> TTF 即时字体</a>
       <a href="#page-turn"><span>05</span> 翻页动画</a>
-      <a href="#anki"><span>06</span> Anki 牌库</a>
+      <a href="#anki"><span>06</span> Anki 卡组</a>
     </div>
 
     <section class="intro section-width">
       <p class="eyebrow reveal">LESS NOISE. MORE PAGES.</p>
       <h2 class="reveal">世界很热闹。<br>这里，只留下一页书。</h2>
-      <p class="intro-copy reveal">让手机里的书架来到墨水屏，让随身的文档找到自己的位置。<br class="desktop-break">换一种喜欢的字体，接着读；打开一副牌组，每天记住一点。</p>
+      <p class="intro-copy reveal">让手机里的书架来到墨水屏，让随身的文档找到自己的位置。<br class="desktop-break">换一种喜欢的字体，接着读；打开一套 Anki 卡组，每天记住一点。</p>
     </section>
 
     <section id="weread" class="weread-story" aria-labelledby="weread-heading">
@@ -295,15 +295,15 @@
     <section id="anki" class="anki-section" aria-labelledby="anki-heading">
       <div class="anki-layout section-width">
         <div class="anki-copy reveal">
-          <p class="eyebrow"><span class="section-number">05</span> ANKI 牌库 / A LITTLE EVERY DAY</p>
+          <p class="eyebrow"><span class="section-number">05</span> Anki 卡组 / A LITTLE EVERY DAY</p>
           <h2 id="anki-heading">读进去。<br><span>也记得住。</span></h2>
-          <p class="section-lead">让碎片时间，变成一点点积累。<br>导入自己的牌组，在墨水屏上专注回忆。</p>
+          <p class="section-lead">让碎片时间，变成一点点积累。<br>导入自己的 Anki 卡组，在墨水屏上专注回忆。</p>
           <ul class="feature-list"><li>兼容旧版 .apkg，本地离线导入</li><li>问答、挖空、静态单选与常见图片</li><li>四档评分、FSRS-6 每日复习</li><li>每日限额、学习统计与进度保存</li></ul>
-          <p class="feature-note">独立离线学习，不连接 AnkiWeb。原牌组复习历史不迁移，复杂脚本与音视频模板不支持。</p>
+          <p class="feature-note">独立离线学习，不连接 AnkiWeb。原 Anki 卡组复习历史不迁移，复杂脚本与音视频模板不支持。</p>
         </div>
         <div class="anki-capture reveal">
           <div class="capture-options" role="group" aria-label="Anki 真机截图">
-            <button type="button" data-anki-view="decks" aria-pressed="false">牌库</button>
+            <button type="button" data-anki-view="decks" aria-pressed="false">卡组</button>
             <button type="button" data-anki-view="front" aria-pressed="true">题面</button>
             <button type="button" data-anki-view="answer" aria-pressed="false">答案</button>
             <button type="button" data-anki-view="stats" aria-pressed="false">统计</button>
@@ -318,7 +318,7 @@
       <div class="details-heading reveal"><p class="eyebrow">GOOD TO KNOW</p><h2 id="details-heading">简单，也说清楚。</h2><p>阅读界面来自真实设备。<br>功能与使用范围，在这里说清楚。</p></div>
       <div class="details-list reveal">
         <details><summary>微信读书能同步什么？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>双向阅读进度同步，以及设备→云的新增阅读时间上传，均已验证成功。同步由你手动确认，也可以只取回云端位置。两端位置都有更新时，由你选择从哪里接着读。个人批注暂存本机，不同步到云端；无法准确匹配阅读位置时会停止同步，不猜测位置。</p></details>
-        <details><summary>哪些本地书和牌组可以阅读？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>本地阅读支持 EPUB 与 PDF。EPUB 支持文字和有范围限制的 JPEG／PNG 插图，并不复现所有复杂网页排版。PDF 保留固定版式，复杂、超容量或缺少内嵌中文字体的文件可能无法正确打开。Anki 需导出兼容旧版本的 .apkg；导入后从本机新卡开始，不迁移桌面复习历史，不连接 AnkiWeb。</p></details>
+        <details><summary>哪些本地书和 Anki 卡组可以阅读？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>本地阅读支持 EPUB 与 PDF。EPUB 支持文字和有范围限制的 JPEG／PNG 插图，并不复现所有复杂网页排版。PDF 保留固定版式，复杂、超容量或缺少内嵌中文字体的文件可能无法正确打开。Anki 需导出兼容旧版本的 .apkg；导入后从本机新卡开始，不迁移桌面复习历史，不连接 AnkiWeb。</p></details>
         <details><summary>双指缩放怎样改变这一页？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>双指缩放已发布。EPUB／TXT 捏合调整字号，松手后从当前阅读位置重新排版；PDF 调整页面比例，以手势中心附近的内容为缩放参考。移动时预览变化，松手后呈现清晰页面；资源不足时可能仅显示松手后的结果。实际响应与显示效果以设备为准。</p></details>
         <details><summary>这些图片来自真实设备吗？<img src="./assets/icons/plus.svg" width="20" height="20" alt=""></summary><p>书架、主页、EPUB、PDF、阅读菜单、字体和 Anki 均为 2026 年 10 月 9 日采集的真机帧缓冲截图，保留完整 684 × 1216 画面，使用原创示例内容。微信读书的三张图仍为固件主机渲染示意。手势与翻页动画由网页演示；截图不代表墨水屏的光学效果或刷新速度，网页设备外框也为示意。</p></details>
       </div>

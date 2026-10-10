@@ -307,7 +307,7 @@
   $("#turn-next").addEventListener("click", () => turn(1));
 
   const ankiViews = {
-    decks: "原创牌库 · 新卡与待复习数量",
+    decks: "原创 Anki 卡组 · 新卡与待复习数量",
     front: "原创问答 · 回忆后再看答案",
     answer: "同一张卡片 · 答案与四档评分",
     stats: "学习统计 · 本次采集未进行评分",

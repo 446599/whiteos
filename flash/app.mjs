@@ -1,7 +1,7 @@
-import { firmwareSource } from "./config.mjs?v=1.0.0-pinned";
-import { FlashError } from "./core.mjs?v=20261009-digest";
-import { loadRelease, downloadParts } from "./github.mjs?v=20261009-digest";
-import { flashDevice } from "./device.mjs?v=20261009-direct";
+import { firmwareSource } from "./config.mjs?v=20261010-release";
+import { FlashError } from "./core.mjs?v=20261010-release";
+import { loadRelease, downloadParts } from "./github.mjs?v=20261010-release";
+import { flashDevice } from "./device.mjs?v=20261010-release";
 
 const $ = (id) => document.getElementById(id);
 const buttons = [$("install"), $("update")];
@@ -38,7 +38,7 @@ async function run(mode) {
     state("选择设备", "请选择小纸 Pico 的 USB 串口。");
     // Request on the click's activation, before any downloads or asynchronous imports.
     port = await navigator.serial.requestPort({ filters: [{ usbVendorId: 0x303a }] });
-    state("下载固件", "从固定的 GitHub 发布提交加载并校验完整发布包。", 2);
+    state("下载固件", "从已锁定版本的发布源加载并校验完整发布包。", 2);
     const images = await downloadParts(release, (fraction) =>
       state("下载固件", "正在检查 SHA-256 与镜像布局。", 2 + fraction * 15));
     const result = await flashDevice({
@@ -73,8 +73,8 @@ async function initialize() {
   try {
     release = await loadRelease(firmwareSource);
     $("version").textContent = release.manifest.version;
-    $("source").textContent = `${release.source.owner}/${release.source.repo} · ${release.commit.slice(0, 7)}`;
-    $("source").href = `https://github.com/${release.source.owner}/${release.source.repo}/tree/${release.commit}`;
+    $("source").textContent = `${release.source.owner}/${release.source.repo} · ${release.tag || release.commit.slice(0, 7)}`;
+    $("source").href = release.releaseUrl || `https://github.com/${release.source.owner}/${release.source.repo}/tree/${release.commit}`;
     $("source").hidden = false;
     $("source-empty").hidden = true;
     state(supported ? "可以开始" : "固件已识别",

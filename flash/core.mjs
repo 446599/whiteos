@@ -24,6 +24,13 @@ export function requireSafe(condition, code, message) {
   if (!condition) throw new FlashError(code, message);
 }
 export function validateSource(source) {
+  if (source?.type === "release") {
+    requireSafe(/^[A-Za-z0-9-]{1,39}$/.test(source.owner) &&
+      /^[A-Za-z0-9_.-]{1,100}$/.test(source.repo) &&
+      source.indexPath === "../firmware/releases.json",
+    "SOURCE", "Release 固件源配置无效。");
+    return source;
+  }
   requireSafe(source && /^[A-Za-z0-9-]{1,39}$/.test(source.owner) &&
     /^[A-Za-z0-9_.-]{1,100}$/.test(source.repo) &&
     typeof source.ref === "string" && source.ref.length > 0 && source.ref.length <= 200 &&

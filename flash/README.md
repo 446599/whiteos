@@ -6,7 +6,7 @@ whiteos **1.0.0** 首版固件已发布。支持 Web Serial 的电脑浏览器�
 
 ## 固件源
 
-当前发布包位于本仓库的 `firmware/` 目录，包含：
+正式发布包为 GitHub Release 附件，烧录所需文件包含：
 
 - `manifest.json`
 - `bootloader.bin`
@@ -17,14 +17,16 @@ whiteos **1.0.0** 首版固件已发布。支持 Web Serial 的电脑浏览器�
 
 ```js
 export const firmwareSource = {
+  type: "release",
   owner: "446599",
   repo: "whiteos",
-  ref: "63f53e88c6d06c75f76c6ad9756257379ed25174",
-  manifestPath: "firmware/manifest.json",
+  indexPath: "../firmware/releases.json",
 };
 ```
 
-当前直接固定到 1.0.0 发布提交，下载无需请求匿名 GitHub API，避免接口限流。后续发布更新时更换此 SHA。也可使用单独的公开固件发布仓库，不配置私有源码仓库或 GitHub token；使用分支或标签时会先解析为固定提交，再下载同一提交的清单与镜像。
+网页不直接跨域读取 Release 附件，也不请求匿名 GitHub API。部署工作流读取公开仓库正式 Release，核对附件与清单，再同步到 Pages 的 `firmware/releases/vX.Y.Z/`。`firmware/releases.json` 指向最高正式版本；一旦开始操作，清单和三份镜像锁定在同一版本目录。下载失败不会退回其他版本。旧正式版本目录也会保留在每次部署中。
+
+发布、编辑或删除 Release，以及更新 main 或手动执行工作流，都会重新部署。草稿和预发布不会进入稳定烧录源。详细附件格式与步骤见 [Release 发布格式](../RELEASE_FORMAT.md)。原提交固定源读取逻辑仅保留作显式配置回滚，不作为自动降级。
 
 固件清单格式：
 
