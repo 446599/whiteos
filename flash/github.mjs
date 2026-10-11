@@ -55,7 +55,8 @@ export async function loadRelease(config) {
     const manifest = validateManifest(await json(manifestUrl.href, 32768));
     requireSafe(manifest.version === current.version, "MANIFEST", "Release 与固件清单版本不一致。");
     return { manifest, assetBase: new URL("./", manifestUrl).href, tag: current.tag,
-      releaseUrl: current.releaseUrl, source };
+      releaseUrl: current.releaseUrl,
+      releaseNotes: typeof current.releaseNotes === "string" ? current.releaseNotes : "", source };
   }
   let commit = source.ref;
   if (!/^[a-f0-9]{40}$/i.test(commit)) {

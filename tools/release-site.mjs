@@ -92,7 +92,8 @@ export async function prepareReleaseSite({ repo, releases, output, root, downloa
     await mkdir(folder, { recursive: true });
     for (const [name, bytes] of files) await writeFile(path.join(folder, name), bytes);
     const entry = { tag, version, releaseUrl, archiveUrl: archive.browser_download_url,
-      publishedAt: release.published_at, manifestPath: `releases/${tag}/manifest.json` };
+      publishedAt: release.published_at, manifestPath: `releases/${tag}/manifest.json`,
+      releaseNotes: typeof release.body === "string" ? release.body : "" };
     entries.push(entry);
     console.log(`Validated ${tag}: three images and manifest from Release assets`);
   }

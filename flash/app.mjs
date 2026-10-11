@@ -1,6 +1,6 @@
 import { firmwareSource } from "./config.mjs?v=20261010-release";
 import { FlashError } from "./core.mjs?v=20261010-release";
-import { loadRelease, downloadParts } from "./github.mjs?v=20261010-release";
+import { loadRelease, downloadParts } from "./github.mjs?v=20261011-notes";
 import { flashDevice } from "./device.mjs?v=20261010-release";
 
 const $ = (id) => document.getElementById(id);
@@ -77,6 +77,9 @@ async function initialize() {
     $("source").href = release.releaseUrl || `https://github.com/${release.source.owner}/${release.source.repo}/tree/${release.commit}`;
     $("source").hidden = false;
     $("source-empty").hidden = true;
+    $("release-notes-version").textContent = release.manifest.version;
+    $("release-notes-body").textContent = release.releaseNotes?.trim() || "该版本暂未提供更新说明。";
+    $("release-notes").hidden = false;
     state(supported ? "可以开始" : "固件已识别",
       supported ? "尚未连接设备。" : "请用电脑 Chrome 或 Edge 打开此页进行烧录。", 0, "ready");
   } catch (error) {
