@@ -1,6 +1,6 @@
 import { firmwareSource } from "./config.mjs?v=20261010-release";
 import { FlashError } from "./core.mjs?v=20261010-release";
-import { loadRelease, downloadParts } from "./github.mjs?v=20261011-notes";
+import { loadRelease, downloadParts } from "./github.mjs?v=20261011-history";
 import { flashDevice } from "./device.mjs?v=20261010-release";
 
 const $ = (id) => document.getElementById(id);
@@ -79,6 +79,23 @@ async function initialize() {
     $("source-empty").hidden = true;
     $("release-notes-version").textContent = release.manifest.version;
     $("release-notes-body").textContent = release.releaseNotes?.trim() || "该版本暂未提供更新说明。";
+    for (const item of release.history || []) {
+      const details = document.createElement("details");
+      details.className = "previous-release";
+      const summary = document.createElement("summary");
+      summary.textContent = `${item.version} · 更新说明`;
+      const body = document.createElement("p");
+      body.className = "release-note-text";
+      body.textContent = item.releaseNotes.trim() || "该版本暂未提供更新说明。";
+      const link = document.createElement("a");
+      link.className = "release-note-link";
+      link.textContent = "查看 Release";
+      link.href = item.releaseUrl;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      details.append(summary, body, link);
+      $("release-notes-history").append(details);
+    }
     $("release-notes").hidden = false;
     state(supported ? "可以开始" : "固件已识别",
       supported ? "尚未连接设备。" : "请用电脑 Chrome 或 Edge 打开此页进行烧录。", 0, "ready");

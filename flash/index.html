@@ -8,8 +8,8 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' https://api.github.com https://raw.githubusercontent.com; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>whiteos · 固件烧录</title>
   <link rel="icon" href="../assets/icons/book-open.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./flash.css?v=20261011-notes">
-  <script type="module" src="./app.mjs?v=20261011-notes"></script>
+  <link rel="stylesheet" href="./flash.css?v=20261011-history">
+  <script type="module" src="./app.mjs?v=20261011-history"></script>
 </head>
 <body>
   <header class="topbar">
@@ -46,6 +46,7 @@
     <section class="release-notes" id="release-notes" aria-labelledby="release-notes-title" hidden>
       <div class="release-notes-heading"><h2 id="release-notes-title">版本更新说明</h2><span id="release-notes-version"></span></div>
       <p id="release-notes-body"></p>
+      <div id="release-notes-history" aria-label="历史版本更新说明"></div>
     </section>
     <noscript><p class="noscript">烧录需要启用 JavaScript。当前不会连接或写入设备。</p></noscript>
   </main>

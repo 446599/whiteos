@@ -54,8 +54,17 @@ export async function loadRelease(config) {
     const manifestUrl = new URL(current.manifestPath, indexUrl);
     const manifest = validateManifest(await json(manifestUrl.href, 32768));
     requireSafe(manifest.version === current.version, "MANIFEST", "Release 与固件清单版本不一致。");
+    const seen = new Set([current.tag]);
+    const history = (Array.isArray(index.releases) ? index.releases : []).filter((item) => {
+      if (!item || seen.has(item.tag) || typeof item.tag !== "string" ||
+          !/^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(item.tag) ||
+          item.version !== item.tag.slice(1) || typeof item.releaseNotes !== "string" ||
+          item.releaseUrl !== `https://github.com/${source.owner}/${source.repo}/releases/tag/${item.tag}`) return false;
+      seen.add(item.tag);
+      return true;
+    }).map(({ version, releaseUrl, releaseNotes }) => ({ version, releaseUrl, releaseNotes }));
     return { manifest, assetBase: new URL("./", manifestUrl).href, tag: current.tag,
-      releaseUrl: current.releaseUrl,
+      releaseUrl: current.releaseUrl, history,
       releaseNotes: typeof current.releaseNotes === "string" ? current.releaseNotes : "", source };
   }
   let commit = source.ref;

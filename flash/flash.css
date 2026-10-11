@@ -52,7 +52,10 @@ progress::-moz-progress-bar { background: var(--green); }
 .release-notes { margin-top: 24px; padding-top: 23px; border-top: 1px solid var(--line); }
 .release-notes-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
 #release-notes-version { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
-#release-notes-body { margin: 14px 0 0; font-size: 14px; line-height: 1.9; white-space: pre-wrap; overflow-wrap: anywhere; }
+#release-notes-body, .release-note-text { margin: 14px 0 0; font-size: 14px; line-height: 1.9; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink); }
+.previous-release { padding-top: 12px; border-top: 1px solid var(--line); }
+.previous-release summary { font-size: 14px; color: var(--ink); min-height: 44px; }
+.release-note-link { display: inline-block; margin-top: 12px; text-decoration: underline; text-underline-offset: 4px; }
 details { font-size: 12px; color: var(--muted); margin-top: 18px; }
 summary { width: fit-content; cursor: pointer; padding-block: 8px; }
 ol { margin: 8px 0; padding-left: 20px; }
