@@ -283,14 +283,14 @@
     function draw(now) {
       const progress = Math.max(0, Math.min(1, (now - started) / duration));
       const covered = Math.round(width * progress);
-      const x = direction > 0 ? 0 : width - covered;
+      const x = direction > 0 ? width - covered : 0;
       state.x = x;
       state.covered = covered;
       turnContext.drawImage(previous, 0, 0);
       // Pixels stay in place; a single full-height boundary sweeps horizontally.
       if (covered) turnContext.drawImage(target, x, 0, covered, height, x, 0, covered, height);
       if (progress > 0 && progress < 1) {
-        const edge = direction > 0 ? covered : width - covered;
+        const edge = direction > 0 ? width - covered : covered;
         const ripple = Math.min(16, edge, width - edge);
         turnContext.fillStyle = `rgba(70,70,70,${0.14 * Math.sin(progress * Math.PI)})`;
         turnContext.fillRect(edge - ripple, 0, ripple * 2, height);

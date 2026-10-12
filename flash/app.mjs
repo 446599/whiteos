@@ -48,8 +48,8 @@ async function run(mode) {
     });
     needsReconnect = result.closeFailed;
     state(mode === "install" ? "全新烧录完成" : "固件更新完成",
-      result.closeFailed ? "镜像与保护区域校验通过。串口未正常释放，请拔插 USB 并刷新页面。" :
-        result.resetFailed ? "镜像与保护区域校验通过。请手动重新启动设备。" : "镜像与保护区域校验通过，设备已发送重启指令。",
+      "镜像与保护区域校验通过。请重新插拔数据线以重启设备。" +
+        (result.closeFailed ? "串口未正常释放，重新插拔后请刷新页面。" : ""),
       100, "success");
   } catch (error) {
     needsReconnect = Boolean(error?.needsReconnect);
