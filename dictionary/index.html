@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f5ee">
+  <meta name="description" content="在浏览器中将 MDX、StarDict、CSV、JSON 和 TXT/TSV 转换为小纸 Pico 词典。文件留在本机，无需安装软件。">
+  <title>词典转换 · whiteos</title>
+  <link rel="icon" href="../assets/icons/book-open.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="./dictionary.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <header class="site-header">
+    <a class="brand" href="../"><img src="../assets/icons/book-open.svg" width="26" height="26" alt=""><span>whiteos</span></a>
+    <nav class="converter-nav" aria-label="词典页导航"><a href="../manual/">使用说明</a><a href="../">返回首页</a></nav>
+  </header>
+  <main id="main" class="converter-main section-width">
+    <p class="eyebrow">小纸 Pico / DICTIONARY</p>
+    <h1>让词典，也来到小纸。</h1>
+    <p class="converter-lead">选一份词库，转换后传到设备。<br>全程在你的浏览器内完成，文件不会上传。</p>
+    <section class="converter-panel" aria-labelledby="convert-heading">
+      <h2 id="convert-heading">转换词典</h2>
+      <div id="drop-zone" class="drop-zone">
+        <img src="../assets/icons/book-open.svg" width="32" height="32" alt="">
+        <label for="files">选择词典文件</label>
+        <input id="files" type="file" multiple accept=".mdx,.mdd,.ifo,.idx,.dict,.gz,.dz,.syn,.csv,.json,.txt,.tsv" aria-describedby="file-help error">
+        <p id="file-help">也可以把文件拖到这里。StarDict 请一起选择同名的 .ifo、.idx、.dict 和可选的 .syn。</p>
+      </div>
+      <ul id="file-list" aria-label="已选文件"></ul>
+      <p id="selection-note" class="hint">支持 MDX、StarDict、CSV、JSON、TXT / TSV；每次转换一份词库，总文件大小不超过 128 MiB。</p>
+      <p id="error" class="converter-error" role="alert"></p>
+      <div class="converter-actions">
+        <button id="convert" class="primary-button" type="button" disabled>开始转换</button>
+        <button id="cancel" class="secondary-button" type="button" hidden>取消</button>
+      </div>
+      <div id="progress-region" hidden>
+        <p id="status" role="status" aria-live="polite"></p>
+        <progress id="progress" aria-label="词典转换进度"></progress>
+      </div>
+      <section id="result" class="converter-result" aria-labelledby="result-heading" hidden>
+        <h3 id="result-heading" tabindex="-1">转换完成</h3>
+        <p id="result-summary"></p>
+        <p id="result-details" class="hint"></p>
+        <a id="download" class="primary-button" download="dictionary.pdict">下载 dictionary.pdict <img src="../assets/icons/arrow-right.svg" width="20" height="20" alt=""></a>
+        <p>在小纸上打开「Wi-Fi 传书」，进入设备给出的地址，点「传词典」上传下载的文件。<br>也可以复制到 TF 卡根目录的 <code>DICT/dictionary.pdict</code>。</p>
+      </section>
+      <noscript><p class="converter-error">请启用 JavaScript 后使用浏览器转换。</p></noscript>
+    </section>
+    <section class="converter-guide" aria-labelledby="formats-heading">
+      <h2 id="formats-heading">选文件时，看这里。</h2>
+      <dl>
+        <div><dt>MDX</dt><dd>选择 .mdx。支持 MDX 1.x / 2.x 的未压缩和 zlib 文本词库；保留文字释义，去掉网页样式。MDD 中的图片和发音不导入。LZO、MDX 3 和需要注册密钥的词库暂不支持。</dd></div>
+        <div><dt>StarDict</dt><dd>一起选同名的 .ifo、.idx、.dict；支持 .idx.gz、.dict.dz 和 .syn。支持 2.4.2 / 3.0.0、32 / 64 位索引和 m/h/x 文本字段。</dd></div>
+        <div><dt>CSV / JSON</dt><dd>使用 UTF-8。CSV 为「词头、释义」两列；JSON 可用 <code>{"hello":"你好"}</code>，或 <code>[{"word":"hello","definition":"你好"}]</code>。</dd></div>
+        <div><dt>TXT / TSV</dt><dd>使用 UTF-8，每行「词头 + Tab + 释义」。Tab 是制表符；空格无法替代它。</dd></div>
+      </dl>
+      <p class="hint">重复词头保留第一条；空释义及超过 127 字节的词头会跳过。超过 4095 字节的释义保留节选并标注。转换结果不超过 128 MiB，词库解压数据不超过 256 MiB。大型词库建议使用电脑浏览器。</p>
+      <p class="hint">首次转换会下载约 13 MB 的本地转换引擎，请稍等。转换时可以切换标签页；关闭页面会中止转换。</p>
+      <p class="hint">生成的索引词典需要支持 <code>.pdict</code> 的固件；已安装此前的词典优化固件即可使用。</p>
+    </section>
+  </main>
+  <footer class="site-footer section-width"><a class="brand" href="../"><img src="../assets/icons/book-open.svg" width="22" height="22" alt=""><span>whiteos</span></a><a href="../manual/">使用说明</a><a href="./README.md">转换说明与开源许可</a></footer>
+</body>
+</html>

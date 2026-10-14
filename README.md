@@ -6,6 +6,7 @@
 - 安装入口：<https://446599.github.io/whiteos/install/>
 - 烧录界面：<https://446599.github.io/whiteos/flash/>
 - 使用说明：<https://446599.github.io/whiteos/manual/>
+- 词典转换：<https://446599.github.io/whiteos/dictionary/>
 
 纯静态 HTML、CSS 和 JavaScript，使用 GitHub Actions 从 `main` 构建并部署到 GitHub Pages。正式 Release 附件在部署时校验并同步为同站下载文件，无需数据库或后端。
 
@@ -22,6 +23,12 @@
 翻页演示使用真实相邻页 `page-turn-before.png` 与 `page-turn-after.png`。一条全高竖向水波纹横向扫过：下一页从左向右、上一页从右向左，新内容原位覆盖，不平移。手势和翻页动画为网页示意，不证明实体屏光学波形、速度或残影。
 
 截图记录见 `assets/screens/capture-manifest.json`，公开内容与字体许可见 `assets/screens/CONTENT_PERMISSION.md` 和 `assets/screens/licenses/`。仍待补的三张微信读书真屏素材见 [截图清单](./SCREENSHOT_CHECKLIST.md)。
+
+## 词典转换
+
+`dictionary/` 在浏览器后台运行已验证的 Python 转换程序，将 MDX、StarDict、CSV、JSON 和 TXT/TSV 转成 `dictionary.pdict`。用户词典只在浏览器内存中处理，没有上传或持久化。选择文件、转换、下载后，用设备 Wi-Fi 传书页的「传词典」上传，或复制到 TF 卡 `DICT/dictionary.pdict`。需要支持 `.pdict` 的词典优化固件；已有 TSV 词典仍可使用。
+
+转换引擎和依赖全部同站托管，首次约下载 13 MB；支持进度、取消和重试。MDX 图片/发音、LZO、MDX 3 和注册密钥不支持。浏览器文件合计及输出上限 128 MiB，解压后的 StarDict 上限 256 MiB。格式、源码、固定依赖、许可和回归入口见 [词典转换说明](./dictionary/README.md)。
 
 ## 网页烧录
 

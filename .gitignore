@@ -2,3 +2,5 @@
 node_modules/
 *.log
 _site/
+__pycache__/
+*.pyc

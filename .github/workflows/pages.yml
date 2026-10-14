@@ -28,6 +28,8 @@ jobs:
         with:
           node-version: '22'
       - uses: actions/configure-pages@v5
+      - name: Verify website and dictionary selection
+        run: node --test tests/*.test.mjs
       - name: Validate and mirror stable Release assets
         run: node tools/release-site.mjs _site
         env:
