@@ -36,3 +36,8 @@
   .install-final { display: block; padding: 20px; }
   .install-final a { margin-top: 8px; }
 }
+
+.site-header .install-nav { position: static; inset: auto; padding: 0; border: 0; background: transparent; flex-direction: row; display: flex; align-items: center; gap: 22px; font-size: 13px; }
+.site-header .install-nav > a { padding: 0; display: inline-flex; align-items: center; min-height: 44px; }
+.install-nav > a:hover { color: var(--red); }
+@media (max-width: 700px) { .site-header .install-nav { gap: 14px; font-size: 12px; } .install-back { font-size: 12px; gap: 6px; } }

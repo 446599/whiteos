@@ -8,13 +8,13 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' https://api.github.com https://raw.githubusercontent.com; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>whiteos · 固件烧录</title>
   <link rel="icon" href="../assets/icons/book-open.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./flash.css?v=20261011-history">
+  <link rel="stylesheet" href="./flash.css?v=20261014-manual">
   <script type="module" src="./app.mjs?v=20261012-reconnect"></script>
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="../index.html"><img src="../assets/icons/book-open.svg" width="23" height="23" alt=""><span>whiteos</span></a>
-    <span class="tool-name">固件烧录</span>
+    <nav class="topbar-links" aria-label="烧录页导航"><a href="../">介绍页</a><a href="../manual/">使用说明</a></nav>
   </header>
   <main>
     <div class="heading">
@@ -37,6 +37,7 @@
       </button>
     </div>
     <p class="safety">全新烧录包含启动程序与分区表；更新仅写应用。<br>均不整片擦除，不操作 TF 卡或 PMU 标定。</p>
+    <p class="manual-link">安装后，从<a href="../manual/">使用说明</a>了解传书、阅读与系统设置。</p>
     <section class="status-area" aria-label="烧录状态">
       <div class="status-heading"><span class="status-dot" id="status-dot" aria-hidden="true"></span><h2 id="status-title" role="status" aria-live="polite">正在检查固件源</h2><output id="percent" aria-label="完成百分比">0%</output></div>
       <progress id="progress" max="100" value="0" aria-label="烧录进度"></progress>
@@ -50,6 +51,6 @@
     </section>
     <noscript><p class="noscript">烧录需要启用 JavaScript。当前不会连接或写入设备。</p></noscript>
   </main>
-  <footer><span>whiteos</span><span>USB · Web Serial</span></footer>
+  <footer><span>whiteos</span><a href="../manual/">使用说明</a><span>USB · Web Serial</span></footer>
 </body>
 </html>

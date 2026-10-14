@@ -5,10 +5,13 @@
 - 介绍网页：<https://446599.github.io/whiteos/>
 - 安装入口：<https://446599.github.io/whiteos/install/>
 - 烧录界面：<https://446599.github.io/whiteos/flash/>
+- 使用说明：<https://446599.github.io/whiteos/manual/>
 
 纯静态 HTML、CSS 和 JavaScript，使用 GitHub Actions 从 `main` 构建并部署到 GitHub Pages。正式 Release 附件在部署时校验并同步为同站下载文件，无需数据库或后端。
 
 ## 内容
+
+中文使用说明共 12 章，涵盖入门、传书、阅读、微信读书、Anki 和系统设置，支持本地搜索、手机目录及打印。介绍页、安装入口和烧录页均可直接跳转；`manual/` 随 Pages 构建一起发布。
 
 介绍微信读书双向进度与阅读时间同步、本地 EPUB 流式阅读与 PDF、阅读菜单、已发布的双指缩放、TTF／OTF 实时解码、翻页动画和离线 Anki。功能状态以网页中的说明为准；线上同步、真机兼容性及设备性能不由网页动画证明。
 
@@ -56,3 +59,7 @@
 - 本地 MD5 计算使用固定版本 spark-md5 3.0.2，许可保存在 `flash/vendor/spark-md5.LICENSE`。
 
 固件中的第三方组件与资源保留各自许可，见 `firmware/THIRD_PARTY_NOTICES.md` 和 `firmware/licenses/`；不将整个固件统一宣称为 Apache-2.0。
+
+## 网页维护验证
+
+`node --test tests/release-site.test.mjs` 验证发布白名单、说明书资源复制与 Release 校验。具有 Playwright 的开发环境可运行 `node tests/navigation.cjs`，检查项目路径下的介绍、安装、烧录、说明书互相跳转及五种屏幕尺寸；`PICO_SITE_BROWSER` 可指定已有 Chromium 浏览器。测试不访问设备，测试文件不进入 Pages 发布产物。

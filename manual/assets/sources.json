@@ -1,0 +1,48 @@
+{
+  "capture_date": "2026-10-09",
+  "source": "Existing publication-reviewed device framebuffer captures; full frame preserved, not optical panel photography.",
+  "content_permission": "CONTENT_PERMISSION.md",
+  "license": "LICENSE",
+  "images": [
+    {
+      "file": "anki-answer.png",
+      "title": "Anki 答案",
+      "width": 684,
+      "height": 1216,
+      "sha256": "e1d722c7652bb614804ea6737723772a8f1c6c9b18dacb1d5e6ca7a8ea7ae282",
+      "source": "device_framebuffer_via_serial_SHOT",
+      "publication_review": "approved_visual_and_privacy_review",
+      "alterations": "none; PGM to lossless PNG, full frame preserved"
+    },
+    {
+      "file": "menu-layout.png",
+      "title": "排版菜单",
+      "width": 684,
+      "height": 1216,
+      "sha256": "d44f161b12b15c2db050f3c0aaee8eb3eb055c369c2e6e31cec03ad38f113455",
+      "source": "device_framebuffer_via_serial_SHOT",
+      "publication_review": "approved_visual_and_privacy_review",
+      "alterations": "none; PGM to lossless PNG, full frame preserved"
+    },
+    {
+      "file": "home.png",
+      "title": "主页（可选）",
+      "width": 684,
+      "height": 1216,
+      "sha256": "72ff83bd2c582f9591f91f1055219dd8de8d4f3a57b8bdb03971466ebf8a2cb1",
+      "source": "device_framebuffer_via_serial_SHOT",
+      "publication_review": "approved_visual_and_privacy_review",
+      "alterations": "none; PGM to lossless PNG, full frame preserved"
+    },
+    {
+      "file": "pdf-zoom.png",
+      "title": "PDF 放大（可选）",
+      "width": 684,
+      "height": 1216,
+      "sha256": "106e90747585dddba6a28428b3c5087791f929fe7d19b394f78b713e62f4c61b",
+      "source": "device_framebuffer_via_serial_SHOT",
+      "publication_review": "approved_visual_and_privacy_review",
+      "alterations": "none; PGM to lossless PNG, full frame preserved"
+    }
+  ]
+}

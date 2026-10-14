@@ -45,7 +45,7 @@ export async function prepareReleaseSite({ repo, releases, output, root, downloa
   if (!releases.length) throw new Error("No stable firmware Release found");
   // Only explicitly public site files enter the deployment artifact.
   await mkdir(output, { recursive: true });
-  for (const name of ["index.html", "styles.css", "script.js", "assets", "flash", "install", ".nojekyll", "README.md", "SCREENSHOT_CHECKLIST.md", "RELEASE_FORMAT.md"]) {
+  for (const name of ["index.html", "styles.css", "script.js", "assets", "flash", "install", "manual", ".nojekyll", "README.md", "SCREENSHOT_CHECKLIST.md", "RELEASE_FORMAT.md"]) {
     await cp(path.join(root, name), path.join(output, name), { recursive: true });
   }
   await mkdir(path.join(output, "firmware"), { recursive: true });

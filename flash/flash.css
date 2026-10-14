@@ -71,3 +71,13 @@ footer { width: min(100% - 48px, 580px); margin: 0 auto 28px; display: flex; jus
   .actions { gap: 10px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+
+/* Chinese: Manual links remain separate from flash actions. English: navigation-only additions. */
+.topbar-links { display: flex; align-items: center; gap: 20px; font-size: 13px; }
+.topbar-links a { display: inline-flex; align-items: center; min-height: 44px; }
+.topbar-links a:hover, footer a:hover { color: var(--green); }
+.manual-link { margin: -10px 0 26px; font-size: 13px; color: var(--muted); }
+.manual-link a { margin-inline: 4px; color: var(--green); text-decoration: underline; text-underline-offset: 4px; }
+footer { align-items: center; gap: 12px; flex-wrap: wrap; }
+footer a { display: inline-flex; align-items: center; min-height: 44px; }
+@media (max-width: 600px) { .topbar-links { gap: 16px; font-size: 12px; } }

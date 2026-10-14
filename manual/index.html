@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f4ed">
+  <meta name="description" content="whiteos 小纸 Pico 中文使用说明：开机操作、Wi-Fi 与 USB 传书、EPUB/TXT/PDF 阅读、微信读书、Anki、备忘录和系统设置。">
+  <title>whiteos 使用说明 · 小纸 Pico</title>
+  <link rel="icon" href="./assets/book.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./manual.css">
+  <script src="./manual.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#content">跳到说明书正文</a>
+  <header class="topbar">
+    <a class="brand" href="#top"><img src="./assets/book.svg" width="25" height="25" alt=""><span>whiteos</span><span class="brand-divider"></span><span class="brand-sub">使用说明</span></a>
+    <div class="topbar-actions"><span class="edition">小纸 Pico · 4.7″</span><button class="print-button" id="print-manual" type="button" hidden>打印 / 保存 PDF</button></div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" aria-label="说明书导航">
+      <details class="toc" id="toc" open>
+        <summary>浏览目录 <span aria-hidden="true">＋</span></summary>
+        <div class="toc-body">
+          <p class="toc-label">从这里开始</p>
+          <nav aria-label="章节目录">
+            <a href="#start"><span>01</span>第一次使用</a>
+            <a href="#controls"><span>02</span>按键与手势</a>
+            <a href="#transfer"><span>03</span>把文件放进小纸</a>
+            <a href="#library"><span>04</span>书架与继续阅读</a>
+            <p class="toc-label">阅读与学习</p>
+            <a href="#reading"><span>05</span>文字阅读与批注</a>
+            <a href="#pdf"><span>06</span>PDF 阅读</a>
+            <a href="#weread"><span>07</span>微信读书</a>
+            <a href="#anki"><span>08</span>Anki 学习</a>
+            <p class="toc-label">日常与设置</p>
+            <a href="#memos"><span>09</span>备忘录与画板</a>
+            <a href="#daily"><span>10</span>闹钟、待办与天气</a>
+            <a href="#settings"><span>11</span>系统设置</a>
+            <a href="#faq"><span>12</span>遇到问题时</a>
+          </nav>
+          <div class="toc-note"><span class="tiny-rule"></span><p>按你要做的事查找。<br>不用从头读完。</p><a href="#directory">TF 卡目录速查 ↗</a></div>
+        </div>
+      </details>
+    </aside>
+
+    <main id="content">
+      <div class="document-bar"><span class="document-kicker">WHITEOS / USER GUIDE</span><nav aria-label="说明书快捷导航"><a href="../">介绍页</a><a href="../flash/">固件烧录</a><a href="#faq">遇到问题？</a></nav></div>
+      <form class="search" id="manual-search" role="search" hidden>
+        <label class="sr-only" for="search-input">搜索说明书</label>
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg>
+        <input type="search" id="search-input" placeholder="想做什么？试试「传书」「字体」「同步」" autocomplete="off" maxlength="80" aria-controls="search-results">
+        <button type="button" id="clear-search" aria-label="清空搜索" hidden>清空</button>
+      </form>
+      <div class="search-results" id="search-results" hidden><p id="search-status" role="status"></p><ul id="search-list"></ul></div>
+
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy"><p class="eyebrow"><span class="status-dot"></span> 一份随手可查的说明书</p><h1 id="hero-title">把小纸<br>用顺手<span>。</span></h1><p class="hero-lead">从放进第一本书，到找到舒服的排版。<br>这里用简单的话，把每一步讲清楚。</p><a class="primary-link" href="#start">从第一次使用开始 <span aria-hidden="true">↗</span></a><div class="hero-meta"><span>适用 whiteos 1.1.x</span><span>整理于 2026.10.14</span></div></div>
+        <figure class="hero-figure"><div class="paper-device"><img src="./assets/home.png" width="684" height="1216" alt="whiteos 概览页面，包含继续阅读、时钟、闹钟和待办"><div class="device-keys" aria-hidden="true"><span>‹</span><span>○</span><span>›</span></div></div><figcaption>小纸 Pico · 概览界面</figcaption></figure>
+      </section>
+
+      <nav class="quick-paths" aria-label="常用操作"><a href="#transfer"><span>我想</span><strong>放几本书进去</strong><i aria-hidden="true">↗</i></a><a href="#reading"><span>我想</span><strong>调舒服一点</strong><i aria-hidden="true">↗</i></a><a href="#weread"><span>我想</span><strong>接着读微信读书</strong><i aria-hidden="true">↗</i></a></nav>
+      <div class="version-note"><strong>先认一下版本。</strong>这是 whiteos 产品固件的说明，不是原厂演示程序的说明。可在「设置 → 设备信息」查看版本。旧版本的入口和功能可能不同；配图为 2026 年 10 月 9 日采集的设备帧缓冲画面，部分菜单以当前设备为准。</div>
+
+      <section class="chapter" id="start" data-keywords="入门 开机 初次 开始 SD卡 TF卡 安装" aria-labelledby="start-title">
+        <header class="chapter-heading"><span class="chapter-number">01</span><div><p class="eyebrow">GET STARTED</p><h2 id="start-title">第一次使用</h2></div></header>
+        <p class="chapter-lead">先准备 TF 卡，再放入一本书，剩下的边用边熟悉。</p>
+        <ol class="steps"><li><div><h3>准备好存储卡</h3><p>本地书籍、字体、Anki 卡组和备忘录主要放在 TF 卡上。设备支持 FAT16、FAT32 和 exFAT。已有可用的卡可以继续使用，插卡不会自动格式化。</p></div></li><li><div><h3>开机，认一下底栏</h3><p>按电源键开机。底栏的「概览」是主页，「书架」用来找书，「应用」放着学习和日常工具，「设置」用来调整设备。主页的「继续阅读」会打开上次的书和已保存位置。</p></div></li><li><div><h3>放入第一本书</h3><p>将 EPUB、PDF 或 TXT 放进 TF 卡的 <code>books</code> 文件夹，再进入书架点击「扫描」。也可以通过 <a href="#transfer">Wi-Fi 网页或 USB 磁盘传书</a>。</p></div></li><li><div><h3>点开书，开始读</h3><p>阅读时，左键上一页，右键下一页，中键打开阅读工具。读完短按电源键锁屏；下次再按，回到刚才的页面。</p></div></li></ol>
+        <div class="callout"><span class="callout-label">先做一件小事</span><p>检查设备日期和时间。到「设置 → 设备信息 → 日期时间」调整后，点「保存到设备」。闹钟和 Anki 每日学习都依赖正确的设备时间。</p></div>
+      </section>
+
+      <section class="chapter" id="controls" data-keywords="操作 按钮 触摸 三键 中键 返回 首页 手势 双指 缩放 翻页 锁屏 关机 电源" aria-labelledby="controls-title">
+        <header class="chapter-heading"><span class="chapter-number">02</span><div><p class="eyebrow">THE BASICS</p><h2 id="controls-title">按键与手势</h2></div></header>
+        <p class="chapter-lead">记住三键，再学会从屏幕边缘滑动。</p>
+        <div class="key-guide" aria-label="阅读三键示意"><div><span class="keycap" aria-hidden="true">‹</span><strong>左键</strong><p>上一页</p></div><div><span class="keycap" aria-hidden="true">○</span><strong>中键</strong><p>阅读工具<br><small>长按约半秒：回主页</small></p></div><div><span class="keycap" aria-hidden="true">›</span><strong>右键</strong><p>下一页</p></div></div>
+        <div class="table-wrap"><table><caption>常用操作速查</caption><thead><tr><th scope="col">想做什么</th><th scope="col">怎么操作</th></tr></thead><tbody><tr><th scope="row">用屏幕翻页</th><td>正文左侧点按上一页，右侧点按下一页；向左滑下一页，向右滑上一页。抬手后提交操作。</td></tr><tr><th scope="row">显示底部导航</th><td>从屏幕最底部向上滑。点正文或按中键可收起。</td></tr><tr><th scope="row">打开控制中心</th><td>从屏幕最顶部向下滑。向上滑回去，或点面板外的区域关闭。</td></tr><tr><th scope="row">调整阅读大小</th><td>双指捏合：TXT / EPUB 改变字号；PDF 改变页面比例。松手后呈现重新排好的页面。</td></tr><tr><th scope="row">快速回主页</th><td>长按中键约半秒；打开了弹窗或面板时，先关闭当前层。双指点按也可回主页，编辑或确认页面会先保护草稿。</td></tr><tr><th scope="row">锁屏 / 恢复</th><td>短按电源键锁屏，再短按恢复原页。墨水屏锁住后依然保留画面。</td></tr><tr><th scope="row">关机</th><td>长按电源键。设备先保存并结束正在使用文件的任务，再显示「已关机」。有未保存草稿时先回去保存或放弃。</td></tr></tbody></table></div>
+        <p class="note">三键会随场景变化：Anki 中键显示答案，文字输入页请用屏内键盘和返回按钮。正在加载时中键可能先取消当前任务。</p>
+      </section>
+
+      <section class="chapter" id="transfer" data-keywords="传书 上传 导入 WiFi Wi-Fi 网络 热点 USB 数据线 SD TF 文件 字体 壁纸 词典 books FONTS WALLPAPERS DICT Anki" aria-labelledby="transfer-title">
+        <header class="chapter-heading"><span class="chapter-number">03</span><div><p class="eyebrow">ADD YOUR FILES</p><h2 id="transfer-title">把文件放进小纸</h2></div></header>
+        <p class="chapter-lead">手机适合用 Wi-Fi，电脑也可以把小纸当作 USB 磁盘。</p>
+        <article class="instruction"><h3>方法一：Wi-Fi 网页传书</h3><p class="path">应用 <span>→</span> 文件导入 <span>→</span> 连接 Wi-Fi / 设备热点</p><ol><li>在小纸上选择「连接 Wi-Fi」，让手机或电脑与小纸连接同一个网络；没有路由器时，选择「设备热点」，让手机连接屏幕显示的小纸热点。</li><li>连接成功后，扫描<strong>传书网页二维码</strong>，或在浏览器输入设备显示的网址。热点的连接码和网页地址码用途不同。</li><li>在网页选择「书籍」，上传 EPUB、PDF 或 TXT。字体、壁纸和词典也有各自的快捷入口。</li><li>等上传及写卡完成，在小纸上「停止传书」或返回。书架和字体会重新扫描。</li></ol><div class="callout compact"><span class="callout-label">连上热点，却显示没有互联网？</span><p>这是正常的，小纸热点只用于局域网传文件。保持连接，再打开设备显示的网址。使用可信网络，传完关闭服务；同网设备也能访问文件管理页。</p></div></article>
+        <article class="instruction"><h3>方法二：USB 磁盘</h3><p class="path">应用 <span>→</span> 文件导入 <span>→</span> USB 磁盘</p><ol><li>插好 TF 卡，用能传数据的 USB 线连接电脑。</li><li>在小纸选择「USB 磁盘」，确认重启。电脑随后会看到整张 TF 卡。</li><li>把文件复制到下面对应的文件夹。磁盘模式期间，小纸暂时不运行阅读界面。</li><li><strong>先在电脑上安全弹出磁盘。</strong>需要时按电源键退出磁盘模式并重启。直接拔线或按键不能代替电脑的安全弹出。</li></ol></article>
+        <article class="instruction" id="directory"><h3>文件该放在哪里？</h3><p>下面从 TF 卡根目录开始。用读卡器复制文件也遵循这个结构。</p><div class="folder-tree" aria-label="TF 卡文件夹结构"><div><code>TF 卡 /</code><span>根目录</span></div><div><code>├─ books /</code><span>EPUB、PDF、TXT 书籍</span></div><div><code>├─ FONTS /</code><span>TTF、OTF 字体</span></div><div><code>├─ WALLPAPERS /</code><span>PNG、JPG、JPEG 壁纸</span></div><div><code>├─ DICT /</code><span><code>dictionary.tsv</code> 离线词典</span></div><div><code>└─ Anki /</code><span>兼容旧版本的 <code>.apkg</code> 卡组</span></div></div><p class="note">书籍直接放在 <code>books</code> 第一层，书架不递归查找子文件夹。FAT 文件系统下 <code>BOOKS</code> 与 <code>books</code> 等价。请保留系统生成的私有目录，它们存放阅读记录和缓存。</p></article>
+        <article class="instruction"><h3>不用电脑，也能整理文件</h3><p class="path">应用 <span>→</span> 文件管理</p><p>点选文件查看详情，可预览 PNG / JPEG、复制、移动、重命名、删除或新建文件夹。复制和移动时先选择目标文件夹，再确认操作；同名目标不会被自动覆盖。</p><p class="note">删除没有回收站。书籍改名或移动后按新路径识别，原阅读记录不会自动迁移。要保留续读位置，尽量保留原书名和路径。</p></article>
+      </section>
+
+      <section class="chapter" id="library" data-keywords="图书 书架 搜索 排序 扫描 重新读取 续读 最近 封面 书签 进度" aria-labelledby="library-title">
+        <header class="chapter-heading"><span class="chapter-number">04</span><div><p class="eyebrow">YOUR LIBRARY</p><h2 id="library-title">书架与继续阅读</h2></div></header>
+        <p class="chapter-lead">放好文件后，书架就是日常读书的起点。</p>
+        <div class="two-columns"><article><h3>扫描与找书</h3><p>底栏点「书架」，在本地分类查看图书。左上角「扫描」重新读取 <code>books</code>；右上角「传书」进入导入页。可以搜索、排序、翻页，再点封面打开。</p><p>1.1.1 起取消了本地书架固定 128 本上限，实际数量仍受可用内存约束。扫描失败会保留原书架。</p></article><article><h3>接着上次读</h3><p>概览页点「继续阅读」，会恢复上次已保存的位置。各本书分别保存进度；换一本书不会把它们混在一起。</p><p>阅读工具的「书签」保存重要位置，应用中的「书签」提供统一入口。想回到某一章，用阅读菜单的「目录」。</p></article></div>
+        <div class="callout"><span class="callout-label">刚复制的书没有出现？</span><p>检查文件是否直接放在 <code>books</code>，扩展名是否为 EPUB / PDF / TXT，再点「扫描」。文件放进其他目录，或放在子文件夹里，都不会出现在本地书架。</p></div>
+      </section>
+
+      <section class="chapter" id="reading" data-keywords="EPUB TXT 小说 文字 阅读 字号 字体 排版 段距 行距 缩进 边距 TTF OTF 目录 章节 自动翻页 晃动翻页 动画 涟漪 水波纹 批注 收藏 划线 标记 查词 词典" aria-labelledby="reading-title">
+        <header class="chapter-heading"><span class="chapter-number">05</span><div><p class="eyebrow">MAKE IT COMFORTABLE</p><h2 id="reading-title">文字阅读与批注</h2></div></header>
+        <p class="chapter-lead">EPUB 和 TXT 会根据你选的字号重新排版。</p>
+        <div class="illustrated"><div><article><h3>中键打开四个标签</h3><ul class="plain-list"><li><strong>排版</strong>：字号、字体、字重、行距、段距、边距与段首缩进。</li><li><strong>目录</strong>：查看章节并跳转。TXT 根据可识别的章节标题生成目录，部分文本可能没有可用目录。</li><li><strong>书签</strong>：保存或重访阅读位置，也能进入「文字批注」。</li><li><strong>设置</strong>：阅读上下栏、标题字号、自动翻页、翻页动画与全刷频率等偏好。</li></ul></article><article><h3>换一种喜欢的字体</h3><p>把 TTF / OTF 放入 TF 卡的 <code>FONTS</code>，停止传书后进入「排版 → 字体」选择。没有外部字体时仍可用内置字体。</p><p>双指捏合也能调字号。字号或间距变化后，页面会重排，页数可能改变；设备尽量以原阅读位置为起点。</p></article></div><figure class="screen-figure"><a href="./assets/menu-layout.png" target="_blank" rel="noopener" aria-label="打开阅读排版截图"><img src="./assets/menu-layout.png" width="684" height="1216" alt="阅读工具排版页，底部为排版、目录、书签、设置标签" loading="lazy"></a><figcaption>阅读工具 · 排版标签<br>旧版截图，控件以设备为准</figcaption></figure></div>
+        <article class="instruction"><h3>翻页动画与清残影</h3><p>「阅读工具 → 设置 → 翻页动画」可以开关动画，选择「水波纹 / 涟漪」和速度。动画在标准刷新档使用，快速档不运行动画。此设置只影响正文翻页。</p><p>墨水屏可能保留上一页的浅痕。可调整「全刷频率」，或在控制中心主动清残影。整屏短暂闪黑是清屏过程，和手机画面的刷新方式不同。</p><p class="note">自动翻页可设置间隔；晃动翻页是可选功能，不需要时保持关闭。选词或打开面板时会暂停自动翻页。</p></article>
+        <article class="instruction"><h3>想记住一句话，或者查一个词</h3><ol><li>在 TXT / EPUB 正文按住文字约半秒，再拖动扩大选区。</li><li>抬手后拖动两端把手，调整选中的内容。</li><li>点「标记」「收藏」或「划线」保存，点「查词」查询本地词典。</li><li>从选区工具的「批注」，或「阅读工具 → 书签 → 文字批注」查看记录。</li></ol><p>选择限于当前可见页。每本书最多 32 条文字批注；批注保存在本机，微信读书批注也暂不上传云端。PDF 暂不支持这种文字选中。</p><details class="small-details"><summary>离线词典怎么准备？</summary><div><p>准备 UTF-8 的 <code>dictionary.tsv</code>，放在 <code>DICT</code>。每行一个「词头 + 真实制表符 + 释义」，文件最大 32 MiB。设备按导入内容查找，不联网，也没有内置兜底释义。</p><pre class="code-sample"><code>hello	你好；问候语。
+reader	读者；阅读器。</code></pre><p class="note">上面仅为格式示例。制作文件时使用 Tab 制表符，不能用两个字符 <code>\t</code> 代替。英文忽略大小写；中文精确匹配，英文没有自动词形还原。</p></div></details></article>
+      </section>
+
+      <section class="chapter" id="pdf" data-keywords="PDF 文档 扫描件 放大 缩小 适宽 适页 跳页 密码 平移 旋转 复位" aria-labelledby="pdf-title">
+        <header class="chapter-heading"><span class="chapter-number">06</span><div><p class="eyebrow">FIXED-LAYOUT READING</p><h2 id="pdf-title">PDF 阅读</h2></div></header>
+        <p class="chapter-lead">PDF 保留原页面，字太小的时候就放大它。</p>
+        <div class="illustrated"><div><p class="path">书架打开 PDF <span>或</span> 应用 <span>→</span> PDF</p><article><h3>用中键打开 PDF 工具</h3><ul class="plain-list"><li><strong>适整页</strong>：看完整的一页，适合先看整体。</li><li><strong>适宽</strong>：按屏幕宽度显示，正文通常更容易读。</li><li><strong>缩放 / 平移</strong>：双指捏合调整比例，放大后移动查看其他区域。</li><li><strong>跳页</strong>：输入目标页码，直接跳到那一页。</li><li><strong>旋转 / 复位 / 强刷</strong>：调整方向、恢复视图或清残影。</li></ul></article><div class="callout compact"><span class="callout-label">PDF 和 EPUB 的区别</span><p>PDF 缩放的是整张页面，不能像 EPUB 那样换字体后重排正文。扫描件、复杂图片或缺少内嵌中文字体的文档可能打开较慢、显示异常或超出容量限制。</p></div></div><figure class="screen-figure"><a href="./assets/pdf-zoom.png" target="_blank" rel="noopener" aria-label="打开 PDF 放大截图"><img src="./assets/pdf-zoom.png" width="684" height="1216" alt="PDF 放大阅读与页面工具示例" loading="lazy"></a><figcaption>PDF · 放大查看</figcaption></figure></div>
+        <p class="note">加密 PDF 会要求输入密码。PDF 的位置和视图由逐书记录保存；密码输入请用屏内键盘。</p>
+      </section>
+
+      <section class="chapter" id="weread" data-keywords="微信 微信读书 weread 扫码 登录 下载 会员 离线 云端 同步 冲突 阅读时间 阅读时长 估算 进度" aria-labelledby="weread-title">
+        <header class="chapter-heading"><span class="chapter-number">07</span><div><p class="eyebrow">CONTINUE ON PICO</p><h2 id="weread-title">微信读书</h2></div></header>
+        <p class="chapter-lead">先下载授权内容，再离线读。同步位置时，由你确认方向。</p>
+        <article><h3>第一次登录与下载</h3><p class="path">应用 <span>→</span> 微信读书 <span>或</span> 书架 <span>→</span> 微信读书分类 <span>→</span> 下载</p><ol class="steps compact-steps"><li><div><h4>准备网络和 TF 卡</h4><p>先在 Wi-Fi 设置中连接并保存网络。微信读书的下载内容和书架缓存在 TF 卡。</p></div></li><li><div><h4>扫码授权登录</h4><p>打开微信读书管理入口，按设备提示用手机扫码并确认。会话过期且续约失败时，需要重新扫码。</p></div></li><li><div><h4>选择书籍或章节下载</h4><p>可按书下载，或在管理页选择章节及书籍。只下载当前账号授权可读的内容；目录显示可读，不代表正文已经下载。</p></div></li><li><div><h4>回到书架离线阅读</h4><p>书架的微信读书分类显示已下载书籍。点开后使用普通阅读工具和章节目录，已下载章节可以连续翻章，切分类和续读不会自动联网。</p></div></li></ol></article>
+        <article class="instruction"><h3>手机和小纸，怎么接上进度？</h3><div class="sync-flow" aria-label="手机与设备同步示意"><div><span>手机 / 云端</span><strong>现有阅读位置</strong></div><span class="sync-arrow" aria-hidden="true">⇄</span><div><span>小纸 Pico</span><strong>本机位置与新增时长</strong></div></div><ol><li>在微信读书分类点击「同步」，联网核对已下载书籍。单书同步也按设备提示进入预览和确认。</li><li>核对本机与云端位置。两端都读过时，选择希望保留的那一处；不要只凭进度更大就直接覆盖。</li><li>只想接着手机读，可选择仅读取云端进度；想把小纸的阅读位置和新增阅读时长带回云端，选择对应上传方向并确认。</li><li>等待设备显示结果。取消或失败不等于成功；有「未确认」报告时，不要把它当作已经上传。</li></ol><div class="callout warm"><span class="callout-label">同步是手动操作</span><p>退出阅读不会自动上传。部分书籍、版本差异、权限、会话或正文映射问题可能让同步失败；看到「估算位置」时先核对实际落点，再决定是否采用。批注暂不云同步，当前授权正文图片也不随微信读书章节下载。</p></div></article>
+      </section>
+
+      <section class="chapter" id="anki" data-keywords="Anki APKG 卡组 牌组 单词 背诵 复习 学习 评分 Again Hard Good Easy FSRS 每日限额 导出 旧版本 校时" aria-labelledby="anki-title">
+        <header class="chapter-heading"><span class="chapter-number">08</span><div><p class="eyebrow">A LITTLE EVERY DAY</p><h2 id="anki-title">Anki 学习</h2></div></header>
+        <p class="chapter-lead">先回忆，再看答案，最后按实际记忆情况评分。</p>
+        <article><h3>准备与导入卡组</h3><ol><li>在电脑 Anki 导出 <code>.apkg</code>，包含媒体，并勾选 <strong>Support older Anki versions</strong>（兼容旧版本）。</li><li>把文件放入 TF 卡的 <code>Anki</code> 文件夹。</li><li>进入「应用 → Anki 学习」，点右上角「导入」，选择文件。</li><li>导入成功后打开牌组，开始学习。建议先用一个小卡组确认模板兼容。</li></ol><p class="note">单包最多 128 MiB、2,000 张卡。复杂脚本、音视频模板及新压缩包格式不支持；<code>.colpkg</code> 也不能直接导入。同名已导入包不覆盖，改名重新导入会产生独立副本。</p></article>
+        <div class="illustrated"><div><article><h3>一次学习，只有三步</h3><p><strong>看问题 → 想答案 → 显示答案后评分。</strong>中键可显示答案；左右键翻当前卡片的内容页，评分请用屏幕上的按钮。</p><div class="rating-list"><div><span>Again</span><p><strong>没记住</strong>，需要再学。</p></div><div><span>Hard</span><p><strong>很费力</strong>，但想起来了。</p></div><div><span>Good</span><p><strong>正常回忆</strong>，比较顺利。</p></div><div><span>Easy</span><p><strong>轻松回忆</strong>，很确定。</p></div></div><p>显示答案不会写入学习记录，评分保存成功才生效。单选题由你核对答案，设备不会替你自动判分。</p></article></div><figure class="screen-figure"><a href="./assets/anki-answer.png" target="_blank" rel="noopener" aria-label="打开 Anki 答案截图"><img src="./assets/anki-answer.png" width="684" height="1216" alt="Anki 答案页面与 Again、Hard、Good、Easy 评分按钮" loading="lazy"></a><figcaption>Anki · 答案与评分</figcaption></figure></div>
+        <article class="instruction"><h3>每日限额与学习统计</h3><p>默认每日新卡 20 张、复习 200 张，可在牌组列表的「每日限额」修改。同一导入包的牌组共享每日额度，到期复习优先。</p><p>「学习统计」显示当天和累计数据。小纸使用 FSRS-6 的按天复习安排；即使选择 Again，也至少安排到下一天，没有几分钟后重学的步骤。</p><div class="callout"><span class="callout-label">这是一份独立的学习进度</span><p>不登录或同步 AnkiWeb，也不迁移电脑 Anki 的旧复习历史。设备从新卡开始记录；每天按设备 UTC+8 日期换日。时间错误会暂停评分，请先校时再进入牌组。</p></div></article>
+      </section>
+
+      <section class="chapter" id="memos" data-keywords="备忘录 便笺 便签 笔记 文字 中文 拼音 键盘 草稿 保存 画板 画笔 橡皮 撤销 绘画" aria-labelledby="memos-title">
+        <header class="chapter-heading"><span class="chapter-number">09</span><div><p class="eyebrow">WRITE SOMETHING DOWN</p><h2 id="memos-title">备忘录与画板</h2></div></header>
+        <p class="chapter-lead">记一点文字，画一张草图。完成后记得保存。</p>
+        <div class="two-columns"><article><h3>文字备忘录</h3><p class="path">应用 <span>→</span> 备忘录 <span>→</span> 新建文字</p><p>使用屏内键盘输入英文、数字或中文拼音。文字从末尾追加；删除键移除末尾字符。可以上下查看内容，或收起键盘扩大纸面。</p><p>点「保存」才写入 TF 卡。还有拼音待确认时，保存会先选候选字，核对后再点保存。最多 32 条，每条 767 个 UTF-8 字节，中文通常占多个字节。</p></article><article><h3>画板</h3><p class="path">备忘录 <span>→</span> 打开画板</p><p>选择画笔或橡皮，用手指绘画；支持三种笔宽和上一笔撤销。清空需确认，清空后仍可撤销。</p><p>当前只有一张独立画板，可以保存并继续编辑，不支持多画板或导入图片。点「保存」才替换原存档。</p></article></div>
+        <div class="callout warm"><span class="callout-label">草稿还没保存</span><p>离开编辑页会询问继续编辑或放弃。锁屏可保留本次草稿，重启或掉电会丢失未保存内容。传书和编辑不能同时使用存储卡，保存失败时先保留草稿并检查卡状态。</p></div>
+      </section>
+
+      <section class="chapter" id="daily" data-keywords="闹钟 时间 提醒 稍后 工作日 周末 待办 清单 任务 勾选 天气 城市 预报 联网 更新" aria-labelledby="daily-title">
+        <header class="chapter-heading"><span class="chapter-number">10</span><div><p class="eyebrow">EVERYDAY TOOLS</p><h2 id="daily-title">闹钟、待办与天气</h2></div></header>
+        <div class="tool-row"><span class="tool-index">A</span><article><h3>闹钟：给一个时刻留提醒</h3><p class="path">应用 <span>→</span> 闹钟 <span>或</span> 概览页闹钟卡片</p><p>新建闹钟，设置时间和重复方式，再保存、开启。最多 8 个，可选仅一次、每天、工作日、周末或指定星期；工作日不包含节假日调休规则。</p><p>响铃时点「停止」、按中键或短按电源键结束，点「5 分钟后提醒」稍后再响。锁屏浅睡支持定时提醒；完全关机、掉电或 USB 磁盘模式下不能保证提醒。</p><p class="note">普通提示音的静音开关不控制闹钟声音。重要提醒请先确认时间和实际设备响铃。</p></article></div>
+        <div class="tool-row"><span class="tool-index">B</span><article><h3>待办：记下，再勾掉</h3><p class="path">应用 <span>→</span> 待办</p><p>点「新建待办」输入内容。完成后点击条目前的勾选按钮；点击文字可编辑，删除需要确认。概览页的待办卡片也提供入口。</p></article></div>
+        <div class="tool-row"><span class="tool-index">C</span><article><h3>天气：主动更新，离线查看</h3><p class="path">应用 <span>→</span> 天气</p><p>先在 Wi-Fi 设置里保存可用网络，再选择城市，点击「联网更新」。没有预设城市，也不会自动刷新。更新成功后保留记录，之后离线也能查看。</p><p>查看观测日期，区分缓存和新预报。同名城市需要输入更具体的名称；换城市失败时仍保留原城市的上次结果。查询会把你确认的城市名发送给天气服务。</p></article></div>
+      </section>
+
+      <section class="chapter" id="settings" data-keywords="设置 控制中心 显示 刷新 灰阶 反色 强刷 清残影 Wi-Fi 蓝牙 BLE 翻页器 省电 电量 自动锁屏 休眠 壁纸 裁剪 缩放 声音 静音 旋律 底栏 自定义 版本 升级 日期 校时" aria-labelledby="settings-title">
+        <header class="chapter-heading"><span class="chapter-number">11</span><div><p class="eyebrow">MAKE IT YOURS</p><h2 id="settings-title">系统设置</h2></div></header>
+        <p class="chapter-lead">阅读习惯、屏幕和锁屏，各自有对应的设置入口。</p>
+        <article><h3>显示与控制中心</h3><p>「设置 → 显示」调整刷新档位、灰阶和反色。标准档适合日常阅读，快速档偏向响应速度，清晰档偏向清理效果；有残影时可主动强刷。</p><p>从屏幕顶部下滑打开控制中心，可快捷进入 Wi-Fi、蓝牙翻页器、声音、刷新和省电等项目。省电开关允许 CPU 空闲时降频，实际续航提升没有固定承诺。</p></article>
+        <article class="instruction"><h3>Wi-Fi 与蓝牙翻页器</h3><div class="two-columns"><div><h4>Wi-Fi</h4><p>「设置 → Wi-Fi」选择网络并输入密码，连接成功后保存。这里是配网入口；要传文件，再打开「文件导入」。正常阅读不保留 Wi-Fi 会话。</p></div><div><h4>蓝牙翻页器</h4><p>让翻页器进入配对模式，在「设置 → 蓝牙翻页器」或控制中心「蓝牙」搜索并点选。支持无需 PIN 的 BLE HID 设备，不是所有蓝牙遥控器都兼容；断开后需手动重连。</p><p class="note">翻页器接口已实现，实物兼容与配对验证仍待完成。</p></div></div></article>
+        <article class="instruction"><h3>多久不操作，自动锁屏？</h3><p class="path">设置 <span>→</span> 休眠</p><p>可选关闭、1、3、5、10 或 30 分钟。默认关闭。触摸和操作重新计时；加载、传书、配网或闹钟响铃期间暂停计时。自动锁屏后按电源键回到原页。</p></article>
+        <article class="instruction"><h3>换一张锁屏壁纸</h3><p class="path">设置 <span>→</span> 锁屏壁纸</p><ol><li>把 PNG / JPG / JPEG 放入 <code>WALLPAPERS</code>，建议使用单文件不超过 2 MiB 的普通图片。</li><li>进入壁纸设置并选择图片，等待预览。</li><li>1.1.1 起支持屏幕比例裁剪：单指拖动，双指或按钮缩放，也可点居中。</li><li>点「确认裁剪并应用」，等保存完成。原图片不会被改写。</li></ol><p>调整时黑白点阵是快速预览，确认后才生成灰度图。图片不支持或无法读取时，设备回退默认时钟锁屏；也可手动选择「使用默认时钟锁屏」。</p></article>
+        <article class="instruction"><h3>声音与旋律</h3><p class="path">设置 <span>→</span> 声音与旋律</p><p>开启或关闭系统提示音，试听提示音和短旋律。点「停止播放」或返回取消余下音符。控制中心的声音开关与这里共用设置，普通翻页保持安静。</p></article>
+        <div class="two-columns instruction"><article><h3>底栏自定义</h3><p>到「设置 → 底栏自定义」，选择常用入口放到底栏，也可以移除自定义项。标注「未安装」的自定义应用只是预留位置，不能当作已可用应用。</p></article><article><h3>设备信息与校时</h3><p>「设置 → 设备信息」查看运行版本、时间、电量等。进入「日期时间」修改后点「保存到设备」，显示采用 UTC+8。返回会放弃未保存的时间草稿。</p></article></div>
+      </section>
+
+      <section class="chapter" id="faq" data-keywords="问题 帮助 FAQ 错误 故障 打不开 失败 卡住 乱码 方框 不见 残影 同步 上传 评分 升级 更新 固件" aria-labelledby="faq-title">
+        <header class="chapter-heading"><span class="chapter-number">12</span><div><p class="eyebrow">WHEN YOU NEED A HAND</p><h2 id="faq-title">遇到问题时</h2></div></header>
+        <p class="chapter-lead">先查这一小页，很多问题都能少绕一步。</p>
+        <div class="faq-list">
+          <details><summary>复制了文件，书架还是没有新书？</summary><div><p>确认 TF 卡已挂载，文件在 <code>books</code> 第一层，格式为 EPUB / PDF / TXT。点书架「扫描」。文件仅上传成功并不代表阅读器支持该格式。</p><a href="#directory">查看目录速查 ↗</a></div></details>
+          <details><summary>手机连上小纸，但传书网页打不开？</summary><div><p>确认小纸停留在传书页，手机仍连接小纸热点或相同局域网。打开设备显示的实际地址，用 <code>http://</code>；不要根据旧截图猜地址。热点没有互联网，手机自动切回其他网络时需重新连接。</p><a href="#transfer">查看传书步骤 ↗</a></div></details>
+          <details><summary>显示 TF 卡不可用，或者保存失败？</summary><div><p>先停止文件操作，不要在写入中拔卡。保留重要数据，检查卡是否插好、空间是否足够，再按设备提示重新读取。反复报错时，在电脑备份并检查文件系统；不要把格式化作为第一步。</p></div></details>
+          <details><summary>换字体后出现方框，或者 TXT 乱码？</summary><div><p>字体可能缺少需要的字形，先换回内置字体。当前版本已改善 TXT 编码识别；仍异常时，在电脑确认并转换为 UTF-8 文本。跨章节后菜单方框也可能与旧版资源问题有关，请先核对固件版本。</p></div></details>
+          <details><summary>某一本 EPUB / PDF 打不开？</summary><div><p>先试另一本较简单的书，区分文件问题和设备状态。检查文件是否完整、PDF 是否需要密码；复杂图片、特殊 EPUB 排版、缺字体或容量超限都可能失败。退出当前书后重试，必要时在电脑重新导出较简单版本。</p></div></details>
+          <details><summary>屏幕有浅痕，或者锁屏后画面一直不消失？</summary><div><p>浅痕是墨水屏残影，可强刷或调整全刷频率。清屏时闪黑是正常刷新过程。锁屏乃至关机后保留最后画面，也是墨水屏特性，单凭静止画面不能判断是否还在运行。</p></div></details>
+          <details><summary>微信读书同步失败，是否已经上传？</summary><div><p>以设备结果为准。「失败」「待处理」或「未确认」都不能当作成功。检查网络、会话、授权和同步预览；若两端进度不同，先核对再选择方向。部分书籍无法可靠映射位置，当前接入不能保证所有书都同步成功。</p><a href="#weread">查看同步说明 ↗</a></div></details>
+          <details><summary>Anki 提示格式不支持？</summary><div><p>回电脑 Anki 重新导出 <code>.apkg</code>，勾选兼容旧版本与包含媒体；仅改扩展名或 ZIP 内的数据库名不能转换格式。复杂模板或超过容量限制也会拒绝导入。</p><a href="#anki">查看导入步骤 ↗</a></div></details>
+          <details><summary>Anki 要求校时，不能继续评分？</summary><div><p>进入「设置 → 设备信息 → 日期时间」，确认日期和时间并保存，然后重新打开牌组。时钟不可用或日期倒退时会暂停学习，避免错误发放每日额度。选择 Again 后至少次日复习，也是当前按天调度的正常行为。</p></div></details>
+          <details><summary>关了提示音，为什么闹钟仍响？关机后会响吗？</summary><div><p>闹钟声音独立于普通系统提示音，停用闹钟请关闭对应记录。锁屏浅睡支持提醒；完全关机、掉电和 USB 磁盘模式不运行正常闹钟调度，不能保证响铃。</p></div></details>
+          <details><summary>怎样安装或更新 whiteos？</summary><div><p>先查看当前版本，再进入 whiteos 站点的安装页，按页面说明区分首次安装和已有固件更新。保留重要 TF 卡内容；刷写时使用适合小纸 Pico 的正式包，并等待工具完成校验。安装后的启动检查以实际设备为准。</p><a href="https://446599.github.io/whiteos/install/" target="_blank" rel="noopener">打开 whiteos 安装入口 ↗</a></div></details>
+        </div>
+      </section>
+
+      <section class="closing-note" aria-labelledby="closing-title"><p class="eyebrow">ONE MORE PAGE</p><h2 id="closing-title">熟悉之后，<br>就安心读吧。</h2><p>这份说明书可随时搜索，也可以打印留存。<br>遇到版本差异，请以设备上的提示和正式发布说明为准。</p><a href="#top">回到说明书开头 ↑</a></section>
+      <footer class="document-footer"><div><strong>whiteos</strong><span>小纸 Pico · 中文使用说明</span></div><p>独立阅读固件。微信读书与 Anki 为各自品牌。配图是设备帧缓冲截图，不代表实屏光学效果或刷新速度。</p><div class="footer-links"><a href="./assets/CONTENT_PERMISSION.md">截图内容来源</a><a href="./assets/LICENSE">截图许可</a><a href="https://446599.github.io/whiteos/" target="_blank" rel="noopener">whiteos 介绍页 ↗</a></div></footer>
+    </main>
+  </div>
+</body>
+</html>
