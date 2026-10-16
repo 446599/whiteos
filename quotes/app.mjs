@@ -73,7 +73,7 @@ byId('build-pack').addEventListener('click', async () => {
   } catch (error) {
     byId('pack-status').textContent = controller.signal.aborted ? '已取消或下载超时，未生成句子包。可重新尝试。' : `未生成句子包：${error.message}`;
   } finally {
-    clearTimeout(timeout); active = null; byId('build-pack').disabled = false; byId('cancel-pack').hidden = true;
+    controller.abort(); clearTimeout(timeout); active = null; byId('build-pack').disabled = false; byId('cancel-pack').hidden = true;
     for (const radio of document.querySelectorAll('input[name="source"]')) radio.disabled = false;
     byId('quote-file').disabled = false;
   }
