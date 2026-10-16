@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { parseInput, selectQuotes, compileQuotes, zipFiles, crc32, MAX_QUOTES } from '../quotes/core.mjs';
 const rows = () => selectQuotes([{ text: '给平常的日子，留一点期待。', author: '测试作者', source: '测试作品' }, { hitokoto: '读到喜欢的地方，就多停留一会儿。', from: '测试来源' }]);
@@ -37,4 +38,12 @@ print(json.dumps({n:base64.b64encode(z.read(n)).decode() for n in z.namelist()})
   const unpacked = JSON.parse(check.stdout);
   for (const [name, content] of Object.entries(files)) assert.deepEqual(Buffer.from(unpacked[name], 'base64'), Buffer.from(content));
   assert.throws(() => zipFiles({ '../outside.txt': 'no' }));
+});
+
+test('quote generation omits unsupported UI glyphs and preserves supported credits', () => {
+  const coverage = JSON.parse(readFileSync(new URL('../quotes/coverage.json', import.meta.url), 'utf8'));
+  const available = new Set(coverage.characters);
+  const input = [...rows(), { text: '生活中也可以多一些期待😀', author: '测试作者' }];
+  assert.equal(selectQuotes(input, 1000, available).length, 2);
+  assert.ok([...rows()[0].text].every(c => available.has(c)));
 });

@@ -17,7 +17,7 @@ function field(text, bytes, chars, allowEmpty = false) {
     !/[\u0000-\u001f\u007f-\u009f\u2028-\u202e\u2066-\u2069]/u.test(text) &&
     !/[\ud800-\udfff]/u.test(text);
 }
-export function selectQuotes(input, limit = 1000) {
+export function selectQuotes(input, limit = 1000, supported = null) {
   if (!Array.isArray(input) || input.length > 20000) throw new Error('句库必须是数组，最多 20,000 条。');
   if (!Number.isInteger(limit) || limit < 1 || limit > MAX_QUOTES) throw new Error('句子数量超出范围。');
   const result = [], seen = new Set();
@@ -28,13 +28,14 @@ export function selectQuotes(input, limit = 1000) {
     const source = typeof (row.source ?? row.from) === 'string' ? (row.source ?? row.from).trim() : '';
     const credit = [author, source].filter(Boolean).join(' · ') || '自定义句库';
     if (!field(text, 128, 26) || !field(credit, 96, 32) || [...text].length < 8) continue;
+    if (supported && [...text, ...credit].some(character => !supported.has(character))) continue;
     const key = text.replace(/\s/gu, '');
     if (seen.has(key)) continue;
     seen.add(key);
     result.push({ text, author, source, credit, ...(typeof row.uuid === 'string' ? { sourceId: row.uuid } : {}) });
     if (result.length === limit) break;
   }
-  if (!result.length) throw new Error('没有符合条件的短句。请使用 8～26 字，并缩短作者、出处。');
+  if (!result.length) throw new Error('没有符合条件的短句。请使用 8～26 字，缩短作者、出处，并检查是否有界面字库不支持的字符。');
   return result;
 }
 export function compileQuotes(rows) {

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // 中文：用户明确下载时才拉取外置句库，不接触串口或账号。/ English: Fetch only on explicit download, without serial/account access.
-import { REVISION, selectQuotes, parseInput, compileQuotes, zipFiles } from './core.mjs';
+import { REVISION, selectQuotes, parseInput, compileQuotes, zipFiles } from './core.mjs?v=20261016-coverage';
 const byId = id => document.getElementById(id);
 let active = null;
 const source = () => document.querySelector('input[name="source"]:checked').value;
@@ -27,7 +27,7 @@ async function textFile(url, signal, max = 4 * 1024 * 1024) {
   for (const part of parts) { data.set(part, cursor); cursor += part.length; }
   return new TextDecoder('utf-8', { fatal: true }).decode(data);
 }
-const rebuild = `// SPDX-License-Identifier: MIT\nimport { readFile, writeFile } from 'node:fs/promises';\nimport { selectQuotes, compileQuotes, MAX_QUOTES } from './core.mjs';\nconst input = JSON.parse(await readFile(new URL('./source.json', import.meta.url), 'utf8'));\nconst rows = selectQuotes(input, MAX_QUOTES);\nawait writeFile(new URL('./daily.pquotes', import.meta.url), compileQuotes(rows));\nconsole.log('已生成 ' + rows.length + ' 条句子');\n`;
+const rebuild = `// SPDX-License-Identifier: MIT\nimport { readFile, writeFile } from 'node:fs/promises';\nimport { selectQuotes, compileQuotes, MAX_QUOTES } from './core.mjs?v=20261016-coverage';\nconst input = JSON.parse(await readFile(new URL('./source.json', import.meta.url), 'utf8'));\nconst coverage = JSON.parse(await readFile(new URL('./coverage.json', import.meta.url), 'utf8'));\nconst rows = selectQuotes(input, MAX_QUOTES, new Set(coverage.characters));\nawait writeFile(new URL('./daily.pquotes', import.meta.url), compileQuotes(rows));\nconsole.log('已生成 ' + rows.length + ' 条句子');\n`;
 byId('cancel-pack').addEventListener('click', () => active?.abort());
 byId('build-pack').addEventListener('click', async () => {
   if (active) return;
@@ -58,12 +58,14 @@ byId('build-pack').addEventListener('click', async () => {
       input = parseInput(await file.text());
       attribution = '来源：用户选择的本机文件。\n句子授权沿用原始内容的许可，本工具不替内容重新授权。\n';
     }
-    const rows = selectQuotes(input);
-    const [tool, toolLicense] = await Promise.all([textFile(new URL('./core.mjs', import.meta.url), controller.signal), textFile(new URL('./LICENSE', import.meta.url), controller.signal)]);
+    const [tool, toolLicense, coverageText] = await Promise.all([textFile(new URL('./core.mjs?v=20261016-coverage', import.meta.url), controller.signal), textFile(new URL('./LICENSE', import.meta.url), controller.signal), textFile(new URL('./coverage.json', import.meta.url), controller.signal)]);
+    const coverage = JSON.parse(coverageText);
+    if (typeof coverage.characters !== 'string') throw new Error('界面字库信息无效，已停止生成。');
+    const rows = selectQuotes(input, 1000, new Set(coverage.characters));
     if (controller.signal.aborted) throw new DOMException('Cancelled', 'AbortError');
-    const notes = `小纸 Pico 外置每日一句\n\n${attribution}\n生成时间：${new Date().toISOString()}\n修改：筛选8～26字、去重、限制署名长度并转换为PQTS0001格式；署名未经逐条原著校对。\n条数：${rows.length}\n\n导入：将整个 QUOTES 文件夹复制到TF卡根目录，然后安全弹出并返回主页。\n需要支持外置句库的新版固件，1.1.3暂不支持。\n\n可编辑数据：source.json。重新生成：安装Node.js后，在此目录执行 node rebuild.mjs。\n转换工具按MIT授权，句子内容保持自己的授权，详见 LICENSE.txt（如有）及原始来源。\n\n分发一言衍生句子包时，保留AGPL许可、来源、修改说明与对应可编辑数据，不额外限制接收者的许可权利。\n本外置格式可用于任意合法来源的句子；分开存放本身不免除第三方许可义务。\n`;
+    const notes = `小纸 Pico 外置每日一句\n\n${attribution}\n生成时间：${new Date().toISOString()}\n修改：筛选8～26字、去重、限制署名长度、跳过界面字库缺字条目并转换为PQTS0001格式；署名未经逐条原著校对。\n条数：${rows.length}\n\n导入：将整个 QUOTES 文件夹复制到TF卡根目录，然后安全弹出并返回主页。\n需要支持外置句库的新版固件，1.1.3暂不支持。\n\n可编辑数据：source.json。重新生成：安装Node.js后，在此目录执行 node rebuild.mjs。\n转换工具按MIT授权，句子内容保持自己的授权，详见 LICENSE.txt（如有）及原始来源。\n\n分发一言衍生句子包时，保留AGPL许可、来源、修改说明与对应可编辑数据，不额外限制接收者的许可权利。\n本外置格式可用于任意合法来源的句子；分开存放本身不免除第三方许可义务。\n`;
     const bytes = zipFiles({ 'QUOTES/daily.pquotes': compileQuotes(rows), 'QUOTES/source.json': JSON.stringify(rows, null, 2) + '\n',
-      'QUOTES/README.txt': notes, 'QUOTES/rebuild.mjs': rebuild, 'QUOTES/core.mjs': tool, 'QUOTES/TOOL-LICENSE.txt': toolLicense, ...extra });
+      'QUOTES/README.txt': notes, 'QUOTES/rebuild.mjs': rebuild, 'QUOTES/core.mjs': tool, 'QUOTES/TOOL-LICENSE.txt': toolLicense, 'QUOTES/coverage.json': coverageText, ...extra });
     const url = URL.createObjectURL(new Blob([bytes], { type: 'application/zip' })), anchor = document.createElement('a');
     anchor.href = url; anchor.download = 'daily-quotes.zip'; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 30000);
     byId('pack-status').textContent = `已生成 ${rows.length} 条短句。解压后，把 QUOTES 文件夹复制到 TF 卡根目录。`;

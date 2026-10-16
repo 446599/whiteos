@@ -7,7 +7,7 @@
   <title>每日一句句库 · whiteos</title>
   <link rel="icon" href="../assets/icons/book-open.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../flash/flash.css?v=20261016-quotes"><link rel="stylesheet" href="./quotes.css">
-  <script type="module" src="./app.mjs"></script>
+  <script type="module" src="./app.mjs?v=20261016-coverage"></script>
 </head>
 <body>
   <header class="topbar"><a class="brand" href="../"><img src="../assets/icons/book-open.svg" width="23" height="23" alt=""><span>whiteos</span></a><nav class="topbar-links" aria-label="句库页导航"><a href="../flash/">返回烧录页</a><a href="../manual/">使用说明</a></nav></header>
@@ -28,7 +28,7 @@
       <ol><li>解压下载的 <strong>daily-quotes.zip</strong>。</li><li>通过小纸的 USB 磁盘模式或读卡器，把整个 <strong>QUOTES</strong> 文件夹复制到 TF 卡根目录。保留包内的来源与许可文件。</li><li>安全弹出磁盘，回到小纸主页。每天自动更换一句，也可以点击“每日一句”右侧的换句按钮。</li></ol>
       <p>再次导入会替换现有句库，请先备份原来的 QUOTES 文件夹。缺少句库时会显示内置生活短句。</p>
     </section>
-    <details><summary>句子包里有什么？</summary><p>daily.pquotes 用于小纸读取；source.json 是可编辑的句子数据；rebuild.mjs 用于重新生成；README.txt 记录来源、版本和筛选规则。一言句子包还附上原始 LICENSE 与使用说明。</p><p>只筛选 8～26 字的完整短句，去除重复和无法正常显示的控制字符。作者、出处过长的条目会跳过；所展示的署名来自上游，未经逐条原著校对。</p></details>
+    <details><summary>句子包里有什么？</summary><p>daily.pquotes 用于小纸读取；source.json 是可编辑的句子数据；rebuild.mjs 用于重新生成；README.txt 记录来源、版本和筛选规则。一言句子包还附上原始 LICENSE 与使用说明。</p><p>只筛选 8～26 字的完整短句，去除重复和无法正常显示的控制字符。作者、出处过长或含界面字库缺字的条目会跳过；所展示的署名来自上游，未经逐条原著校对。</p></details>
   </main>
   <footer><span>whiteos</span><a href="../flash/">固件烧录</a><span>离线 · 可替换句库</span></footer>
 </body>
