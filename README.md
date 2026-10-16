@@ -6,6 +6,7 @@
 - 安装入口：<https://446599.github.io/whiteos/install/>
 - 烧录界面：<https://446599.github.io/whiteos/flash/>
 - 使用说明：<https://446599.github.io/whiteos/manual/>
+- 每日一句句库：<https://446599.github.io/whiteos/quotes/>（适配固件待发布）
 - 词典转换：<https://446599.github.io/whiteos/dictionary/>
 
 纯静态 HTML、CSS 和 JavaScript，使用 GitHub Actions 从 `main` 构建并部署到 GitHub Pages。正式 Release 附件在部署时校验并同步为同站下载文件，无需数据库或后端。
@@ -74,3 +75,9 @@
 ## 网页维护验证
 
 `node --test tests/*.test.mjs` 验证完整包解析、更新写入范围、发布打包、发布白名单与 Release 校验。`node tests/flash-browser.cjs` 使用模拟设备检查导入、失败重选、异步结果覆盖、两种烧录流程及五种屏幕尺寸，不连接实物。具有 Playwright 的开发环境可运行 `node tests/navigation.cjs`，检查项目路径下的介绍、安装、烧录、说明书互相跳转及五种屏幕尺寸；`PICO_SITE_BROWSER` 可指定已有 Chromium 浏览器。测试不访问设备，测试文件不进入 Pages 发布产物。
+
+## 外置每日一句
+
+`quotes/` 提供独立句子包生成工具，从固定版本的一言文学/原创数据生成，或在浏览器处理用户自己的 JSON、TXT/TSV。主页的入口在烧录操作之后，不会连接串口、改变固件来源或随烧录写卡。
+
+外置格式的固件支持尚未发布，正式版 1.1.3 不支持；页面明确显示兼容性。下载的 ZIP 解压为 `QUOTES` 文件夹，经 USB 磁盘/读卡器复制到 TF 根目录。句子包包含设备格式、可编辑来源、重建脚本和来源/许可；一言内容仍遵循原 AGPL 和原作者权利，不因外置而免除义务。工具独立代码使用 MIT，未把一言数据加入本仓库或固件镜像。格式和验证见 [句库工具说明](./quotes/README.md)。

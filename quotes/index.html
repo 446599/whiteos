@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self' https://raw.githubusercontent.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>每日一句句库 · whiteos</title>
+  <link rel="icon" href="../assets/icons/book-open.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../flash/flash.css?v=20261016-quotes"><link rel="stylesheet" href="./quotes.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="../"><img src="../assets/icons/book-open.svg" width="23" height="23" alt=""><span>whiteos</span></a><nav class="topbar-links" aria-label="句库页导航"><a href="../flash/">返回烧录页</a><a href="../manual/">使用说明</a></nav></header>
+  <main>
+    <div class="heading"><span class="eyebrow">whiteos / DAILY QUOTES</span><h1>每日一句句库</h1><p>单独导入，一次准备，离线阅读。</p></div>
+    <p class="compatibility"><strong>需要支持外置句库的新版固件。</strong>当前正式版 1.1.3 暂不支持；可先准备句子包，待适配版发布后使用。</p>
+    <section class="quote-form" aria-labelledby="choose-title">
+      <h2 id="choose-title">1. 选择句库来源</h2>
+      <label class="source-option"><input type="radio" name="source" value="hitokoto" checked><span><strong>一言 · 文学与原创</strong><small>下载时从一言的公开句库筛选短句，最多 1,000 条。句子包保留 AGPL 许可及来源。</small></span></label>
+      <label class="source-option"><input type="radio" name="source" value="custom"><span><strong>自己的句子</strong><small>选择本机 JSON 或 TXT／TSV 文件，文件只在浏览器处理。</small></span></label>
+      <div id="custom-fields" hidden><label for="quote-file">句库文件</label><input id="quote-file" type="file" accept=".json,.txt,.tsv"><p>每行：短句、作者、出处，用 Tab 分隔；JSON 支持 text、author、source 字段。请使用自己有权分发的内容。</p><a href="./example.tsv" download>下载格式示例</a></div>
+      <div id="source-license" class="license-note"><p>外置存放仍须遵守句库许可。一言部分内容的版权属于原作者，AGPL 声明不能代替原文授权。本工具保留原始许可及筛选来源，不改变第三方内容的权利归属。</p><a href="https://github.com/hitokoto-osc/sentences-bundle#使用须知" target="_blank" rel="noopener noreferrer">查看一言来源与许可 ↗</a></div>
+      <button id="build-pack" type="button">生成并下载句子包</button><button id="cancel-pack" class="secondary-button" type="button" hidden>取消</button>
+      <p id="pack-status" role="status" aria-live="polite">句子包独立于固件，不需要连接设备。</p>
+      <p id="preview" hidden></p>
+    </section>
+    <section class="quote-guide" aria-labelledby="import-title"><h2 id="import-title">2. 导入到小纸</h2>
+      <ol><li>解压下载的 <strong>daily-quotes.zip</strong>。</li><li>通过小纸的 USB 磁盘模式或读卡器，把整个 <strong>QUOTES</strong> 文件夹复制到 TF 卡根目录。保留包内的来源与许可文件。</li><li>安全弹出磁盘，回到小纸主页。每天自动更换一句，也可以点击“每日一句”右侧的换句按钮。</li></ol>
+      <p>再次导入会替换现有句库，请先备份原来的 QUOTES 文件夹。缺少句库时会显示内置生活短句。</p>
+    </section>
+    <details><summary>句子包里有什么？</summary><p>daily.pquotes 用于小纸读取；source.json 是可编辑的句子数据；rebuild.mjs 用于重新生成；README.txt 记录来源、版本和筛选规则。一言句子包还附上原始 LICENSE 与使用说明。</p><p>只筛选 8～26 字的完整短句，去除重复和无法正常显示的控制字符。作者、出处过长的条目会跳过；所展示的署名来自上游，未经逐条原著校对。</p></details>
+  </main>
+  <footer><span>whiteos</span><a href="../flash/">固件烧录</a><span>离线 · 可替换句库</span></footer>
+</body>
+</html>

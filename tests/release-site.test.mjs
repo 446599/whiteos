@@ -10,13 +10,13 @@ async function fixture(context) {
   const temporary = await mkdtemp(path.join(os.tmpdir(), "whiteos-release-site-"));
   context.after(() => rm(temporary, { recursive: true, force: true }));
   const root = path.join(temporary, "source");
-  for (const folder of ["assets", "flash", "install", "manual/assets", "dictionary/python", "dictionary/vendor", "firmware/licenses"]) await mkdir(path.join(root, folder), { recursive: true });
+  for (const folder of ["assets", "flash", "install", "manual/assets", "dictionary/python", "dictionary/vendor", "quotes", "firmware/licenses"]) await mkdir(path.join(root, folder), { recursive: true });
   for (const file of ["index.html", "styles.css", "script.js", ".nojekyll", "README.md", "SCREENSHOT_CHECKLIST.md", "RELEASE_FORMAT.md",
     "firmware/README.md", "firmware/THIRD_PARTY_NOTICES.md"]) await writeFile(path.join(root, file), "Public content");
   await writeFile(path.join(root, "private-token.txt"), "Do not deploy");
   await writeFile(path.join(root, "manual/index.html"), '<a href="./assets/screen.svg">Manual</a>');
   await writeFile(path.join(root, "manual/assets/screen.svg"), '<svg xmlns="http://www.w3.org/2000/svg"></svg>');
-  for (const file of ["dictionary/index.html", "dictionary/worker.js", "dictionary/python/importer.py", "dictionary/vendor/runtime.wasm"]) await writeFile(path.join(root, file), "Public converter");
+  for (const file of ["quotes/index.html", "quotes/app.mjs", "dictionary/index.html", "dictionary/worker.js", "dictionary/python/importer.py", "dictionary/vendor/runtime.wasm"]) await writeFile(path.join(root, file), "Public converter");
   const { release, images } = await syntheticRelease();
   release.manifest.version = "1.0.0";
   const filenames = { bootloader: "bootloader.bin", partitions: "partition-table.bin", application: "whiteos.bin" };
@@ -50,7 +50,7 @@ test("build mirrors only verified Release images and explicitly public files", a
     new Uint8Array(await readFile(path.join(options.output, "firmware/releases/v1.0.0", part.file))), options.bytes.get(part.file));
   await assert.rejects(access(path.join(options.output, "private-token.txt")));
   await assert.rejects(access(path.join(options.output, "firmware/whiteos.bin")));
-  for (const file of ["manual/index.html", "manual/assets/screen.svg", "dictionary/index.html", "dictionary/worker.js", "dictionary/python/importer.py", "dictionary/vendor/runtime.wasm"]) {
+  for (const file of ["manual/index.html", "manual/assets/screen.svg", "quotes/index.html", "quotes/app.mjs", "dictionary/index.html", "dictionary/worker.js", "dictionary/python/importer.py", "dictionary/vendor/runtime.wasm"]) {
     assert.deepEqual(await readFile(path.join(options.output, file)), await readFile(path.join(options.root, file)));
   }
 });

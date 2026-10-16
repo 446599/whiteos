@@ -106,3 +106,9 @@ footer a { display: inline-flex; align-items: center; min-height: 44px; }
 .download-guide ol { line-height: 1.9; }
 .download-guide code { font-size: 12px; overflow-wrap: anywhere; }
 .download-guide p { margin-top: 12px; }
+
+/* 句库入口独立于烧录操作。/ Quote downloads are separate from flashing actions. */
+.quote-entry { margin-top: 28px; padding: 20px 0; border-top: 1px solid var(--line); }
+.quote-entry h2 { font-size: 17px; }
+.quote-entry p { color: var(--muted); font-size: 13px; line-height: 1.9; }
+.quote-entry a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--green); font-size: 14px; text-decoration: underline; text-underline-offset: 4px; }
