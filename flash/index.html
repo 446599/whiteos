@@ -8,8 +8,8 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' https://api.github.com https://raw.githubusercontent.com; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>whiteos · 固件烧录</title>
   <link rel="icon" href="../assets/icons/book-open.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./flash.css?v=20261014-manual">
-  <script type="module" src="./app.mjs?v=20261012-reconnect"></script>
+  <link rel="stylesheet" href="./flash.css?v=20261016-online-default">
+  <script type="module" src="./app.mjs?v=20261016-online-default"></script>
 </head>
 <body>
   <header class="topbar">
@@ -22,11 +22,16 @@
       <h1>固件烧录</h1>
       <p>小纸 Pico <span aria-hidden="true">·</span> ESP32-S3</p>
     </div>
-    <dl class="release-info">
-      <div><dt>固件版本</dt><dd id="version">—</dd></div>
-      <div><dt>发布来源</dt><dd><a id="source" hidden target="_blank" rel="noopener noreferrer"></a><span id="source-empty">未配置</span></dd></div>
-    </dl>
-    <div class="actions" aria-label="烧录操作">
+    <section class="firmware-source" aria-labelledby="firmware-mode">
+      <div class="source-heading"><h2 id="firmware-mode">在线固件</h2><span id="source-tag" class="source-tag">默认使用</span></div>
+      <p id="source-hint">正在获取最新正式版本。网页会自动下载并校验固件。</p>
+      <dl class="release-info">
+        <div><dt>固件版本</dt><dd id="version">—</dd></div>
+        <div><dt>发布来源</dt><dd><a id="source" hidden target="_blank" rel="noopener noreferrer"></a><span id="source-empty">正在加载</span></dd></div>
+      </dl>
+      <button id="use-online" class="text-button" type="button" hidden>切回在线固件</button>
+    </section>
+    <div class="actions" aria-label="烧录操作" aria-describedby="source-hint">
       <button id="install" type="button" disabled>
         <img src="../assets/icons/arrow-right.svg" width="21" height="21" alt="">
         <span>全新烧录</span>
@@ -44,6 +49,24 @@
       <p id="status-detail">尚未连接设备。</p>
       <details id="history"><summary>操作记录</summary><ol id="events"></ol></details>
     </section>
+    <details id="firmware-fallback" class="firmware-import">
+      <summary id="import-title">在线下载失败？使用本地完整包</summary>
+      <p>这是备用方式。只有在线下载遇到问题时，才需要下载文件再导入。</p>
+      <div class="import-actions">
+        <button id="choose-firmware" class="secondary-button" type="button">选择完整包 .bin</button>
+        <a id="release-download" href="https://github.com/446599/whiteos/releases" target="_blank" rel="noopener noreferrer">去 GitHub 下载 <span aria-hidden="true">↗</span></a>
+      </div>
+      <input id="firmware-file" type="file" accept=".bin" hidden aria-label="选择小纸 Pico 完整固件包">
+      <p id="import-summary" role="status" aria-live="polite">未选择本地文件。</p>
+      <details class="download-guide"><summary>怎么下载、导入？</summary>
+        <ol>
+          <li>打开 GitHub 发布页，展开版本下的 <strong>Assets</strong>。</li>
+          <li>下载 <code>whiteos-X.Y.Z-full.bin</code>（完整包）。不要选 <code>whiteos.bin</code> 或 Source code。旧版本没有完整包时，请使用在线烧录。</li>
+          <li>回到此页，点“选择完整包 .bin”。检查顶部显示的版本后，选择“固件更新”或“全新烧录”。</li>
+        </ol>
+        <p>已有 whiteos 选“固件更新”；首次安装选“全新烧录”。两个入口都能使用完整包。烧录请用电脑 Chrome 或 Edge 打开此页。</p>
+      </details>
+    </details>
     <section class="release-notes" id="release-notes" aria-labelledby="release-notes-title" hidden>
       <div class="release-notes-heading"><h2 id="release-notes-title">版本更新说明</h2><span id="release-notes-version"></span></div>
       <p id="release-notes-body"></p>

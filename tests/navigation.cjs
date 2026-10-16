@@ -49,7 +49,7 @@ const types = { ".html": "text/html", ".css": "text/css", ".js": "text/javascrip
       assert.equal(await page.locator(".chapter").count(), 12);
       await page.locator('.document-bar a[href="../flash/"]').click();
       await page.waitForURL(base + "flash/");
-      assert.equal(await page.locator("button").count(), 2);
+      assert.equal(await page.locator(".actions button").count(), 2);
       assert.equal(await page.evaluate(() => window.__portRequests), 0);
       await page.locator('.topbar-links a[href="../manual/"]').click();
       await page.waitForURL(base + "manual/");

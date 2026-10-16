@@ -20,8 +20,8 @@ main { width: min(100% - 48px, 580px); margin: 64px auto 72px; }
 h1 { margin: 14px 0 8px; font-size: 34px; font-weight: 600; line-height: 1.4; }
 .heading p { margin: 0; color: var(--muted); font-size: 14px; }
 .heading p span { padding-inline: 8px; }
-.release-info { margin: 34px 0 24px; padding-block: 16px; border-block: 1px solid var(--line); display: grid; gap: 8px; font-size: 13px; }
-.release-info div { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 10px; }
+.release-info { margin: 18px 0 0; display: grid; gap: 8px; font-size: 13px; }
+.release-info div { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 10px; align-items: center; }
 dt { color: var(--muted); }
 dd { margin: 0; overflow-wrap: anywhere; }
 dd a { text-decoration: underline; text-underline-offset: 4px; }
@@ -81,3 +81,28 @@ footer { width: min(100% - 48px, 580px); margin: 0 auto 28px; display: flex; jus
 footer { align-items: center; gap: 12px; flex-wrap: wrap; }
 footer a { display: inline-flex; align-items: center; min-height: 44px; }
 @media (max-width: 600px) { .topbar-links { gap: 16px; font-size: 12px; } }
+
+/* 本地导入与下载指引共用现有纸张风格。/ Local import and download help share the existing paper style. */
+.firmware-source { margin: 30px 0 24px; padding: 20px; border: 1px solid #c7d0c2; border-radius: 6px; background: #f0f3ec; }
+.source-heading { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.source-heading h2 { font-size: 18px; }
+.source-tag { font-size: 11px; color: var(--green); border: 1px solid #b7c5b1; border-radius: 3px; padding: 1px 6px; }
+#source-hint { font-size: 13px; color: var(--muted); margin: 10px 0 0; }
+#version { font-size: 23px; line-height: 1.4; font-weight: 600; }
+.firmware-import { margin: 24px 0 0; padding-top: 16px; border-top: 1px solid var(--line); }
+.firmware-import > summary { min-height: 44px; font-size: 13px; color: var(--muted); }
+.firmware-import[open] > summary { color: var(--ink); margin-bottom: 8px; }
+.firmware-import p { margin: 6px 0 12px; color: var(--muted); font-size: 13px; }
+.import-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 20px; }
+.import-actions a { display: inline-flex; align-items: center; min-height: 44px; gap: 6px; font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
+.secondary-button { min-height: 46px; padding: 10px 16px; color: var(--ink); background: transparent; border-color: #8b8d80; font-size: 14px; }
+.secondary-button:hover:not(:disabled) { background: #e9ede5; border-color: var(--green); }
+.text-button { min-height: 44px; padding: 8px 0; background: transparent; border: 0; color: var(--green); font-size: 12px; font-weight: 500; flex: 0 0 auto; margin-top: 8px; }
+.text-button:hover:not(:disabled) { background: transparent; color: #264631; text-decoration: underline; }
+.text-button:disabled { background: transparent; }
+#import-summary { margin-top: 12px; overflow-wrap: anywhere; }
+.download-guide { margin-top: 4px; }
+.download-guide summary { min-height: 44px; }
+.download-guide ol { line-height: 1.9; }
+.download-guide code { font-size: 12px; overflow-wrap: anywhere; }
+.download-guide p { margin-top: 12px; }

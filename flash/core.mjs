@@ -108,6 +108,83 @@ export function validateImage(bytes, role) {
     requireSafe((bytes[3] >> 4) === 4, "IMAGE", "启动程序未配置为 16 MB Flash。");
   }
 }
+export function imageLength(bytes) {
+  requireSafe(bytes.length >= 24 && bytes[0] === 0xe9 && bytes[1] > 0 && bytes[1] <= 16,
+    "IMAGE", "完整包中的 ESP 镜像头无效。");
+  let end = 24;
+  for (let index = 0; index < bytes[1]; index++) {
+    requireSafe(end + 8 <= bytes.length, "IMAGE", "完整包中的 ESP 镜像段不完整。");
+    const size = new DataView(bytes.buffer, bytes.byteOffset + end + 4, 4).getUint32(0, true);
+    end += 8 + size;
+    requireSafe(end <= bytes.length, "IMAGE", "完整包中的 ESP 镜像段超出文件范围。");
+  }
+  end = Math.ceil((end + 1) / 16) * 16;
+  if (bytes[23] & 1) end += 32;
+  requireSafe(end <= bytes.length, "IMAGE", "完整包中的 ESP 镜像尾部不完整。");
+  return end;
+}
+// 导入文件不依赖文件名：核对段校验、内嵌摘要及产品版本。/ Verify segments, embedded digest and product version independently of filenames.
+export async function verifyEspImage(bytes, role) {
+  validateImage(bytes, role);
+  const length = imageLength(bytes);
+  requireSafe(length === bytes.length && bytes[23] === 1, "IMAGE", "镜像大小或内嵌校验信息无效，请重新下载完整包。");
+  let cursor = 24, checksum = 0xef;
+  for (let index = 0; index < bytes[1]; index++) {
+    const size = new DataView(bytes.buffer, bytes.byteOffset + cursor + 4, 4).getUint32(0, true);
+    for (let at = cursor + 8; at < cursor + 8 + size; at++) checksum ^= bytes[at];
+    cursor += 8 + size;
+  }
+  const digestOffset = length - 32;
+  requireSafe(bytes[digestOffset - 1] === checksum, "IMAGE", "固件段校验失败，请重新下载完整包。");
+  const digest = Array.from(bytes.subarray(digestOffset), byte => byte.toString(16).padStart(2, "0")).join("");
+  requireSafe(await sha256(bytes.subarray(0, digestOffset)) === digest, "HASH", "固件内嵌摘要不匹配，请重新下载完整包。");
+  if (role !== "application") return null;
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  requireSafe(view.getUint32(28, true) >= 256 && view.getUint32(32, true) === 0xabcd5432,
+    "IMAGE", "应用缺少有效版本信息。");
+  const field = offset => {
+    const data = bytes.subarray(offset, offset + 32), end = data.indexOf(0);
+    requireSafe(end > 0, "IMAGE", "应用版本信息无效。");
+    return new TextDecoder("utf-8", { fatal: true }).decode(data.subarray(0, end));
+  };
+  const version = field(48);
+  requireSafe(field(80) === "Read_Pico" && /^[A-Za-z0-9][A-Za-z0-9._+-]{0,30}$/.test(version),
+    "IMAGE", "所选固件不适用于小纸 Pico。");
+  return version;
+}
+export async function splitMergedBundle(bytes) {
+  requireSafe(bytes instanceof Uint8Array && bytes.length > APP_ADDRESS && bytes.length <= APP_ADDRESS + APP_SIZE,
+    "BUNDLE", "完整包大小不符合小纸 Pico 发布布局。");
+  const bootSize = imageLength(bytes);
+  requireSafe(bootSize <= TABLE_ADDRESS, "BUNDLE", "启动程序超出允许范围。");
+  const bootloader = bytes.slice(0, bootSize);
+  const table = bytes.slice(TABLE_ADDRESS, TABLE_ADDRESS + 3072);
+  const appSize = imageLength(bytes.subarray(APP_ADDRESS));
+  const application = bytes.slice(APP_ADDRESS, APP_ADDRESS + appSize);
+  requireSafe(APP_ADDRESS + appSize === bytes.length &&
+    isBlank(bytes.subarray(bootSize, TABLE_ADDRESS)) &&
+    isBlank(bytes.subarray(TABLE_ADDRESS + 3072, APP_ADDRESS)),
+    "BUNDLE", "完整包包含意外数据或大小不完整，请下载标有 full.bin 的官方附件。");
+  await verifyEspImage(bootloader, "bootloader");
+  validatePartitions(table);
+  if (new DataView(table.buffer, table.byteOffset).getUint16(128, true) === 0xebeb) {
+    const expected = Array.from(table.subarray(144, 160), byte => byte.toString(16).padStart(2, "0")).join("");
+    requireSafe(isBlank(table.subarray(130, 144)) && isBlank(table.subarray(160)) &&
+      md5(table.subarray(0, 128)) === expected, "PARTITIONS", "分区表摘要无效，请重新下载完整包。");
+  } else {
+    requireSafe(isBlank(table.subarray(128)), "PARTITIONS", "分区表尾部包含意外数据，请重新下载完整包。");
+  }
+  const version = await verifyEspImage(application, "application");
+  const parts = [];
+  for (const [role, offset, file, image] of [
+    ["bootloader", 0, "bootloader.bin", bootloader],
+    ["partitions", TABLE_ADDRESS, "partition-table.bin", table],
+    ["application", APP_ADDRESS, "whiteos.bin", application],
+  ]) parts.push({ role, offset, file, size: image.length, sha256: await sha256(image) });
+  const manifest = validateManifest({ schema: 1, board: "read-pico-4.7", chip: "ESP32-S3",
+    flashSize: FLASH_SIZE, partitionTableOffset: TABLE_ADDRESS, version, parts });
+  return { manifest, images: new Map([["bootloader", bootloader], ["partitions", table], ["application", application]]) };
+}
 export function selectedParts(manifest, mode) {
   requireSafe(mode === "install" || mode === "update", "MODE", "未知烧录操作。");
   return manifest.parts.filter((part) => mode === "install" || part.role === "application")

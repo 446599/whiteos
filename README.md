@@ -32,19 +32,23 @@
 
 ## 网页烧录
 
-页面仅保留“全新烧录”和“固件更新”两个按钮：
+页面提供“全新烧录”和“固件更新”两种方式，可使用在线固件或本地完整包：
 
 - 全新烧录写入发布包中的启动程序、分区表和应用，不整片擦除。
 - 固件更新只写应用，不改写启动程序和分区表。
 
-**whiteos 1.1.2**：优化微信读书下载、阅读与云同步，提升开书速度与 EPUB 兼容性。固件通过 GitHub Release 发布；Actions 校验并同步三份镜像、清单和更新说明到 Pages。网页识别最高正式版本，在一次操作中锁定同一版本。支持的电脑浏览器会启用两个烧录按钮，页面不会自动连接设备。
+默认使用在线固件，页面识别版本后直接点击“固件更新”或“全新烧录”，网页自动下载并校验。本地导入默认折叠，仅作为下载失败时的备用方式。
 
-- [1.1.2 Release 与下载](https://github.com/446599/whiteos/releases/tag/v1.1.2)
-- [查看发布清单](./firmware/releases/v1.1.2/manifest.json)
+在线下载失败时，在 [GitHub Releases](https://github.com/446599/whiteos/releases) 的 Assets 下载 `whiteos-X.Y.Z-full.bin`，回烧录页选择完整包。页面核对内嵌版本与完整性；已有 whiteos 选“固件更新”。1.1.2 及更早正式版没有完整 BIN，可继续在线烧录。
+
+**当前已发布 whiteos 1.1.3**：翻页响应更快、连续翻页更利落，加快微信读书加载；支持选书同步与阶段进度、导入 TXT/EPUB 离线阅读和词典注音。固件通过 GitHub Release 发布；Actions 校验并同步三份镜像、清单和更新说明到 Pages。网页识别最高正式版本，在一次操作中锁定同一版本。支持的电脑浏览器会启用两个烧录按钮，页面不会自动连接设备。
+
+- [1.1.3 Release 与下载](https://github.com/446599/whiteos/releases/tag/v1.1.3)
+- [查看发布清单](./firmware/releases/v1.1.3/manifest.json)
 - [后续 Release 发布格式](./RELEASE_FORMAT.md)
 - [固件说明](./firmware/README.md) · [烧录说明](./flash/README.md)
 
-应用大小为 7,730,208 字节，内部版本为 `1.1.2`。编译、镜像与分区校验已通过；相比已完成四本书下载、章节跳转和两轮云同步设备回归的本地 1.1.1 镜像，本次仅更改版本与构建元数据。网页烧录完成后，请重新插拔数据线以重启设备。
+应用大小为 7,800,992 字节，内部版本为 `1.1.3`。编译、镜像与分区校验已通过；程序内容与已完成底栏单次点击真机确认的修复版相同，仅更新版本与构建元数据。导入 TXT 及部分 EPUB 的云端进度同步仍在适配。网页烧录完成后，请重新插拔数据线以重启设备。
 
 烧录需要在支持 Web Serial 的电脑浏览器中通过 HTTPS 使用。普通浏览器也可以浏览介绍网页。
 
@@ -69,4 +73,4 @@
 
 ## 网页维护验证
 
-`node --test tests/release-site.test.mjs` 验证发布白名单、说明书资源复制与 Release 校验。具有 Playwright 的开发环境可运行 `node tests/navigation.cjs`，检查项目路径下的介绍、安装、烧录、说明书互相跳转及五种屏幕尺寸；`PICO_SITE_BROWSER` 可指定已有 Chromium 浏览器。测试不访问设备，测试文件不进入 Pages 发布产物。
+`node --test tests/*.test.mjs` 验证完整包解析、更新写入范围、发布打包、发布白名单与 Release 校验。`node tests/flash-browser.cjs` 使用模拟设备检查导入、失败重选、异步结果覆盖、两种烧录流程及五种屏幕尺寸，不连接实物。具有 Playwright 的开发环境可运行 `node tests/navigation.cjs`，检查项目路径下的介绍、安装、烧录、说明书互相跳转及五种屏幕尺寸；`PICO_SITE_BROWSER` 可指定已有 Chromium 浏览器。测试不访问设备，测试文件不进入 Pages 发布产物。

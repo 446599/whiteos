@@ -1,7 +1,7 @@
 import {
   FlashError, requireSafe, requireDevice,
   selectedParts, protectedRanges, md5,
-} from "./core.mjs?v=20261010-release";
+} from "./core.mjs?v=20261016-import";
 
 const DIGEST_BLOCK_SIZE = 512 * 1024;
 const DIGEST_TIMEOUT_MS = 15000;

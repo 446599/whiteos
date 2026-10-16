@@ -4,7 +4,7 @@ import { mkdtemp, mkdir, writeFile, readFile, rm, access } from "node:fs/promise
 import path from "node:path";
 import os from "node:os";
 import { listStableReleases, prepareReleaseSite } from "../tools/release-site.mjs";
-import { syntheticRelease } from "./flash-fixtures.mjs";
+import { syntheticRelease, completeImage, mergeImages } from "./flash-fixtures.mjs";
 
 async function fixture(context) {
   const temporary = await mkdtemp(path.join(os.tmpdir(), "whiteos-release-site-"));
@@ -85,3 +85,48 @@ test("Release discovery ignores drafts and prereleases and sorts numeric stable 
   });
   assert.deepEqual((await listStableReleases("synthetic/test-firmware", "test-only-token")).map(release => release.tag_name), ["v1.10.0", "v1.9.0"]);
 });
+
+async function modernFixture(context) {
+  const options = await fixture(context);
+  const version = "1.1.3", tag = `v${version}`;
+  const record = options.releases[0];
+  options.manifest.version = version;
+  const app = completeImage(8224, version);
+  options.bytes.set("whiteos.bin", app);
+  const part = options.manifest.parts.find(part => part.role === "application");
+  const { sha256 } = await import("../flash/core.mjs");
+  part.sha256 = await sha256(app);
+  options.bytes.set("manifest.json", new TextEncoder().encode(JSON.stringify(options.manifest)));
+  options.bytes.delete("whiteos-1.0.0.zip");
+  options.bytes.set(`whiteos-${version}.zip`, new Uint8Array([80, 75, 3, 4]));
+  const images = new Map(options.manifest.parts.map(part => [part.role, options.bytes.get(part.file)]));
+  options.bytes.set(`whiteos-${version}-full.bin`, mergeImages(images));
+  record.tag_name = tag;
+  record.html_url = `https://github.com/${options.repo}/releases/tag/${tag}`;
+  record.body = "清晰的当前版本更新说明";
+  record.assets = [...options.bytes].map(([name, content]) => ({ name, state: "uploaded", size: content.length,
+    browser_download_url: `https://github.com/${options.repo}/releases/download/${tag}/${name}` }));
+  return options;
+}
+
+test("new Releases require a validated full bundle and preserve release notes", async context => {
+  const options = await modernFixture(context);
+  await prepareReleaseSite(options);
+  const index = JSON.parse(await readFile(path.join(options.output, "firmware/releases.json")));
+  assert.equal(index.latest.releaseNotes, "清晰的当前版本更新说明");
+  assert.deepEqual(new Uint8Array(await readFile(path.join(options.output, "firmware/releases/v1.1.3/whiteos-1.1.3-full.bin"))),
+    options.bytes.get("whiteos-1.1.3-full.bin"));
+});
+for (const failure of ["missing-full", "corrupt-full", "different-full", "duplicate-full"]) {
+  test(`new Releases reject ${failure}`, async context => {
+    const options = await modernFixture(context);
+    const name = "whiteos-1.1.3-full.bin";
+    const record = options.releases[0];
+    if (failure === "missing-full") record.assets = record.assets.filter(asset => asset.name !== name);
+    if (failure === "corrupt-full") options.bytes.get(name)[0x10000 + 100] ^= 1;
+    if (failure === "different-full") options.bytes.get(name).set(completeImage(4112, "other-version"), 0);
+    if (failure === "duplicate-full") record.assets.push(record.assets.find(asset => asset.name === name));
+    await assert.rejects(prepareReleaseSite(options));
+    await assert.rejects(access(path.join(options.output, "firmware/releases.json")));
+  });
+}

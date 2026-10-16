@@ -2,9 +2,11 @@ import { cp, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
-import { validateManifest, validateImage } from "../flash/core.mjs";
+import { validateManifest, validateImage, splitMergedBundle } from "../flash/core.mjs";
 
 const TAG = /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/;
+// 已发布的历史版本没有完整包；新版本必须提供。/ Published legacy tags lack full bundles; new tags must provide one.
+const LEGACY_TAGS = new Set(["v1.0.0", "v1.0.1", "v1.0.2", "v1.1.0", "v1.1.1", "v1.1.2"]);
 const repoPattern = /^[A-Za-z0-9-]{1,39}\/[A-Za-z0-9_.-]{1,100}$/;
 
 async function boundedDownload(url, limit, headers = {}) {
@@ -88,6 +90,23 @@ export async function prepareReleaseSite({ repo, releases, output, root, downloa
       validateImage(bytes, part.role);
       files.set(part.file, bytes);
     }
+    const fullName = `whiteos-${version}-full.bin`;
+    const hasFull = release.assets.some(item => item.name === fullName);
+    if (hasFull || !LEGACY_TAGS.has(tag)) {
+      const item = asset(fullName);
+      const expectedSize = 0x10000 + manifest.parts.find(part => part.role === "application").size;
+      if (item.size !== expectedSize) throw new Error(`${tag}: full bundle size mismatch`);
+      const full = new Uint8Array(await download(item.browser_download_url, expectedSize));
+      if (full.length !== expectedSize) throw new Error(`${tag}: full bundle download mismatch`);
+      const split = await splitMergedBundle(full);
+      if (split.manifest.version !== version) throw new Error(`${tag}: embedded version mismatch`);
+      for (const part of manifest.parts) {
+        if (!Buffer.from(split.images.get(part.role)).equals(Buffer.from(files.get(part.file)))) {
+          throw new Error(`${tag}: full bundle differs from ${part.file}`);
+        }
+      }
+      files.set(fullName, full);
+    }
     const folder = path.join(output, "firmware", "releases", tag);
     await mkdir(folder, { recursive: true });
     for (const [name, bytes] of files) await writeFile(path.join(folder, name), bytes);
@@ -95,7 +114,7 @@ export async function prepareReleaseSite({ repo, releases, output, root, downloa
       publishedAt: release.published_at, manifestPath: `releases/${tag}/manifest.json`,
       releaseNotes: typeof release.body === "string" ? release.body : "" };
     entries.push(entry);
-    console.log(`Validated ${tag}: three images and manifest from Release assets`);
+    console.log(`Validated ${tag}: images, manifest${hasFull ? " and full bundle" : " (legacy)"} from Release assets`);
   }
   await writeFile(path.join(output, "firmware", "releases.json"), JSON.stringify({ schema: 1, latest: entries[0], releases: entries }, null, 2) + "\n");
   return entries;
