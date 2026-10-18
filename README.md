@@ -6,7 +6,7 @@
 - 安装入口：<https://446599.github.io/whiteos/install/>
 - 烧录界面：<https://446599.github.io/whiteos/flash/>
 - 使用说明：<https://446599.github.io/whiteos/manual/>
-- 每日一句句库：<https://446599.github.io/whiteos/quotes/>（适配固件待发布）
+- 每日一句句库：<https://446599.github.io/whiteos/quotes/>（whiteos 1.1.4 支持）
 - 词典转换：<https://446599.github.io/whiteos/dictionary/>
 
 纯静态 HTML、CSS 和 JavaScript，使用 GitHub Actions 从 `main` 构建并部署到 GitHub Pages。正式 Release 附件在部署时校验并同步为同站下载文件，无需数据库或后端。
@@ -42,14 +42,14 @@
 
 在线下载失败时，在 [GitHub Releases](https://github.com/446599/whiteos/releases) 的 Assets 下载 `whiteos-X.Y.Z-full.bin`，回烧录页选择完整包。页面核对内嵌版本与完整性；已有 whiteos 选“固件更新”。1.1.2 及更早正式版没有完整 BIN，可继续在线烧录。
 
-**当前已发布 whiteos 1.1.3**：翻页响应更快、连续翻页更利落，加快微信读书加载；支持选书同步与阶段进度、导入 TXT/EPUB 离线阅读和词典注音。固件通过 GitHub Release 发布；Actions 校验并同步三份镜像、清单和更新说明到 Pages。网页识别最高正式版本，在一次操作中锁定同一版本。支持的电脑浏览器会启用两个烧录按钮，页面不会自动连接设备。
+当前已发布 whiteos 1.1.4：完善应用页拖动排序、中文拼音词组候选与分层设置，新增内置系统说明书和书籍管理；修复输入卡顿、外置系统字体下部分 EPUB 无法打开及显示问题，支持 EPUB 脚注卡片与外置每日一句句库。固件通过 GitHub Release 发布；Actions 校验并同步三份镜像、清单和更新说明到 Pages。网页识别最高正式版本，在一次操作中锁定同一版本。支持的电脑浏览器会启用两个烧录按钮，页面不会自动连接设备。
 
-- [1.1.3 Release 与下载](https://github.com/446599/whiteos/releases/tag/v1.1.3)
-- [查看发布清单](./firmware/releases/v1.1.3/manifest.json)
+- [1.1.4 Release 与下载](https://github.com/446599/whiteos/releases/tag/v1.1.4)
+- [查看发布清单](./firmware/releases/v1.1.4/manifest.json)
 - [后续 Release 发布格式](./RELEASE_FORMAT.md)
 - [固件说明](./firmware/README.md) · [烧录说明](./flash/README.md)
 
-应用大小为 7,800,992 字节，内部版本为 `1.1.3`。编译、镜像与分区校验已通过；程序内容与已完成底栏单次点击真机确认的修复版相同，仅更新版本与构建元数据。导入 TXT 及部分 EPUB 的云端进度同步仍在适配。网页烧录完成后，请重新插拔数据线以重启设备。
+应用大小为 7,860,192 字节，内部版本为 `1.1.4`，SHA-256 为 `d1f6b246baa829ed4202137014906490f70b14d62d259474771426f3315e739f`。拼音词组候选目前以六字母以内的常用双字词为主。微信读书导入 TXT 及部分 EPUB 支持下载与离线阅读，云端进度同步仍在适配；蓝牙翻页器的实物兼容性仍待验证。网页烧录完成后，请重新插拔数据线以重启设备。
 
 烧录需要在支持 Web Serial 的电脑浏览器中通过 HTTPS 使用。普通浏览器也可以浏览介绍网页。
 
@@ -80,4 +80,4 @@
 
 `quotes/` 提供独立句子包生成工具，从固定版本的一言文学/原创数据生成，或在浏览器处理用户自己的 JSON、TXT/TSV。主页的入口在烧录操作之后，不会连接串口、改变固件来源或随烧录写卡。
 
-外置格式的固件支持尚未发布，正式版 1.1.3 不支持；页面明确显示兼容性。下载的 ZIP 解压为 `QUOTES` 文件夹，经 USB 磁盘/读卡器复制到 TF 根目录。句子包包含设备格式、可编辑来源、重建脚本和来源/许可；一言内容仍遵循原 AGPL 和原作者权利，不因外置而免除义务。工具独立代码使用 MIT，未把一言数据加入本仓库或固件镜像。格式和验证见 [句库工具说明](./quotes/README.md)。
+正式版 1.1.4 支持外置离线句库、按日期更新和点击换句；缺卡或句库损坏时仍可显示内置短句，1.1.3 及更早版本不支持外置句库。下载的 ZIP 解压为 `QUOTES` 文件夹，经 USB 磁盘/读卡器复制到 TF 根目录。句子包包含设备格式、可编辑来源、重建脚本和来源/许可；一言内容仍遵循原 AGPL 和原作者权利，不因外置而免除义务。工具独立代码使用 MIT，未把一言数据加入本仓库或固件镜像。格式和验证见 [句库工具说明](./quotes/README.md)。
